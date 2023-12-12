@@ -1,4 +1,4 @@
-import AuthForm from '@/components/authForm';
+import CreateAccountForm from '@/components/authForms/CreateAccountForm';
 import { Button } from '@/components/ui/button';
 
 const Playground = () => {
@@ -24,7 +24,7 @@ const Playground = () => {
         </Button>
       </div>
       {/* auth form */}
-      <AuthForm />
+      <CreateAccountForm />
     </div>
   );
 };
