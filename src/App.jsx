@@ -1,10 +1,11 @@
+import Authentication from './pages/Authentication.jsx';
 import Playground from './pages/playground.jsx';
 
 function App() {
   return (
     <div>
-      <h1>Hello, world!</h1>
-      <Playground />;
+      {/* <Playground />; */}
+      <Authentication />
     </div>
   );
 }
