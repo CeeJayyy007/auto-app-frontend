@@ -1,4 +1,5 @@
-import { Button } from '../components/ui/button';
+import AuthForm from '@/components/authForm';
+import { Button } from '@/components/ui/button';
 
 const Playground = () => {
   return (
@@ -22,6 +23,8 @@ const Playground = () => {
           <span>Link as child</span>
         </Button>
       </div>
+      {/* auth form */}
+      <AuthForm />
     </div>
   );
 };
