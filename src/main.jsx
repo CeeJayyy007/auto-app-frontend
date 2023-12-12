@@ -1,11 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
-import Playground from './pages/playground.jsx';
 import './styles/globals.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <>
-    <App />
-    <Playground />
-  </>
-);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
