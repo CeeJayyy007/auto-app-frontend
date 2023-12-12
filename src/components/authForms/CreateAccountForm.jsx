@@ -154,7 +154,23 @@ const CreateAccountForm = ({ className, ...props }) => {
                       {...field}
                     />
                   </FormControl>
-                  {form.formState.errors.password && <FormMessage />}
+                  {form.formState.errors.password?.message && (
+                    <ul className="mt-2 text-[0.8rem] font-medium text-destructive">
+                      {Object.keys(form.formState.errors.password.message).map(
+                        (m, i) => {
+                          const { pass, message } =
+                            form.formState.errors.password.message[m];
+
+                          return (
+                            <li key={i}>
+                              <span>{pass ? '✅' : '❌'}</span>
+                              <span>{message}</span>
+                            </li>
+                          );
+                        }
+                      )}
+                    </ul>
+                  )}
                 </FormItem>
               )}
             />
