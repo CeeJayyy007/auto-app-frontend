@@ -24,8 +24,12 @@
     --input: 240 5.9% 90%;
     --ring: 142.1 76.2% 36.3%;
     --radius: 0.5rem;
+    --sucess: 142.1 76.2% 36.3%;
+    --sucess-foreground: 355.7 100% 97.3%;
     --warning: 38 92% 50%;
     --warning-foreground: 48 96% 89%;
+    --error: 0 62.8% 30.6%;
+    --error-foreground: 0 85.7% 97.3%;
   }
 
   .dark {
@@ -48,8 +52,12 @@
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
+    --sucess: 142.1 76.2% 36.3%;
+    --sucess-foreground: 355.7 100% 97.3%;
     --warning: 48 96% 89%;
     --warning-foreground: 38 92% 50%;
+    --error: 0 85.7% 97.3%;
+    --error-foreground: 0 0% 95%;
   }
 }
 
