@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { Icons } from '@/components/icons';
 import {
   Form,
   FormControl,
@@ -15,6 +16,7 @@ import {
 import AuthValidationFormSchema from './AuthValidation';
 
 const LoginForm = ({ className, ...props }) => {
+  const [showPassword, setShowPassword] = React.useState(false);
   const form = useForm({
     resolver: zodResolver(AuthValidationFormSchema),
     defaultValues: {
@@ -67,12 +69,22 @@ const LoginForm = ({ className, ...props }) => {
                 <FormItem>
                   <FormLabel className="sr-only">Email</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Password"
-                      type="password"
-                      disabled={form.formState.isLoading}
-                      {...field}
-                    />
+                    <div className="flex relative items-center">
+                      <Button
+                        className="absolute inset-y-0 right-0 hover:bg-transparent"
+                        variant="ghost"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <Icons.eyeClose /> : <Icons.eyeOpen />}
+                      </Button>
+                      <Input
+                        placeholder="Password"
+                        type={showPassword ? 'text' : 'password'}
+                        disabled={form.formState.isLoading}
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   {form.formState.errors.password && <FormMessage />}
                 </FormItem>
@@ -80,7 +92,7 @@ const LoginForm = ({ className, ...props }) => {
             />
 
             <Button className="mt-8" disabled={form.formState.isLoading}>
-              Login
+              Sign In
             </Button>
           </div>
         </form>

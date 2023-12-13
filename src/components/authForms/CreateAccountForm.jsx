@@ -2,7 +2,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Icons } from '@/components/icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import {
@@ -16,6 +16,8 @@ import {
 import AuthValidationFormSchema from './AuthValidation';
 
 const CreateAccountForm = ({ className, ...props }) => {
+  const [showPassword, setShowPassword] = React.useState(false);
+
   const form = useForm({
     resolver: zodResolver(AuthValidationFormSchema),
     defaultValues: {
@@ -109,7 +111,7 @@ const CreateAccountForm = ({ className, ...props }) => {
                   <FormLabel className="sr-only">Phone Number</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="phone Number"
+                      placeholder="Phone Number"
                       type="tel"
                       disabled={form.formState.isLoading}
                       {...field}
@@ -147,12 +149,22 @@ const CreateAccountForm = ({ className, ...props }) => {
                 <FormItem>
                   <FormLabel className="sr-only">Email</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Password"
-                      type="password"
-                      disabled={form.formState.isLoading}
-                      {...field}
-                    />
+                    <div className="flex relative items-center">
+                      <Button
+                        className="absolute inset-y-0 right-0 hover:bg-transparent"
+                        variant="ghost"
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                      >
+                        {showPassword ? <Icons.eyeClose /> : <Icons.eyeOpen />}
+                      </Button>
+                      <Input
+                        placeholder="Password"
+                        type={showPassword ? 'text' : 'password'}
+                        disabled={form.formState.isLoading}
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   {form.formState.errors.password?.message && (
                     <ul className="mt-2 text-[0.8rem] font-medium text-destructive">
@@ -174,8 +186,12 @@ const CreateAccountForm = ({ className, ...props }) => {
                 </FormItem>
               )}
             />
-            <Button disabled={form.formState.isLoading} className="mt-8">
-              Create Account
+            <Button
+              type="submit"
+              disabled={form.formState.isLoading}
+              className="mt-8"
+            >
+              Sign Up
             </Button>
           </div>
         </form>
