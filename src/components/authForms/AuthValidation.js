@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-const AuthValidationFormSchema = z
+const CreateAccountFormSchema = z
   .object({
     firstName: z.string().min(2, 'Must be at least 2 characters'),
     lastName: z.string().min(2, 'Must be at least 2 characters'),
@@ -9,7 +9,6 @@ const AuthValidationFormSchema = z
     phone: z.string().min(10, 'Must be at least 10 characters'),
     password: z.string()
   })
-  .optional()
   .superRefine(({ password }, checkPassComplexity) => {
     const containsUppercase = (ch) => /[A-Z]/.test(ch);
     const containsLowercase = (ch) => /[a-z]/.test(ch);
@@ -73,4 +72,9 @@ const AuthValidationFormSchema = z
     }
   });
 
-export default AuthValidationFormSchema;
+const LoginFormSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string()
+});
+
+export { CreateAccountFormSchema, LoginFormSchema };

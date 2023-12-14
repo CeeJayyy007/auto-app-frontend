@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -13,12 +12,15 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import AuthValidationFormSchema from './AuthValidation';
+import { LoginFormSchema } from './AuthValidation';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ className, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
+
   const form = useForm({
-    resolver: zodResolver(AuthValidationFormSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: {
       email: '',
       password: ''
@@ -27,7 +29,9 @@ const LoginForm = ({ className, ...props }) => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
+      localStorage.setItem('token', JSON.stringify(data));
+      console.log('token', localStorage.getItem('token'));
+      navigate('/dashboard');
       form.reset();
     } catch (error) {
       form.setError('submitError', {
@@ -38,7 +42,7 @@ const LoginForm = ({ className, ...props }) => {
   };
 
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
+    <div className="grid gap-6" {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-2">
@@ -67,7 +71,7 @@ const LoginForm = ({ className, ...props }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Email</FormLabel>
+                  <FormLabel className="sr-only">Password</FormLabel>
                   <FormControl>
                     <div className="flex relative items-center">
                       <Button
@@ -90,8 +94,11 @@ const LoginForm = ({ className, ...props }) => {
                 </FormItem>
               )}
             />
-
-            <Button className="mt-8" disabled={form.formState.isLoading}>
+            <Button
+              className="mt-8"
+              disabled={form.formState.isLoading}
+              type="submit"
+            >
               Sign In
             </Button>
           </div>
