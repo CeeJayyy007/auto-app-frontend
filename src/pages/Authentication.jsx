@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import CreateAccountForm from '@/components/authForms/CreateAccountForm';
-import { Icons } from '@/components/icons';
+import { Icons } from '@/components/icons/icons';
 import LoginForm from '@/components/authForms/LoginForm';
 
 const Authentication = () => {

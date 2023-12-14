@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/Input';
-import { Icons } from '@/components/icons';
+import { Icons } from '../icons/icons';
 
 const Search = () => {
   return (
