@@ -13,13 +13,13 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
-import AuthValidationFormSchema from './AuthValidation';
+import { CreateAccountFormSchema } from './AuthValidation';
 
 const CreateAccountForm = ({ className, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const form = useForm({
-    resolver: zodResolver(AuthValidationFormSchema),
+    resolver: zodResolver(CreateAccountFormSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -43,7 +43,7 @@ const CreateAccountForm = ({ className, ...props }) => {
   };
 
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
+    <div className="grid gap-6" {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="grid gap-2">
@@ -147,7 +147,7 @@ const CreateAccountForm = ({ className, ...props }) => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Email</FormLabel>
+                  <FormLabel className="sr-only">Password</FormLabel>
                   <FormControl>
                     <div className="flex relative items-center">
                       <Button

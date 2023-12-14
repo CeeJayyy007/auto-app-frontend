@@ -1,17 +1,13 @@
-import Dashboard from './pages/Dashboard';
-import Layout from './components/layout/Layout';
-import Authentication from './pages/Authentication';
-import Playground from './pages/playground';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { publicRoutes, privateRoutes } from './routes';
+import checkAuth from './utils/auth';
 
-function App() {
-  return (
-    <div>
-      {/* <Playground />; */}
-      {/* <Authentication /> */}
-      <Layout>
-        <Dashboard />
-      </Layout>
-    </div>
-  );
-}
+const App = () => {
+  const router = createBrowserRouter([
+    ...(checkAuth() ? privateRoutes() : []),
+    ...publicRoutes()
+  ]);
+
+  return <RouterProvider router={router} />;
+};
 export default App;
