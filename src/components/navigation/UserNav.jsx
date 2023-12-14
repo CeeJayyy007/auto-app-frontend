@@ -9,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { avatarFallback } from '@/utils/helpers';
 
 const UserNav = () => {
   return (
@@ -17,7 +18,7 @@ const UserNav = () => {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="profile-avatar" />
-            <AvatarFallback>AA</AvatarFallback>
+            <AvatarFallback>{avatarFallback('User 1')}</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
