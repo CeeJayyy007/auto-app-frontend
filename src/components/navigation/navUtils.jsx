@@ -1,55 +1,46 @@
-import { Icons } from '../icons';
-
-const getIcon = (name) => {
-  const IconComponent = Icons[name];
-  if (IconComponent) {
-    return <IconComponent className="mr-2 h-4 w-4" />;
-  } else {
-    return <Icons.dashboard />;
-  }
-};
+import getIcon from '../icons/getIcon';
 
 export const sidebarContent = [
   {
     id: 1,
     title: 'Dashboard',
-    icon: getIcon('dashboard'),
+    icon: getIcon({ name: 'dashboard', className: 'mr-2' }),
     path: '/dashboard'
   },
   {
     id: 2,
     title: 'Profile',
-    icon: getIcon('profile'),
+    icon: getIcon({ name: 'profile', className: 'mr-2' }),
     path: '/profile'
   },
   {
     id: 3,
     title: 'Appointments',
-    icon: getIcon('appointments'),
+    icon: getIcon({ name: 'appointments', className: 'mr-2' }),
     path: '/appointments'
   },
   {
     id: 4,
     title: 'Activities',
-    icon: getIcon('activities'),
+    icon: getIcon({ name: 'activities', className: 'mr-2' }),
     path: '/activities'
   },
   {
     id: 5,
     title: 'Services',
-    icon: getIcon('services'),
+    icon: getIcon({ name: 'services', className: 'mr-2' }),
     path: '/services'
   },
   {
     id: 6,
     title: 'Payments',
-    icon: getIcon('payments'),
+    icon: getIcon({ name: 'payments', className: 'mr-2' }),
     path: '/payments'
   },
   {
     id: 7,
     title: 'Reports',
-    icon: getIcon('reports'),
+    icon: getIcon({ name: 'reports', className: 'mr-2' }),
     path: '/reports'
   }
 ];
@@ -58,13 +49,13 @@ export const bottomNavContent = [
   {
     id: 1,
     title: 'Settings',
-    icon: getIcon('settings'),
+    icon: getIcon({ name: 'settings', className: 'mr-2' }),
     path: '/settings'
   },
   {
     id: 2,
     title: 'Logout',
-    icon: getIcon('logout'),
+    icon: getIcon({ name: 'logout', className: 'mr-2' }),
     path: '/logout'
   }
 ];
