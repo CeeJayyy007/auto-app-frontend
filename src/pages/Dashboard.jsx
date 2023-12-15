@@ -101,7 +101,7 @@ const Dashboard = () => {
             <Charts />
           </CardContent>
         </Card>
-        <Card className="col-span-3">
+        <Card className="col-span-4 md:col-span-3">
           <CardHeader>
             <CardTitle>Recent Activities</CardTitle>
             <CardDescription>

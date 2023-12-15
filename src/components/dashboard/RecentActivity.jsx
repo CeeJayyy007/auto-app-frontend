@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
 
-const RecentActivity = ({ name, description, avatar, value }) => {
+const RecentActivity = ({ name, description, value }) => {
   return (
     <div className="space-y-8 py-2">
       <div className="flex items-center">
