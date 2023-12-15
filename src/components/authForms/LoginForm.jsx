@@ -31,7 +31,7 @@ const LoginForm = ({ className, ...props }) => {
     try {
       localStorage.setItem('token', JSON.stringify(data));
       console.log('token', localStorage.getItem('token'));
-      navigate('/dashboard');
+      navigate('/');
       form.reset();
     } catch (error) {
       form.setError('submitError', {
