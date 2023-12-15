@@ -1,10 +1,10 @@
 import Search from '../search/Search';
 import UserNav from './UserNav';
-import { Icons } from '../Icons';
+import { Icons } from '../icons/icons';
 
 const MainNav = () => {
   return (
-    <nav className="flex items-center justify-between h-16 px-4">
+    <nav className="flex items-center justify-between h-16 px-4 py-4">
       <h3 className="flex flex-row">
         <Icons.logo className="h-6 w-auto" /> Auto App
       </h3>
