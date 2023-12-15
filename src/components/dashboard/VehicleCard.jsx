@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import IconButton from '../IconButton';
+import IconButton from '../button/IconButton';
 
 const vehicleData = [
   {
