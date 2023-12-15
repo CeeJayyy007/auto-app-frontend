@@ -1,4 +1,5 @@
-import IconButton from '@/components/IconButton';
+import React, { useState } from 'react';
+import IconButton from '@/components/button/IconButton';
 import {
   sidebarContent as content,
   bottomNavContent as bottomContent
@@ -6,11 +7,19 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+  const [clickedPath, setClickedPath] = useState('/');
+
   const navigate = useNavigate();
 
   const handleClick = (path) => {
-    console.log(path);
-    navigate(path);
+    if (path === '/logout') {
+      console.log(path);
+      localStorage.removeItem('token');
+      navigate('/sign-in');
+    } else {
+      setClickedPath(path);
+      navigate(path);
+    }
   };
 
   return (
@@ -20,7 +29,7 @@ const Sidebar = () => {
           <IconButton
             key={item.title}
             {...item}
-            variant="ghost"
+            variant={clickedPath === item.path ? 'secondary' : 'ghost'}
             onClick={() => handleClick(item.path)}
           />
         ))}
@@ -28,7 +37,12 @@ const Sidebar = () => {
 
       <div className="absolute space-y-3 bottom-8 pr-8">
         {bottomContent.map((item) => (
-          <IconButton key={item.title} {...item} variant="ghost" />
+          <IconButton
+            key={item.title}
+            {...item}
+            variant={clickedPath === item.path ? 'secondary' : 'ghost'}
+            onClick={() => handleClick(item.path)}
+          />
         ))}
       </div>
     </div>

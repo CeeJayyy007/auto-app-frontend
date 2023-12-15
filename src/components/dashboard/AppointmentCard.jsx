@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card';
 import IconButton from '../button/IconButton';
 
-const vehicleData = [
+const appointmentData = [
   {
     id: 1,
     make: 'Toyota',

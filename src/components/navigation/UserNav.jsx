@@ -10,8 +10,17 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { avatarFallback } from '@/utils/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const UserNav = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    console.log('logout');
+    localStorage.removeItem('token');
+    navigate('/sign-in');
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,7 +31,7 @@ const UserNav = () => {
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end" forceMount>
+      <DropdownMenuContent className="w-56 px-2 pb-2" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">User 1</p>
@@ -33,12 +42,18 @@ const UserNav = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Activities</DropdownMenuItem>
-          <DropdownMenuItem>Settings</DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/profile')}>
+            Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/activities')}>
+            Activities
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate('/settings')}>
+            Settings
+          </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Log out</DropdownMenuItem>
+        <DropdownMenuItem onClick={handleLogout}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
