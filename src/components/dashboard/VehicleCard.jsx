@@ -16,7 +16,7 @@ const vehicleData = [
     make: 'Toyota',
     model: 'Camry',
     year: '2023',
-    image: '/src/assets/benz.jpeg'
+    image: '/src/assets/lambo.jpeg'
   },
   {
     id: 2,
@@ -31,13 +31,6 @@ const vehicleData = [
     model: 'Benz',
     year: '2021',
     image: '/src/assets/benz.jpeg'
-  },
-  {
-    id: 4,
-    make: 'Tesla',
-    model: 'Model 3',
-    year: '2021',
-    image: '/src/assets/range.jpeg'
   }
 ];
 
@@ -45,21 +38,16 @@ const VehicleCard = () => {
   return (
     <Card className="col-span-4">
       <CardHeader>
-        <CardTitle>Your vehicle(s)</CardTitle>
+        <CardTitle>Your vehicle</CardTitle>
         <CardDescription>Vehicle details and overview.</CardDescription>
         <Separator className="my-4" />
       </CardHeader>
-      <CardContent>
-        <ScrollArea>
+      <ScrollArea>
+        <CardContent>
           <div className="flex space-x-8 pb-4">
             {vehicleData.map((vehicle) => (
-              <div>
-                <Image
-                  key={vehicle.id}
-                  width={150}
-                  height={150}
-                  vehicle={vehicle}
-                />
+              <div key={vehicle.image}>
+                <Image width={150} height={150} vehicle={vehicle} />
                 <h4 className="mt-2 font-medium leading-none">
                   {vehicle.make}
                 </h4>
@@ -69,9 +57,9 @@ const VehicleCard = () => {
               </div>
             ))}
           </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
-      </CardContent>
+        </CardContent>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </Card>
   );
 };

@@ -13,7 +13,7 @@ const Layout = () => {
         {/* <Suspense fallback={<CustomLoader />}> */}
         <Suspense>
           <div className="bg-gray-100 rounded-lg w-screen p-4">
-            <h4 className="text-2xl my-2 font-bold tracking-tight">
+            <h4 className="my-2 mt-0 font-bold tracking-tight">
               Welcome back, User
             </h4>
             <Outlet />
