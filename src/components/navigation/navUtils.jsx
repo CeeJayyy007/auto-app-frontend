@@ -5,7 +5,7 @@ export const sidebarContent = [
     id: 1,
     title: 'Dashboard',
     icon: getIcon({ name: 'dashboard', className: 'mr-2' }),
-    path: '/dashboard'
+    path: '/'
   },
   {
     id: 2,
