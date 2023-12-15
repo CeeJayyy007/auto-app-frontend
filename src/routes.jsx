@@ -1,9 +1,8 @@
-import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
-const Profile = lazy(() => import('./pages/Profile'));
-const Dashboard = lazy(() => import('./pages/Dashboard'));
-const Authentication = lazy(() => import('./pages/Authentication'));
+import Profile from './pages/Profile';
+import Dashboard from './pages/Dashboard';
+import Authentication from './pages/Authentication';
 
 const privateRoutes = () => {
   return [
