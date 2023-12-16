@@ -14,7 +14,7 @@ const IconDropdownMenu = ({ label, children }) => {
       <DropdownMenuTrigger>
         <MenuIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent align="end">
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
