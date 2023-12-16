@@ -10,7 +10,7 @@ import Charts from '@/components/dashboard/DashboardChart';
 import getIcon from '@/components/icons/getIcon';
 import RecentActivity from '@/components/dashboard/RecentActivity';
 import VehicleCard from '@/components/dashboard/VehicleCard';
-import AppointmentCard from '@/components/dashboard/AppointmentCard';
+import AppointmentCard from '@/components/appointment/AppointmentCard';
 
 const dashboardCardContent = [
   {

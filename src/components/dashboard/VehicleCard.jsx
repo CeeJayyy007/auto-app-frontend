@@ -1,4 +1,4 @@
-import Image from './Image';
+import Image from '../image/Image';
 import { Separator } from '@/components/ui/Separator';
 import {
   Card,
