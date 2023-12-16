@@ -4,11 +4,10 @@ import {
   sidebarContent as content,
   bottomNavContent as bottomContent
 } from './navUtils';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
-  const [clickedPath, setClickedPath] = useState('/');
-
+  let location = useLocation();
   const navigate = useNavigate();
 
   const handleClick = (path) => {
@@ -17,7 +16,6 @@ const Sidebar = () => {
       localStorage.removeItem('token');
       navigate('/sign-in');
     } else {
-      setClickedPath(path);
       navigate(path);
     }
   };
@@ -29,7 +27,7 @@ const Sidebar = () => {
           <IconButton
             key={item.title}
             {...item}
-            variant={clickedPath === item.path ? 'secondary' : 'ghost'}
+            variant={location.pathname === item.path ? 'secondary' : 'ghost'}
             onClick={() => handleClick(item.path)}
           />
         ))}
@@ -40,7 +38,7 @@ const Sidebar = () => {
           <IconButton
             key={item.title}
             {...item}
-            variant={clickedPath === item.path ? 'secondary' : 'ghost'}
+            variant={location.pathname === item.path ? 'secondary' : 'ghost'}
             onClick={() => handleClick(item.path)}
           />
         ))}
