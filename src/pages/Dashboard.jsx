@@ -10,6 +10,7 @@ import Charts from '@/components/dashboard/DashboardChart';
 import getIcon from '@/components/icons/getIcon';
 import RecentActivity from '@/components/dashboard/RecentActivity';
 import VehicleCard from '@/components/dashboard/VehicleCard';
+import AppointmentCard from '@/components/dashboard/AppointmentCard';
 
 const dashboardCardContent = [
   {
@@ -122,7 +123,7 @@ const Dashboard = () => {
         </Card>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-8">
-        <VehicleCard />
+        <AppointmentCard />
         <VehicleCard />
       </div>
     </div>
