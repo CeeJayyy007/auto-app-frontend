@@ -1,5 +1,3 @@
-import Image from './Image';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/Separator';
 import {
   Card,
@@ -8,60 +6,87 @@ import {
   CardHeader,
   CardTitle
 } from '@/components/ui/card';
-import IconButton from '../button/IconButton';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
+import { Badge } from '@/components/ui/badge';
+import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 
 const appointmentData = [
   {
     id: 1,
-    make: 'Toyota',
-    model: 'Camry',
-    year: '2023',
-    image: '/src/assets/lambo.jpeg'
+    date: '15/12/2023',
+    note: 'Urgent fix',
+    services: ['oil change', 'tyre change'],
+    status: 'pending'
   },
   {
     id: 2,
-    make: 'Tesla',
-    model: 'Model 3',
-    year: '2021',
-    image: '/src/assets/range.jpeg'
+    date: '12/12/2023',
+    note: 'Change oil',
+    services: ['oil change', 'tyre change'],
+    status: 'pending'
   },
   {
     id: 3,
-    make: 'Mercedes',
-    model: 'Benz',
-    year: '2021',
-    image: '/src/assets/benz.jpeg'
+    date: '11/12/2023',
+    note: 'Fix the issues',
+    services: ['steering fix', 'tyre change'],
+    status: 'approved'
   }
 ];
 
-const VehicleCard = () => {
+const AppointmentCard = () => {
   return (
     <Card className="col-span-4">
-      <CardHeader>
-        <CardTitle>Your vehicle</CardTitle>
-        <CardDescription>Vehicle details and overview.</CardDescription>
-        <Separator className="my-4" />
+      <CardHeader className="pb-0">
+        <CardTitle>Appointments</CardTitle>
+        <CardDescription>Details and overview.</CardDescription>
+        <Separator />
       </CardHeader>
-      <ScrollArea>
-        <CardContent>
-          <div className="flex space-x-8 pb-4">
-            {vehicleData.map((vehicle) => (
-              <div key={vehicle.image}>
-                <Image width={150} height={150} vehicle={vehicle} />
-                <h4 className="mt-2 font-medium leading-none">
-                  {vehicle.make}
-                </h4>
-                <p className="text-sm text-muted-foreground mt-0">
-                  {vehicle.model} | {vehicle.year}
-                </p>
-              </div>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>S/No.</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Note</TableHead>
+              <TableHead>Services</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody className="py-0">
+            {appointmentData.map((appointment) => (
+              <TableRow key={appointment.date}>
+                <TableCell className="font-medium">{appointment.id}</TableCell>
+                <TableCell>{appointment.date}</TableCell>
+                <TableCell>{appointment.note}</TableCell>
+                <TableCell>
+                  {commaSeparatedArray(appointment.services)}
+                </TableCell>
+                <TableCell>
+                  {
+                    <Badge
+                      className={`rounded-full px-2 py-1 ${statusColor(
+                        appointment.status
+                      )}`}
+                    >
+                      {appointment.status}
+                    </Badge>
+                  }
+                </TableCell>
+              </TableRow>
             ))}
-          </div>
-        </CardContent>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+          </TableBody>
+        </Table>
+      </CardContent>
     </Card>
   );
 };
 
-export default VehicleCard;
+export default AppointmentCard;
