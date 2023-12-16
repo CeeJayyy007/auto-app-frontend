@@ -8,7 +8,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 
-const ProfileDropdownMenu = ({ label }) => {
+const IconDropdownMenu = ({ label, children }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -18,10 +18,11 @@ const ProfileDropdownMenu = ({ label }) => {
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
+        {children}
         <DropdownMenuItem>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
 };
 
-export default ProfileDropdownMenu;
+export default IconDropdownMenu;
