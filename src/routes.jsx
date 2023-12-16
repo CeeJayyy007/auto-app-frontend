@@ -3,6 +3,7 @@ import Layout from '@/components/layout/Layout';
 import Profile from './pages/Profile';
 import Dashboard from './pages/Dashboard';
 import Authentication from './pages/Authentication';
+import Appointments from './pages/Appointments';
 
 const privateRoutes = () => {
   return [
@@ -11,6 +12,7 @@ const privateRoutes = () => {
       children: [
         { path: '/', element: <Dashboard /> },
         { path: 'profile', element: <Profile /> },
+        { path: 'appointments', element: <Appointments /> },
         { path: '*', element: <Navigate to="/" replace /> }
       ]
     }
