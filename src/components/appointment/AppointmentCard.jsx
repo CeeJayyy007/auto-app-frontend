@@ -16,9 +16,7 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
-import ProfileDropdownMenu from '../icons/IconDropdownMenu';
-import Button from '../button/IconButton';
-import getIcon from '../icons/getIcon';
+import { Button } from '@/components/ui/button';
 
 const appointmentData = [
   {
@@ -26,7 +24,7 @@ const appointmentData = [
     date: '15/12/2023',
     note: 'Urgent fix',
     services: ['oil change', 'tyre change'],
-    status: 'pending'
+    status: 'completed'
   },
   {
     id: 2,
@@ -53,7 +51,7 @@ const AppointmentCard = () => {
             <CardTitle className="text-gray-700">Appointments</CardTitle>
             <CardDescription>Details and overview.</CardDescription>
           </div>
-          <Button title="Add Appointment" className="w-[150px]" />
+          <Button>Add Appointment</Button>
         </div>
         <Separator />
       </CardHeader>
@@ -74,13 +72,13 @@ const AppointmentCard = () => {
                 <TableCell className="font-medium">{appointment.id}</TableCell>
                 <TableCell>{appointment.date}</TableCell>
                 <TableCell>{appointment.note}</TableCell>
-                <TableCell>
+                <TableCell className="truncate">
                   {commaSeparatedArray(appointment.services)}
                 </TableCell>
                 <TableCell>
                   {
                     <Badge
-                      className={`rounded-full px-2 py-1 ${statusColor(
+                      className={`font-normal rounded-full ${statusColor(
                         appointment.status
                       )}`}
                     >

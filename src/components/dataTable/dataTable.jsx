@@ -1,11 +1,5 @@
-'use client';
-
 import * as React from 'react';
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,
@@ -23,18 +17,16 @@ import {
   TableHead,
   TableHeader,
   TableRow
-} from '@/registry/new-york/ui/table';
+} from '@/components/ui/table';
 
-import { DataTablePagination } from '../components/data-table-pagination';
-import { DataTableToolbar } from '../components/data-table-toolbar';
+import { DataTablePagination } from './dataTablePagination';
+import { DataTableToolbar } from './dataTableToolbar';
 
 export const DataTable = ({ columns, data }) => {
   const [rowSelection, setRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] =
-    React.useState < VisibilityState > {};
-  const [columnFilters, setColumnFilters] =
-    React.useState < ColumnFiltersState > [];
-  const [sorting, setSorting] = React.useState < SortingState > [];
+  const [columnVisibility, setColumnVisibility] = React.useState({});
+  const [columnFilters, setColumnFilters] = React.useState([]);
+  const [sorting, setSorting] = React.useState([]);
 
   const table = useReactTable({
     data,

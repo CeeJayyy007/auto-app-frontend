@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { CheckIcon, PlusCircledIcon } from '@radix-ui/react-icons';
-import { Column } from '@tanstack/react-table';
+// import { Column } from '@tanstack/react-table';
 
 import { cn } from '@/lib/utils';
-import { Badge } from '@/registry/new-york/ui/badge';
-import { Button } from '@/registry/new-york/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Command,
   CommandEmpty,
@@ -13,13 +13,13 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator
-} from '@/registry/new-york/ui/command';
+} from '@/components/ui/command';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger
-} from '@/registry/new-york/ui/popover';
-import { Separator } from '@/registry/new-york/ui/separator';
+} from '@/components/ui/popover';
+import { Separator } from '@/components/ui/separator';
 
 export const DataTableFacetedFilter = ({ column, title, options }) => {
   const facets = column?.getFacetedUniqueValues();
@@ -91,13 +91,13 @@ export const DataTableFacetedFilter = ({ column, title, options }) => {
                   >
                     <div
                       className={cn(
-                        'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
+                        'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-gray-300',
                         isSelected
                           ? 'bg-primary text-primary-foreground'
                           : 'opacity-50 [&_svg]:invisible'
                       )}
                     >
-                      <CheckIcon className={cn('h-4 w-4')} />
+                      <CheckIcon className={cn('h-4 w-4 ')} />
                     </div>
                     {option.icon && (
                       <option.icon className="mr-2 h-4 w-4 text-muted-foreground" />

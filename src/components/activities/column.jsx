@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { services, statuses } from './data';
+import { services, inventories, statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { DataTableRowActions } from '../dataTable/dataTableRowAction';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
@@ -41,15 +41,30 @@ export const columns = [
     enableHiding: false
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'startDate',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Date" />
+      <DataTableColumnHeader column={column} title="Start Date" />
     ),
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
           <span className="max-w-[100px] font-medium">
-            {row.getValue('date')}
+            {row.getValue('startDate')}
+          </span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'endDate',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="End Date" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[100px] font-medium">
+            {row.getValue('endDate')}
           </span>
         </div>
       );
@@ -87,6 +102,30 @@ export const columns = [
       return (
         <div className="flex items-center max-w-[400px] truncate">
           <span>{commaSeparatedArray(row.getValue('services'))}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.every((item) => row.getValue(id).includes(item));
+    }
+  },
+  {
+    accessorKey: 'inventory',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Items" />
+    ),
+    cell: ({ row }) => {
+      const inventory = inventories.find((inventory) =>
+        row.getValue('inventory').includes(inventory.value)
+      );
+
+      if (!inventory) {
+        return null;
+      }
+
+      return (
+        <div className="flex items-center max-w-[400px] truncate">
+          <span>{commaSeparatedArray(row.getValue('inventory'))}</span>
         </div>
       );
     },

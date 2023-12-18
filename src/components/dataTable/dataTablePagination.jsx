@@ -4,16 +4,16 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon
 } from '@radix-ui/react-icons';
-import { Table } from '@tanstack/react-table';
+// import { Table } from '@tanstack/react-table';
 
-import { Button } from '@/registry/new-york/ui/button';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue
-} from '@/registry/new-york/ui/select';
+} from '@/components/ui/select';
 
 export const DataTablePagination = ({ table }) => {
   return (
