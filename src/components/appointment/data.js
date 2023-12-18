@@ -1,146 +1,164 @@
-import {
-  ArrowDownIcon,
-  ArrowRightIcon,
-  ArrowUpIcon,
-  CheckCircledIcon,
-  CircleIcon,
-  CrossCircledIcon,
-  QuestionMarkCircledIcon,
-  StopwatchIcon
-} from '@radix-ui/react-icons';
-
-export const labels = [
-  {
-    value: 'bug',
-    label: 'Bug'
-  },
-  {
-    value: 'feature',
-    label: 'Feature'
-  },
-  {
-    value: 'documentation',
-    label: 'Documentation'
-  }
-];
-
 export const statuses = [
   {
-    value: 'backlog',
-    label: 'Backlog',
-    icon: QuestionMarkCircledIcon
+    value: 'pending',
+    label: 'Pending'
   },
   {
-    value: 'todo',
-    label: 'Todo',
-    icon: CircleIcon
-  },
-  {
-    value: 'in progress',
-    label: 'In Progress',
-    icon: StopwatchIcon
-  },
-  {
-    value: 'done',
-    label: 'Done',
-    icon: CheckCircledIcon
+    value: 'approved',
+    label: 'Approved'
   },
   {
     value: 'canceled',
-    label: 'Canceled',
-    icon: CrossCircledIcon
+    label: 'Canceled'
+  },
+  {
+    value: 'completed',
+    label: 'Completed'
   }
 ];
 
-export const priorities = [
+export const services = [
   {
-    label: 'Low',
-    value: 'low',
-    icon: ArrowDownIcon
+    label: 'Oil Change',
+    value: 'Oil Change'
   },
   {
-    label: 'Medium',
-    value: 'medium',
-    icon: ArrowRightIcon
+    label: 'Tyre Change',
+    value: 'Tyre Change'
   },
   {
-    label: 'High',
-    value: 'high',
-    icon: ArrowUpIcon
+    label: 'Steering',
+    value: 'Steering'
+  },
+  {
+    label: 'Wheel Alignment',
+    value: 'Wheel Alignment'
+  },
+  {
+    label: 'Brake',
+    value: 'Brake'
+  },
+  {
+    label: 'Engine',
+    value: 'Engine'
+  },
+  {
+    label: 'Suspension',
+    value: 'Suspension'
+  },
+  {
+    label: 'Air Conditioning',
+    value: 'Air Conditioning'
+  },
+  {
+    label: 'Electrical',
+    value: 'Electrical'
+  },
+  {
+    label: 'Exhaust',
+    value: 'Exhaust'
+  },
+  {
+    label: 'Transmission',
+    value: 'Transmission'
+  },
+  {
+    label: 'Battery',
+    value: 'Battery'
+  },
+  {
+    label: 'Cooling',
+    value: 'Cooling'
+  },
+  {
+    label: 'Wiper',
+    value: 'Wiper'
   }
 ];
 
 export const appointmentData = [
   {
+    id: 1,
     date: '2021-10-01',
     note: 'Note 1',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
+    services: ['Oil Change', 'Tyre Change', 'Steering'],
     status: 'pending'
   },
   {
+    id: 2,
     date: '2021-10-02',
     note: 'Note 2',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
+    services: ['Cooling', 'Wiper', 'Battery'],
     status: 'approved'
   },
   {
+    id: 3,
     date: '2021-10-03',
     note: 'Note 3',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'pending'
+    services: ['Exhaust', 'Transmission', 'Electrical'],
+    status: 'canceled'
   },
   {
+    id: 4,
     date: '2021-10-04',
     note: 'Note 4',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'approved'
+    services: ['Air Conditioning', 'Suspension', 'Engine'],
+    status: 'pending'
   },
   {
+    id: 5,
     date: '2021-10-05',
     note: 'Note 5',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'pending'
+    services: ['Battery', 'Cooling', 'Wiper'],
+    status: 'completed'
   },
   {
+    id: 6,
     date: '2021-10-06',
     note: 'Note 6',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'approved'
+    services: ['Transmission', 'Exhaust', 'Electrical'],
+    status: 'canceled'
   },
   {
+    id: 7,
     date: '2021-10-07',
     note: 'Note 7',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
+    services: ['Suspension', 'Air Conditioning', 'Engine'],
     status: 'pending'
   },
   {
+    id: 8,
     date: '2021-10-08',
     note: 'Note 8',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'approved'
+    services: ['Oil Change', 'Tyre Change', 'Steering'],
+    status: 'completed'
   },
   {
+    id: 9,
     date: '2021-10-09',
     note: 'Note 9',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'pending'
+    services: ['Cooling', 'Wiper', 'Battery'],
+    status: 'canceled'
   },
   {
+    id: 10,
     date: '2021-10-10',
     note: 'Note 10',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'approved'
-  },
-  {
-    date: '2021-10-11',
-    note: 'Note 11',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
+    services: ['Exhaust', 'Transmission', 'Electrical'],
     status: 'pending'
   },
   {
+    id: 11,
+    date: '2021-10-11',
+    note: 'Note 11',
+    services: ['Tyre Change', 'Steering', 'Oil Change'],
+    status: 'approved'
+  },
+  {
+    id: 12,
     date: '2021-10-12',
     note: 'Note 12',
-    Services: ['Service 1', 'Service 2', 'Service 3'],
-    status: 'approved'
+    services: ['Cooling', 'Wiper', 'Battery'],
+    status: 'completed'
   }
 ];
