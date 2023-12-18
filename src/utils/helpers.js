@@ -14,6 +14,10 @@ export const statusColor = (status) => {
       return 'bg-warning';
     case 'approved':
       return 'bg-primary';
+    case 'canceled':
+      return 'bg-destructive';
+    case 'completed':
+      return 'bg-blue-500';
     default:
       return 'bg-destructive';
   }
