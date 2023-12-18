@@ -104,7 +104,7 @@ const Dashboard = () => {
     <div className="space-y-4">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {dashboardCardContent.map((card) => (
-          <Card className={card.bg}>
+          <Card className={card.bg} key={card.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 {card.title}
@@ -139,7 +139,7 @@ const Dashboard = () => {
           </div>
           <CardContent>
             {recentActivityData.map((activity) => (
-              <div className="space-y-8 py-2">
+              <div className="space-y-8 py-2" key={activity.id}>
                 <div className="flex items-center">
                   <Avatar className="h-9 w-9">
                     <AvatarImage src="/avatars/01.png" alt="Avatar" />
