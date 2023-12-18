@@ -62,32 +62,32 @@ const Profile = () => {
     <div className="flex flex-col">
       <h3 className="mb-4 font-bold text-gray-700">Profile</h3>
       <div className="grid gap-4 md:grid-cols-5">
-        <div className="col-span-2 rounded-[14px] p-4 bg-blue-500 md:h-[600px] ">
+        <div className="col-span-2 rounded-[14px] p-4 bg-green-500 md:h-[600px] ">
           <div className="grid grid-cols-3 pt-4 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-blue-300">Make</p>
+              <p className="text-muted-foreground text-green-300">Make</p>
               <p className="text-xl text-white mt-1">Toyota</p>
             </div>
             <Separator
               orientation="vertical"
-              className="bg-blue-400 h-[45px]  w-[2px] my-4 mx-[40px]"
+              className="bg-green-400 h-[45px]  w-[2px] my-4 mx-[40px]"
             />
             <div>
-              <p className="text-muted-foreground text-blue-300">Model</p>
+              <p className="text-muted-foreground text-green-300">Model</p>
               <p className="text-xl text-white mt-1">Corolla</p>
             </div>
           </div>
           <div className="grid grid-cols-3 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-blue-300">Year</p>
+              <p className="text-muted-foreground text-green-300">Year</p>
               <p className="text-xl text-white mt-1">2016</p>
             </div>
             <Separator
               orientation="vertical"
-              className="bg-blue-400 h-[45px]  w-[2px] my-4  mx-[40px]"
+              className="bg-green-400 h-[45px]  w-[2px] my-4  mx-[40px]"
             />
             <div className="">
-              <p className="text-muted-foreground text-blue-300">Reg. No.</p>
+              <p className="text-muted-foreground text-green-300">Reg. No.</p>
               <p className="text-xl text-white mt-1">LND123XA</p>
             </div>
           </div>

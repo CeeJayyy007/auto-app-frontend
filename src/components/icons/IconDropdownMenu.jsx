@@ -19,6 +19,7 @@ const IconDropdownMenu = ({ label, children }) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Edit</DropdownMenuItem>
         {children}
+        <DropdownMenuSeparator />
         <DropdownMenuItem>Delete</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
