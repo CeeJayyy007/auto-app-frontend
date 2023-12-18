@@ -65,7 +65,7 @@ const Profile = () => {
         <div className="col-span-2 rounded-[14px] p-4 bg-green-500 md:h-[600px] ">
           <div className="grid grid-cols-3 pt-4 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-green-300">Make</p>
+              <p className="text-muted-foreground text-green-200">Make</p>
               <p className="text-xl text-white mt-1">Toyota</p>
             </div>
             <Separator
@@ -73,13 +73,13 @@ const Profile = () => {
               className="bg-green-400 h-[45px]  w-[2px] my-4 mx-[40px]"
             />
             <div>
-              <p className="text-muted-foreground text-green-300">Model</p>
+              <p className="text-muted-foreground text-green-200">Model</p>
               <p className="text-xl text-white mt-1">Corolla</p>
             </div>
           </div>
           <div className="grid grid-cols-3 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-green-300">Year</p>
+              <p className="text-muted-foreground text-green-200">Year</p>
               <p className="text-xl text-white mt-1">2016</p>
             </div>
             <Separator
@@ -87,7 +87,7 @@ const Profile = () => {
               className="bg-green-400 h-[45px]  w-[2px] my-4  mx-[40px]"
             />
             <div className="">
-              <p className="text-muted-foreground text-green-300">Reg. No.</p>
+              <p className="text-muted-foreground text-green-200">Reg. No.</p>
               <p className="text-xl text-white mt-1">LND123XA</p>
             </div>
           </div>
@@ -122,8 +122,10 @@ const Profile = () => {
               <div className="ml-4">
                 <p className="text-xl mt-1">{name}</p>
                 <p className="text-sm text-muted-foreground mt-0">{email}</p>
-                <p className="text-sm text-muted-foreground mt-0">{phone}</p>
-                <Badge className="text-sm text-white mt-1 rounded-full px-4 bg-primary">
+                <p className="text-sm text-muted-foreground mt-0 mb-2">
+                  {phone}
+                </p>
+                <Badge className="font-normal rounded-full bg-primary">
                   {role}
                 </Badge>
               </div>
