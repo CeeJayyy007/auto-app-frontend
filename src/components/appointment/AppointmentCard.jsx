@@ -16,6 +16,9 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import ProfileDropdownMenu from '../icons/IconDropdownMenu';
+import Button from '../button/IconButton';
+import getIcon from '../icons/getIcon';
 
 const appointmentData = [
   {
@@ -45,8 +48,13 @@ const AppointmentCard = () => {
   return (
     <Card className="col-span-4">
       <CardHeader className="pb-0">
-        <CardTitle>Appointments</CardTitle>
-        <CardDescription>Details and overview.</CardDescription>
+        <div className="flex flex-row justify-between">
+          <div>
+            <CardTitle className="text-gray-700">Appointments</CardTitle>
+            <CardDescription>Details and overview.</CardDescription>
+          </div>
+          <Button title="Add Appointment" className="w-[150px]" />
+        </div>
         <Separator />
       </CardHeader>
       <CardContent>

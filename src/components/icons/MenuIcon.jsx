@@ -1,5 +1,5 @@
 import IconButton from '../button/IconButton';
-import getIcon from '../icons/getIcon';
+import getIcon from './getIcon';
 
 const MenuIcon = ({ className }) => {
   return (
