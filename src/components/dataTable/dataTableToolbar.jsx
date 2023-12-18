@@ -1,14 +1,11 @@
-'use client';
-
 import { Cross2Icon } from '@radix-ui/react-icons';
-import { Table } from '@tanstack/react-table';
 
-import { Button } from '@/registry/new-york/ui/button';
-import { Input } from '@/registry/new-york/ui/input';
-import { DataTableViewOptions } from '@/app/examples/tasks/components/data-table-view-options';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { DataTableViewOptions } from './dataTableViewOptions';
 
-import { priorities, statuses } from '../data/data';
-import { DataTableFacetedFilter } from './data-table-faceted-filter';
+import { services, statuses } from '../appointment/data';
+import { DataTableFacetedFilter } from './dataTableFacetedFilter';
 
 export const DataTableToolbar = ({ table }) => {
   const isFiltered = table.getState().columnFilters.length > 0;
@@ -17,10 +14,10 @@ export const DataTableToolbar = ({ table }) => {
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter tasks..."
-          value={table.getColumn('title')?.getFilterValue() ?? ''}
+          placeholder="Filter appointments..."
+          value={table.getColumn('note')?.getFilterValue() ?? ''}
           onChange={(event) =>
-            table.getColumn('title')?.setFilterValue(event.target.value)
+            table.getColumn('note')?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -31,11 +28,12 @@ export const DataTableToolbar = ({ table }) => {
             options={statuses}
           />
         )}
-        {table.getColumn('priority') && (
+
+        {table.getColumn('services') && (
           <DataTableFacetedFilter
-            column={table.getColumn('priority')}
-            title="Priority"
-            options={priorities}
+            column={table.getColumn('services')}
+            title="Services"
+            options={services}
           />
         )}
         {isFiltered && (
