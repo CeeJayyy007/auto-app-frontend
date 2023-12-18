@@ -1,14 +1,10 @@
-'use client';
+import { Badge } from '@/components/ui/badge';
+import { Checkbox } from '@/components/ui/checkbox';
 
-import { ColumnDef } from '@tanstack/react-table';
-
-import { Badge } from '@/registry/new-york/ui/badge';
-import { Checkbox } from '@/registry/new-york/ui/checkbox';
-
-import { labels, priorities, statuses } from '../data/data';
-import { appointmentSchema } from '../data/schema';
-import { DataTableColumnHeader } from './data-table-column-header';
-import { DataTableRowActions } from './data-table-row-actions';
+import { services, statuses } from './data';
+import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
+import { DataTableRowActions } from '../dataTable/dataTableRowAction';
+import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 
 export const columns = [
   {
@@ -21,7 +17,7 @@ export const columns = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
-        className="translate-y-[2px]"
+        className="translate-y-[2px] border-gray-300 w-5 h-5 ml-2"
       />
     ),
     cell: ({ row }) => (
@@ -29,7 +25,7 @@ export const columns = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-        className="translate-y-[2px]"
+        className="translate-y-[2px] border-gray-300 w-5 h-5 ml-2"
       />
     ),
     enableSorting: false,
@@ -38,28 +34,64 @@ export const columns = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Task" />
+      <DataTableColumnHeader column={column} title="S/No." />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue('id')}</div>,
+    cell: ({ row }) => <div className="w-[50px]">{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'date',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Title" />
+      <DataTableColumnHeader column={column} title="Date" />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label);
-
       return (
         <div className="flex space-x-2">
-          {label && <Badge variant="outline">{label.label}</Badge>}
-          <span className="max-w-[500px] truncate font-medium">
-            {row.getValue('title')}
+          <span className="max-w-[100px] font-medium">
+            {row.getValue('date')}
           </span>
         </div>
       );
+    }
+  },
+  {
+    accessorKey: 'note',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Note" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span className="max-w-[400px] truncate font-medium">
+            {row.getValue('note')}
+          </span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'services',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Services" />
+    ),
+    cell: ({ row }) => {
+      const service = services.find((service) =>
+        row.getValue('services').includes(service.value)
+      );
+
+      if (!service) {
+        return null;
+      }
+
+      return (
+        <div className="flex items-center">
+          <span>{commaSeparatedArray(row.getValue('services'))}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.every((item) => row.getValue(id).includes(item));
     }
   },
   {
@@ -77,38 +109,16 @@ export const columns = [
       }
 
       return (
-        <div className="flex w-[100px] items-center">
-          {status.icon && (
-            <status.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{status.label}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    }
-  },
-  {
-    accessorKey: 'priority',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Priority" />
-    ),
-    cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue('priority')
-      );
-
-      if (!priority) {
-        return null;
-      }
-
-      return (
         <div className="flex items-center">
-          {priority.icon && (
-            <priority.icon className="mr-2 h-4 w-4 text-muted-foreground" />
-          )}
-          <span>{priority.label}</span>
+          <span>
+            <Badge
+              className={`font-normal rounded-full ${statusColor(
+                status.value
+              )}`}
+            >
+              {status.label}
+            </Badge>
+          </span>
         </div>
       );
     },
@@ -116,6 +126,7 @@ export const columns = [
       return value.includes(row.getValue(id));
     }
   },
+
   {
     id: 'actions',
     cell: ({ row }) => <DataTableRowActions row={row} />
