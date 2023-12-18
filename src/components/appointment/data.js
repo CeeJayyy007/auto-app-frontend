@@ -4,8 +4,8 @@ export const statuses = [
     label: 'Pending'
   },
   {
-    value: 'approved',
-    label: 'Approved'
+    value: 'in-progress',
+    label: 'In-Progress'
   },
   {
     value: 'canceled',
@@ -89,7 +89,7 @@ export const appointmentData = [
     date: '2021-10-02',
     note: 'Note 2',
     services: ['Cooling', 'Wiper', 'Battery'],
-    status: 'approved'
+    status: 'in-progress'
   },
   {
     id: 3,
@@ -152,7 +152,7 @@ export const appointmentData = [
     date: '2021-10-11',
     note: 'Note 11',
     services: ['Tyre Change', 'Steering', 'Oil Change'],
-    status: 'approved'
+    status: 'in-progress'
   },
   {
     id: 12,

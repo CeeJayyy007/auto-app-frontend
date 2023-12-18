@@ -85,7 +85,7 @@ export const columns = [
       }
 
       return (
-        <div className="flex items-center">
+        <div className="flex items-center max-w-[400px] truncate">
           <span>{commaSeparatedArray(row.getValue('services'))}</span>
         </div>
       );
