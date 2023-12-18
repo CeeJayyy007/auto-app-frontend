@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Authentication from './pages/Authentication';
 import Appointments from './pages/Appointments';
 import Activities from './pages/Activities';
+import Services from './pages/Services';
 
 const privateRoutes = () => {
   return [
@@ -15,6 +16,7 @@ const privateRoutes = () => {
         { path: 'profile', element: <Profile /> },
         { path: 'appointments', element: <Appointments /> },
         { path: 'activities', element: <Activities /> },
+        { path: 'services', element: <Services /> },
         { path: '*', element: <Navigate to="/" replace /> }
       ]
     }
