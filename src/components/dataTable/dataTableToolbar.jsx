@@ -6,6 +6,7 @@ import { DataTableViewOptions } from './dataTableViewOptions';
 
 import { services, statuses } from '../appointment/data';
 import { DataTableFacetedFilter } from './dataTableFacetedFilter';
+import { inventories } from '../activities/data';
 
 export const DataTableToolbar = ({ table }) => {
   const isFiltered = table.getState().columnFilters.length > 0;
@@ -36,6 +37,15 @@ export const DataTableToolbar = ({ table }) => {
             options={services}
           />
         )}
+
+        {table.getColumn('inventory') && (
+          <DataTableFacetedFilter
+            column={table.getColumn('inventory')}
+            title="Items"
+            options={inventories}
+          />
+        )}
+
         {isFiltered && (
           <Button
             variant="ghost"

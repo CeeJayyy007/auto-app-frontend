@@ -12,12 +12,12 @@ export const statusColor = (status) => {
   switch (status) {
     case 'pending':
       return 'bg-warning';
-    case 'approved':
-      return 'bg-primary';
+    case 'in-progress':
+      return 'bg-blue-500';
     case 'canceled':
       return 'bg-destructive';
     case 'completed':
-      return 'bg-blue-500';
+      return 'bg-primary';
     default:
       return 'bg-destructive';
   }
