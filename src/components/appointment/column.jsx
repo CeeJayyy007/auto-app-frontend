@@ -48,9 +48,7 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[100px] font-medium">
-            {row.getValue('date')}
-          </span>
+          <span className="max-w-[100px]">{row.getValue('date')}</span>
         </div>
       );
     }

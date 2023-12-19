@@ -1,10 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { services, inventories, statuses } from './data';
+import { inventories, statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { DataTableRowActions } from '../dataTable/dataTableRowAction';
-import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import {
+  commaSeparatedArray,
+  inventoryStatusColor,
+  statusColor
+} from '@/utils/helpers';
 
 export const columns = [
   {
@@ -41,78 +45,13 @@ export const columns = [
     enableHiding: false
   },
   {
-    accessorKey: 'startDate',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Start Date" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[100px]">{row.getValue('startDate')}</span>
-        </div>
-      );
-    }
-  },
-  {
-    accessorKey: 'endDate',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="End Date" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[100px]">{row.getValue('endDate')}</span>
-        </div>
-      );
-    }
-  },
-  {
-    accessorKey: 'note',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Note" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span className="max-w-[400px] truncate font-medium">
-            {row.getValue('note')}
-          </span>
-        </div>
-      );
-    }
-  },
-  {
-    accessorKey: 'services',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Services" />
-    ),
-    cell: ({ row }) => {
-      const service = services.find((service) =>
-        row.getValue('services').includes(service.value)
-      );
-
-      if (!service) {
-        return null;
-      }
-
-      return (
-        <div className="flex items-center max-w-[400px] truncate">
-          <span>{commaSeparatedArray(row.getValue('services'))}</span>
-        </div>
-      );
-    },
-    filterFn: (row, id, value) => {
-      return value.every((item) => row.getValue(id).includes(item));
-    }
-  },
-  {
-    accessorKey: 'inventory',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Items" />
+      <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
       const inventory = inventories.find((inventory) =>
-        row.getValue('inventory').includes(inventory.value)
+        row.getValue('name').includes(inventory.value)
       );
 
       if (!inventory) {
@@ -121,12 +60,64 @@ export const columns = [
 
       return (
         <div className="flex items-center max-w-[400px] truncate">
-          <span>{commaSeparatedArray(row.getValue('inventory'))}</span>
+          <span>{inventory.label}</span>
         </div>
       );
     },
     filterFn: (row, id, value) => {
-      return value.every((item) => row.getValue(id).includes(item));
+      return value.includes(row.getValue(id));
+    }
+  },
+  {
+    accessorKey: 'quantity',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Quantity" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span>{row.getValue('quantity')}</span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'lowLevel',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Low Level" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span>{row.getValue('lowLevel')}</span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'initialPrice',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Initial Price" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span>{row.getValue('initialPrice')}</span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'finalPrice',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Final Price" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span>{row.getValue('finalPrice')}</span>
+        </div>
+      );
     }
   },
   {
@@ -147,7 +138,7 @@ export const columns = [
         <div className="flex items-center">
           <span>
             <Badge
-              className={`font-normal rounded-full ${statusColor(
+              className={`font-normal rounded-full ${inventoryStatusColor(
                 status.value
               )}`}
             >
