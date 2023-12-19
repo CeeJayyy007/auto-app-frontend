@@ -50,22 +50,11 @@ export const columns = [
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => {
-      const inventory = inventories.find((inventory) =>
-        row.getValue('name').includes(inventory.value)
-      );
-
-      if (!inventory) {
-        return null;
-      }
-
       return (
-        <div className="flex items-center max-w-[400px] truncate">
-          <span>{inventory.label}</span>
+        <div className="flex space-x-2">
+          <span>{row.getValue('name')}</span>
         </div>
       );
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
     }
   },
   {

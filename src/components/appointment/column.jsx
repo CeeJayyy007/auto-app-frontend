@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { services, statuses } from './data';
+import { services, statuses, vehicles } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { DataTableRowActions } from '../dataTable/dataTableRowAction';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
@@ -36,7 +36,7 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="S/No." />
     ),
-    cell: ({ row }) => <div className="w-[50px]">{row.getValue('id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false
   },
@@ -51,6 +51,30 @@ export const columns = [
           <span className="max-w-[100px]">{row.getValue('date')}</span>
         </div>
       );
+    }
+  },
+  {
+    accessorKey: 'vehicle',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Vehicle" />
+    ),
+    cell: ({ row }) => {
+      const vehicle = vehicles.find((vehicle) =>
+        row.getValue('vehicle').includes(vehicle.value)
+      );
+
+      if (!vehicle) {
+        return null;
+      }
+
+      return (
+        <div className="flex items-center">
+          <span>{vehicle.label}</span>
+        </div>
+      );
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id));
     }
   },
   {
