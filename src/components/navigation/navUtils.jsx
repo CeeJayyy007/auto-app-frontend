@@ -33,12 +33,18 @@ export const sidebarContent = [
   },
   {
     id: 6,
+    title: 'Inventory',
+    icon: getIcon({ name: 'cart', className: 'mr-2' }),
+    path: '/inventory'
+  },
+  {
+    id: 7,
     title: 'Payments',
     icon: getIcon({ name: 'payments', className: 'mr-2' }),
     path: '/payments'
   },
   {
-    id: 7,
+    id: 8,
     title: 'Reports',
     icon: getIcon({ name: 'reports', className: 'mr-2' }),
     path: '/reports'
