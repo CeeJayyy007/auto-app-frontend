@@ -22,7 +22,14 @@ import {
 import { DataTablePagination } from './dataTablePagination';
 import { DataTableToolbar } from './dataTableToolbar';
 
-export const DataTable = ({ columns, data }) => {
+export const DataTable = ({
+  columns,
+  data,
+  props,
+  services,
+  placeholder,
+  filterColumn
+}) => {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState({});
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -52,7 +59,13 @@ export const DataTable = ({ columns, data }) => {
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar
+        table={table}
+        props={props}
+        services={services}
+        placeholder={placeholder}
+        filterColumn={filterColumn}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>

@@ -2,6 +2,7 @@ import { columns } from '@/components/appointment/column';
 import { appointmentData } from '@/components/appointment/data';
 import { DataTable } from '@/components/dataTable/dataTable';
 import { Button } from '@/components/ui/button';
+import { services, statuses, vehicles } from '../components/appointment/data';
 
 const Appointments = () => {
   return (
@@ -11,7 +12,13 @@ const Appointments = () => {
         <Button>Add Appointment</Button>
       </div>
       <div className="rounded-[14px] bg-white p-8">
-        <DataTable data={appointmentData} columns={columns} />
+        <DataTable
+          data={appointmentData}
+          columns={columns}
+          props={{ services, statuses, vehicles }}
+          placeholder="Search appointments..."
+          filterColumn="note"
+        />
       </div>
     </div>
   );

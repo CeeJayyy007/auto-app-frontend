@@ -3,26 +3,29 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DataTableViewOptions } from './dataTableViewOptions';
-
-import { services, statuses } from '../appointment/data';
 import { DataTableFacetedFilter } from './dataTableFacetedFilter';
-import { inventories } from '../activities/data';
 
-export const DataTableToolbar = ({ table }) => {
+export const DataTableToolbar = ({
+  table,
+  props,
+  placeholder,
+  filterColumn
+}) => {
   const isFiltered = table.getState().columnFilters.length > 0;
+  const { services, statuses, inventories, vehicles } = props;
 
   return (
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter..."
-          value={table.getColumn('note')?.getFilterValue() ?? ''}
+          placeholder={placeholder}
+          value={table.getColumn(filterColumn)?.getFilterValue() ?? ''}
           onChange={(event) =>
-            table.getColumn('note')?.setFilterValue(event.target.value)
+            table.getColumn(filterColumn)?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {table.getColumn('status') && (
+        {statuses && (
           <DataTableFacetedFilter
             column={table.getColumn('status')}
             title="Status"
@@ -30,7 +33,7 @@ export const DataTableToolbar = ({ table }) => {
           />
         )}
 
-        {table.getColumn('services') && (
+        {services && (
           <DataTableFacetedFilter
             column={table.getColumn('services')}
             title="Services"
@@ -38,11 +41,19 @@ export const DataTableToolbar = ({ table }) => {
           />
         )}
 
-        {table.getColumn('inventory') && (
+        {inventories && (
           <DataTableFacetedFilter
             column={table.getColumn('inventory')}
             title="Items"
             options={inventories}
+          />
+        )}
+
+        {vehicles && (
+          <DataTableFacetedFilter
+            column={table.getColumn('vehicle')}
+            title="Vehicles"
+            options={vehicles}
           />
         )}
 
