@@ -2,10 +2,10 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { DataTableViewOptions } from './dataTableViewOptions';
+import { DataTableViewOptions } from '../dataTable/dataTableViewOptions';
 
-import { services, statuses } from '../appointment/data';
-import { DataTableFacetedFilter } from './dataTableFacetedFilter';
+import { statuses } from './data';
+import { DataTableFacetedFilter } from '../dataTable/datatableFacetedFilter';
 import { inventories } from '../activities/data';
 
 export const DataTableToolbar = ({ table }) => {
@@ -15,10 +15,10 @@ export const DataTableToolbar = ({ table }) => {
     <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
         <Input
-          placeholder="Filter..."
-          value={table.getColumn('note')?.getFilterValue() ?? ''}
+          placeholder="Filter inventory..."
+          value={table.getColumn('name')?.getFilterValue() ?? ''}
           onChange={(event) =>
-            table.getColumn('note')?.setFilterValue(event.target.value)
+            table.getColumn('name')?.setFilterValue(event.target.value)
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
@@ -30,18 +30,10 @@ export const DataTableToolbar = ({ table }) => {
           />
         )}
 
-        {table.getColumn('services') && (
+        {table.getColumn('name') && (
           <DataTableFacetedFilter
-            column={table.getColumn('services')}
-            title="Services"
-            options={services}
-          />
-        )}
-
-        {table.getColumn('inventory') && (
-          <DataTableFacetedFilter
-            column={table.getColumn('inventory')}
-            title="Items"
+            column={table.getColumn('name')}
+            title="Name"
             options={inventories}
           />
         )}
