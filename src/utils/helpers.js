@@ -22,3 +22,16 @@ export const statusColor = (status) => {
       return 'bg-destructive';
   }
 };
+
+export const inventoryStatusColor = (status) => {
+  switch (status) {
+    case 'out of stock':
+      return 'bg-destructive';
+    case 'low stock':
+      return 'bg-warning';
+    case 'in stock':
+      return 'bg-primary';
+    default:
+      return 'bg-destructive';
+  }
+};
