@@ -7,6 +7,7 @@ import Appointments from './pages/Appointments';
 import Activities from './pages/Activities';
 import Services from './pages/Services';
 import Inventory from './pages/Inventory';
+import MaintenaceRecord from './pages/MaintenanceRecord';
 
 const privateRoutes = () => {
   return [
@@ -18,6 +19,7 @@ const privateRoutes = () => {
         { path: 'appointments', element: <Appointments /> },
         { path: 'activities', element: <Activities /> },
         { path: 'services', element: <Services /> },
+        { path: 'maintenance-record/:id', element: <MaintenaceRecord /> },
         { path: 'inventory', element: <Inventory /> },
         { path: 'reports', element: <div>Reports</div> },
         { path: 'payments', element: <div>Payments</div> },
