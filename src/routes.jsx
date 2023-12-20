@@ -8,6 +8,7 @@ import Activities from './pages/Activities';
 import Services from './pages/Services';
 import Inventory from './pages/Inventory';
 import MaintenaceRecord from './pages/MaintenanceRecord';
+import Analytics from './pages/Analytics';
 
 const privateRoutes = () => {
   return [
@@ -21,8 +22,9 @@ const privateRoutes = () => {
         { path: 'services', element: <Services /> },
         { path: 'maintenance-record/:id', element: <MaintenaceRecord /> },
         { path: 'inventory', element: <Inventory /> },
-        { path: 'reports', element: <div>Reports</div> },
         { path: 'payments', element: <div>Payments</div> },
+        { path: 'reports', element: <div>Reports</div> },
+        { path: 'analytics', element: <Analytics /> },
         { path: 'settings', element: <div>Settings</div> },
         { path: '*', element: <Navigate to="/" replace /> }
       ]
