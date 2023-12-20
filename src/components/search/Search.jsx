@@ -4,7 +4,7 @@ import { Icons } from '../icons/icons';
 const Search = () => {
   return (
     <div className="flex items-center relative">
-      <Icons.search className="absolute left-2 top-1/2 transform -translate-y-1/2" />
+      <Icons.search className="absolute left-2 top-1/2 transform -translate-y-1/2 fill-gray-400" />
       <Input
         type="search"
         placeholder="Search..."

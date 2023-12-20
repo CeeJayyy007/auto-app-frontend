@@ -19,7 +19,7 @@ const dashboardCardContent = [
     id: 1,
     title: 'Total Spend',
     icon: getIcon({ name: 'cart' }),
-    content: 'N 1000',
+    content: '₦ 1000',
     text: 'Last 30 days',
     bg: 'bg-green-50'
   },

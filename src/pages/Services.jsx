@@ -15,7 +15,7 @@ const serviceData = [
   {
     id: 1,
     name: 'Oil change',
-    price: 'N 1000',
+    price: '₦ 1000',
     duration: '30 mins',
     description: 'Oil change description',
     image: '/src/assets/oil-change.jpeg'
@@ -23,7 +23,7 @@ const serviceData = [
   {
     id: 2,
     name: 'Car wash',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car wash description',
     image: '/src/assets/car-wash.jpeg'
@@ -31,7 +31,7 @@ const serviceData = [
   {
     id: 3,
     name: 'Car wax',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car wax description',
     image: '/src/assets/car-wax.jpeg'
@@ -39,7 +39,7 @@ const serviceData = [
   {
     id: 4,
     name: 'Car polish',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car polish description',
     image: '/src/assets/car-polish.jpeg'
@@ -47,7 +47,7 @@ const serviceData = [
   {
     id: 5,
     name: 'Car detailing',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car detailing description',
     image: '/src/assets/car-detailing.jpeg'
@@ -55,7 +55,7 @@ const serviceData = [
   {
     id: 6,
     name: 'Car painting',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car painting description',
     image: '/src/assets/car-painting.jpeg'
@@ -63,7 +63,7 @@ const serviceData = [
   {
     id: 7,
     name: 'Car servicing',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car servicing description',
     image: '/src/assets/car-servicing.jpeg'
@@ -71,7 +71,7 @@ const serviceData = [
   {
     id: 8,
     name: 'Car repairs',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car repairs description',
     image: '/src/assets/car-repairs.jpeg'
@@ -79,7 +79,7 @@ const serviceData = [
   {
     id: 9,
     name: 'Car maintenance',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car maintenance description',
     image: '/src/assets/car-maintenance.jpeg'
@@ -87,7 +87,7 @@ const serviceData = [
   {
     id: 10,
     name: 'Car inspection',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car inspection description',
     image: '/src/assets/car-inspection.jpeg'
@@ -95,7 +95,7 @@ const serviceData = [
   {
     id: 11,
     name: 'Car diagnostics',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car diagnostics description',
     image: '/src/assets/car-diagnostics.jpeg'
@@ -103,7 +103,7 @@ const serviceData = [
   {
     id: 12,
     name: 'Car alignment',
-    price: 'N 500',
+    price: '₦ 500',
     duration: '30 mins',
     description: 'Car alignment description',
     image: '/src/assets/car-alignment.jpeg'
