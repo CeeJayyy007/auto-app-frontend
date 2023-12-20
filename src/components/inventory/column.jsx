@@ -123,7 +123,7 @@ export const columns = [
         <div className="flex items-center">
           <span>
             <Badge
-              className={`font-normal rounded-full ${inventoryStatusColor(
+              className={`w-[90px] flex justify-center px-1 font-normal rounded-full ${inventoryStatusColor(
                 status.value
               )}`}
             >

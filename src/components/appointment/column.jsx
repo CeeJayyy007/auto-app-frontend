@@ -3,8 +3,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { services, statuses, vehicles } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
-import { DataTableRowActions } from '../dataTable/dataTableRowAction';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import { AppointmentsDataTableRowActions } from './AppointmentsDataTableRowActions';
 
 export const columns = [
   {
@@ -134,7 +134,7 @@ export const columns = [
         <div className="flex items-center">
           <span>
             <Badge
-              className={`font-normal rounded-full ${statusColor(
+              className={`w-[90px] flex justify-center px-1 font-normal rounded-full ${statusColor(
                 status.value
               )}`}
             >
@@ -151,6 +151,6 @@ export const columns = [
 
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />
+    cell: ({ row }) => <AppointmentsDataTableRowActions row={row} />
   }
 ];
