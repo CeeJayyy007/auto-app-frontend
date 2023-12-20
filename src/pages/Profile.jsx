@@ -143,7 +143,7 @@ const Profile = () => {
               </div>
               <IconDropdownMenu label="Vehicle menu" />
             </div>
-            <ScrollArea className="max-w-[600px]">
+            <ScrollArea className="max-w-[600px] overflow-x-auto">
               <RadioGroup
                 defaultValue={vehicleData[0].registrationNumber}
                 className="flex flex-row justify-center space-x-4 mt-4"

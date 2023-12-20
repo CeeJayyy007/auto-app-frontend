@@ -16,7 +16,7 @@ export const sidebarContent = [
   {
     id: 3,
     title: 'Appointments',
-    icon: getIcon({ name: 'appointments', className: 'mr-2' }),
+    icon: getIcon({ name: 'appointments', className: 'mr-2 ' }),
     path: '/appointments'
   },
   {
@@ -48,6 +48,12 @@ export const sidebarContent = [
     title: 'Reports',
     icon: getIcon({ name: 'reports', className: 'mr-2' }),
     path: '/reports'
+  },
+  {
+    id: 9,
+    title: 'Analytics',
+    icon: getIcon({ name: 'chart', className: 'mr-2' }),
+    path: '/analytics'
   }
 ];
 

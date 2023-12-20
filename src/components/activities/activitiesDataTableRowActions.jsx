@@ -13,6 +13,12 @@ import { useNavigate } from 'react-router-dom';
 export const ActivitiesDataTableRowActions = ({ row }) => {
   const navigate = useNavigate();
 
+  const { id } = row.original;
+
+  const handleView = () => {
+    navigate(`/maintenance-record/${id}`);
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -25,9 +31,7 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <DropdownMenuItem onClick={() => navigate('/maintenance-record/1')}>
-          View
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
         <DropdownMenuItem>Edit</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Delete</DropdownMenuItem>

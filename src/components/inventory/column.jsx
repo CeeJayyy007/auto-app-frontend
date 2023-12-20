@@ -86,7 +86,7 @@ export const columns = [
   {
     accessorKey: 'initialPrice',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Initial Price" />
+      <DataTableColumnHeader column={column} title="Initial Price (₦)" />
     ),
     cell: ({ row }) => {
       return (
@@ -99,7 +99,7 @@ export const columns = [
   {
     accessorKey: 'finalPrice',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Final Price" />
+      <DataTableColumnHeader column={column} title="Final Price (₦)" />
     ),
     cell: ({ row }) => {
       return (
