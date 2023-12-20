@@ -1,14 +1,10 @@
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
 
-import { inventories, statuses } from './data';
+import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { DataTableRowActions } from '../dataTable/dataTableRowAction';
-import {
-  commaSeparatedArray,
-  inventoryStatusColor,
-  statusColor
-} from '@/utils/helpers';
+import { inventoryStatusColor } from '@/utils/helpers';
 
 export const columns = [
   {
