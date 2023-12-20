@@ -78,7 +78,7 @@ const AppointmentCard = () => {
                 <TableCell>
                   {
                     <Badge
-                      className={`font-normal rounded-full ${statusColor(
+                      className={`w-[90px] flex justify-center px-1 font-normal rounded-full ${statusColor(
                         appointment.status
                       )}`}
                     >
