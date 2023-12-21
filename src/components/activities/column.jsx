@@ -4,7 +4,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { services, inventories, statuses, vehicles } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
-import { ActivitiesDataTableRowActions } from './activitiesDataTableRowActions';
+import { ActivitiesDataTableRowActions } from './ActivitiesDataTableRowActions';
+import ColouredBadge from '../badge/ColouredBadge';
 
 export const columns = [
   {
@@ -170,13 +171,7 @@ export const columns = [
       return (
         <div className="flex items-center">
           <span>
-            <Badge
-              className={`min-w-[80px] font-normal rounded-full ${statusColor(
-                status.value
-              )}`}
-            >
-              {status.label}
-            </Badge>
+            <ColouredBadge status={status} colorFn={statusColor} />
           </span>
         </div>
       );

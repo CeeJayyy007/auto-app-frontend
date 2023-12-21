@@ -17,7 +17,6 @@ import {
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import ItemCard from './ItemCard';
-import { last } from 'lodash';
 
 const RecordCombobox = ({ data, name }) => {
   const [open, setOpen] = useState(false);
@@ -90,7 +89,7 @@ const RecordCombobox = ({ data, name }) => {
         {Object.keys(selected).length > 0 ? (
           <ScrollArea className=" max-h-[400px]">
             {Object.entries(selected).map(([key, value]) => (
-              <ItemCard key={key} name={value} className="" />
+              <ItemCard key={key} name={value} />
             ))}
             <ScrollBar orientation="vertical" />
           </ScrollArea>

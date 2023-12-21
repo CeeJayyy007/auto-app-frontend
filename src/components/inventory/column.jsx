@@ -5,6 +5,7 @@ import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { DataTableRowActions } from '../dataTable/dataTableRowAction';
 import { inventoryStatusColor } from '@/utils/helpers';
+import ColouredBadge from '../badge/ColouredBadge';
 
 export const columns = [
   {
@@ -122,13 +123,7 @@ export const columns = [
       return (
         <div className="flex items-center">
           <span>
-            <Badge
-              className={`font-normal rounded-full ${inventoryStatusColor(
-                status.value
-              )}`}
-            >
-              {status.label}
-            </Badge>
+            <ColouredBadge status={status} colorFn={inventoryStatusColor} />
           </span>
         </div>
       );

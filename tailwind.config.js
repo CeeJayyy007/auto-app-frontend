@@ -16,9 +16,9 @@ module.exports = {
       }
     },
     fontFamily: {
-      sans: ['Inter', 'sans-serif'],
-      mono: ['JetBrains Mono', 'monospace'],
-      serif: ['Merriweather', 'serif']
+      sans: ['nunito', 'sans-serif'],
+      mono: ['nunito', 'monospace'],
+      serif: ['nunito', 'serif']
     },
     extend: {
       colors: {
