@@ -17,7 +17,6 @@ import {
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 import ItemCard from './ItemCard';
-import { last } from 'lodash';
 
 const RecordCombobox = ({ data, name }) => {
   const [open, setOpen] = useState(false);

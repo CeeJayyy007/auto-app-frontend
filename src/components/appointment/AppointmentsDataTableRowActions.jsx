@@ -8,10 +8,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import ViewAppointmentSheet from './ViewAppointmentSheet';
+import EditAppointment from './EditAppointment';
 
 export const AppointmentsDataTableRowActions = ({ row }) => {
   const { id } = row.original;
+
+  const vehicleData = [
+    {
+      make: 'Toyota',
+      model: 'Camry',
+      year: '2021',
+      registrationNumber: 'LND123XA'
+    },
+    {
+      make: 'Mercedes',
+      model: 'Benz',
+      year: '2021',
+      registrationNumber: 'LND123XX'
+    }
+  ];
 
   return (
     <DropdownMenu>
@@ -25,8 +40,9 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
-        <ViewAppointmentSheet />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Create Request</DropdownMenuItem>
+        <EditAppointment data={vehicleData} />
+        <DropdownMenuItem>Cancel</DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Delete</DropdownMenuItem>
       </DropdownMenuContent>
