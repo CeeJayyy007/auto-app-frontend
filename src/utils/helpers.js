@@ -11,13 +11,13 @@ export const commaSeparatedArray = (array) => {
 export const statusColor = (status) => {
   switch (status) {
     case 'pending':
-      return 'bg-warning';
+      return 'bg-orange-100 text-orange-400 border-orange-400';
     case 'in-progress':
-      return 'bg-blue-500';
+      return 'bg-blue-100 text-blue-400 border-blue-400';
     case 'canceled':
-      return 'bg-destructive';
+      return 'bg-red-100 text-red-400 border-red-400';
     case 'completed':
-      return 'bg-primary';
+      return 'bg-green-100 text-green-400 border-green-400';
     default:
       return 'bg-destructive';
   }
@@ -26,11 +26,11 @@ export const statusColor = (status) => {
 export const inventoryStatusColor = (status) => {
   switch (status) {
     case 'out of stock':
-      return 'bg-destructive';
+      return 'bg-red-100 text-red-400 border-red-400';
     case 'low stock':
-      return 'bg-warning';
+      return 'bg-orange-100 text-orange-400 border-orange-400';
     case 'in stock':
-      return 'bg-primary';
+      return 'bg-green-100 text-green-400 border-green-400';
     default:
       return 'bg-destructive';
   }
