@@ -3,6 +3,13 @@ import getIcon from '@/components/icons/getIcon';
 import MaintenanceRecordTable from '@/components/maintenanceRecord/MaintenanceRecordTable';
 import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
 import RecordTotalTable from '@/components/maintenanceRecord/RecordTotalTable';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 const inventoryData = [
   {
@@ -93,10 +100,40 @@ const totalData = [
   }
 ];
 
+const statusData = [
+  {
+    value: 'in-progress',
+    label: 'In Progress'
+  },
+  {
+    value: 'ready',
+    label: 'Ready'
+  },
+  {
+    value: 'canceled',
+    label: 'Canceled'
+  }
+];
+
 const MaintenaceRecord = () => {
   return (
     <div className="">
-      <h3 className="mb-4 font-bold text-gray-700">Maintenance Record</h3>
+      <div className="flex flex-row justify-between">
+        <h3 className="mb-4 font-bold text-gray-700">Maintenance Record</h3>
+        <Select>
+          <SelectTrigger className="w-[180px] bg-white">
+            <SelectValue placeholder="Select status" />
+          </SelectTrigger>
+          <SelectContent>
+            {statusData.map((item) => (
+              <SelectItem key={item.value} value={item.value}>
+                {item.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="grid grid-cols-2 gap-4 w-full">
         <div className="col-span-1 flex flex-col space-y-4">
           <div className="bg-white rounded-[14px] p-4">

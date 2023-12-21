@@ -65,7 +65,7 @@ const Profile = () => {
         <div className="col-span-2 rounded-[14px] p-4 bg-green-500 md:h-[600px] ">
           <div className="grid grid-cols-3 pt-4 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-green-200">Make</p>
+              <p className="text-muted-foreground text-green-300">Make</p>
               <p className="text-xl text-white mt-1">Toyota</p>
             </div>
             <Separator
@@ -73,13 +73,13 @@ const Profile = () => {
               className="bg-green-400 h-[45px]  w-[2px] my-4 mx-[40px]"
             />
             <div>
-              <p className="text-muted-foreground text-green-200">Model</p>
+              <p className="text-muted-foreground text-green-300">Model</p>
               <p className="text-xl text-white mt-1">Corolla</p>
             </div>
           </div>
           <div className="grid grid-cols-3 mx-8">
             <div className="">
-              <p className="text-muted-foreground text-green-200">Year</p>
+              <p className="text-muted-foreground text-green-300">Year</p>
               <p className="text-xl text-white mt-1">2016</p>
             </div>
             <Separator
@@ -87,7 +87,7 @@ const Profile = () => {
               className="bg-green-400 h-[45px]  w-[2px] my-4  mx-[40px]"
             />
             <div className="">
-              <p className="text-muted-foreground text-green-200">Reg. No.</p>
+              <p className="text-muted-foreground text-green-300">Reg. No.</p>
               <p className="text-xl text-white mt-1">LND123XA</p>
             </div>
           </div>
@@ -101,7 +101,7 @@ const Profile = () => {
           />
         </div>
         <div className="grid col-span-3 rounded-[14px] gap-y-4">
-          <div className="col-span-3 rounded-[14px] bg-white py-4">
+          <div className="col-span-3 rounded-[14px] bg-white py-4 pr-4">
             <div className="flex flex-row justify-between items-start">
               <h3 className="text-xl font-semibold mx-4 text-gray-700">
                 User Profile
