@@ -136,7 +136,7 @@ const MaintenaceRecord = () => {
         </div>
         <div className="col-span-1 bg-white rounded-[14px] p-4">
           <h3 className="text-[16px] font-bold pb-0">
-            Select Servics and Items
+            Select Services and Items
           </h3>
           <p className="text-xs text-muted-foreground mb-4 mt-0">
             Pick the services and items to be used for the mantenance activity

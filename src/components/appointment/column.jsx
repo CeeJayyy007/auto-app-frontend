@@ -5,6 +5,7 @@ import { services, statuses, vehicles } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 import { AppointmentsDataTableRowActions } from './AppointmentsDataTableRowActions';
+import ColouredBadge from '../badge/ColouredBadge';
 
 export const columns = [
   {
@@ -133,13 +134,7 @@ export const columns = [
       return (
         <div className="flex items-center">
           <span>
-            <Badge
-              className={`w-[90px] flex justify-center px-1 font-normal rounded-full ${statusColor(
-                status.value
-              )}`}
-            >
-              {status.label}
-            </Badge>
+            <ColouredBadge status={status} colorFn={statusColor} />
           </span>
         </div>
       );

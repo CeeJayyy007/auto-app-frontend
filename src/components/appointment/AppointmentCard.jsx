@@ -17,6 +17,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 import { Button } from '@/components/ui/button';
+import ColouredBadge from '../badge/ColouredBadge';
 
 const appointmentData = [
   {
@@ -24,21 +25,21 @@ const appointmentData = [
     date: '15/12/2023',
     note: 'Urgent fix',
     services: ['oil change', 'tyre change'],
-    status: 'completed'
+    status: { value: 'completed', label: 'Completed' }
   },
   {
     id: 2,
     date: '12/12/2023',
     note: 'Change oil',
     services: ['oil change', 'tyre change'],
-    status: 'pending'
+    status: { value: 'pending', label: 'Pending' }
   },
   {
     id: 3,
     date: '11/12/2023',
     note: 'Fix the issues',
     services: ['steering fix', 'tyre change'],
-    status: 'approved'
+    status: { value: 'canceled', label: 'Canceled' }
   }
 ];
 
@@ -77,13 +78,10 @@ const AppointmentCard = () => {
                 </TableCell>
                 <TableCell>
                   {
-                    <Badge
-                      className={`w-[90px] flex justify-center px-1 font-normal rounded-full ${statusColor(
-                        appointment.status
-                      )}`}
-                    >
-                      {appointment.status}
-                    </Badge>
+                    <ColouredBadge
+                      status={appointment.status}
+                      colorFn={statusColor}
+                    />
                   }
                 </TableCell>
               </TableRow>

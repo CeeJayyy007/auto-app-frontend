@@ -38,7 +38,7 @@ const userData = {
   username: 'johndoe001',
   email: 'johnjackson@mail.com',
   phone: '0712345678',
-  role: 'user'
+  role: 'User'
 };
 
 const userStatsData = {
@@ -101,7 +101,7 @@ const Profile = () => {
           />
         </div>
         <div className="grid col-span-3 rounded-[14px] gap-y-4">
-          <div className="col-span-3 rounded-[14px] bg-white p-4">
+          <div className="col-span-3 rounded-[14px] bg-white py-4">
             <div className="flex flex-row justify-between items-start">
               <h3 className="text-xl font-semibold mx-4 text-gray-700">
                 User Profile
@@ -125,7 +125,7 @@ const Profile = () => {
                 <p className="text-sm text-muted-foreground mt-0 mb-2">
                   {phone}
                 </p>
-                <Badge className="font-normal rounded-full bg-primary">
+                <Badge className="w-[80px] flex justify-center px-1 font-normal rounded-full bg-green-100 text-green-400 border-green-400">
                   {role}
                 </Badge>
               </div>
