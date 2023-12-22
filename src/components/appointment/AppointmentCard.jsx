@@ -52,7 +52,7 @@ const AppointmentCard = () => {
             <CardTitle className="text-gray-700">Appointments</CardTitle>
             <CardDescription>Details and overview.</CardDescription>
           </div>
-          <Button>Add Appointment</Button>
+          <Button>View All</Button>
         </div>
         <Separator />
       </CardHeader>
