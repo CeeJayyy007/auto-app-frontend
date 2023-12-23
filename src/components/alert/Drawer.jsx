@@ -9,8 +9,16 @@ import {
   DrawerFooter
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
+import { Separator } from '@radix-ui/react-separator';
+import { SelectSeparator } from '../ui/select';
 
-const DrawerComponent = ({ triggerLabel, title, description, actionLabel }) => {
+const DrawerComponent = ({
+  triggerLabel,
+  title,
+  description,
+  actionLabel,
+  body
+}) => {
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -24,11 +32,15 @@ const DrawerComponent = ({ triggerLabel, title, description, actionLabel }) => {
       </DrawerTrigger>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
+          <DrawerHeader className="pb-0 pt-4">
             <DrawerTitle>{title}</DrawerTitle>
-            <DrawerDescription>{description}</DrawerDescription>
+            <DrawerDescription className="mt-0">
+              {description}
+            </DrawerDescription>
           </DrawerHeader>
-          <DrawerFooter className="mb-8">
+          <SelectSeparator />
+          {body}
+          <DrawerFooter className="mb-8 pt-0">
             <DrawerClose asChild>
               <Button variant="outline">{actionLabel}</Button>
             </DrawerClose>

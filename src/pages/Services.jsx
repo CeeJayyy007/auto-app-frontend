@@ -135,13 +135,35 @@ const Services = () => {
                 <IconDropdownMenu
                   className="m-0"
                   label={service.name}
-                  children={
+                  viewAction={
                     <DrawerComponent
                       actionLabel="Close"
                       triggerLabel="View"
-                      title={`View ${service.name} Service`}
-                      description={service.name}
+                      title={`Viewing ${service.name} Service`}
+                      description={service.description}
                       cancelLabel="Cancel"
+                      body={
+                        <div className="flex flex-col space-y-4 py-4">
+                          <h4 className="text-sm font-semibold mx-4">
+                            Name: {service.name}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Price: {service.price}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Duration: {service.duration}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Created By: Admin
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Updated By: Admin
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Updated on: 12/12/2023
+                          </h4>
+                        </div>
+                      }
                     />
                   }
                   deleteAction={

@@ -10,9 +10,21 @@ import {
 } from '@/components/ui/dropdown-menu';
 import AlertDialogComponent from '../alert/AlertDialog';
 import DrawerComponent from '../alert/Drawer';
+import ColouredBadge from '../badge/ColouredBadge';
+import { inventoryStatusColor } from '@/utils/helpers';
 
 export const InventoryDataTableRowActions = ({ row }) => {
-  const { id } = row.original;
+  console.log(row.original);
+  const {
+    id,
+    name,
+    quantity,
+    lowLevel,
+    initialPrice,
+    markUp,
+    finalPrice,
+    status
+  } = row.original;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -28,8 +40,33 @@ export const InventoryDataTableRowActions = ({ row }) => {
         <DrawerComponent
           actionLabel="Close"
           triggerLabel="View"
-          title="View Inventory Item"
-          description={id}
+          title={`Viewing ${name} inventory item details`}
+          body={
+            <div className="flex flex-col space-y-4 py-4">
+              <h4 className="text-sm font-semibold mx-4">Name: {name}</h4>
+              <h4 className="text-sm font-semibold mx-4">
+                Quantity: {quantity}
+              </h4>
+              <div className="flex flex-row flex-between items-center">
+                <h4 className="text-sm font-semibold mx-4">
+                  Low Level: {lowLevel}
+                </h4>
+                <ColouredBadge status={status} colorFn={inventoryStatusColor} />
+              </div>
+              <h4 className="text-sm font-semibold mx-4">
+                Initial Price (₦): {initialPrice}
+              </h4>
+              <h4 className="text-sm font-semibold mx-4">Mark Up: {markUp}</h4>
+              <h4 className="text-sm font-semibold mx-4">
+                Final Price (₦): {finalPrice}
+              </h4>
+              <h4 className="text-sm font-semibold mx-4">Created by: Admin</h4>
+              <h4 className="text-sm font-semibold mx-4">Updated by: Admin</h4>
+              <h4 className="text-sm font-semibold mx-4">
+                Updated on: 12/12/2023
+              </h4>
+            </div>
+          }
           cancelLabel="Cancel"
         />
         <DropdownMenuItem>Edit</DropdownMenuItem>
