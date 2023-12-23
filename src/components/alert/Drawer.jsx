@@ -9,8 +9,7 @@ import {
   DrawerFooter
 } from '@/components/ui/drawer';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@radix-ui/react-separator';
-import { SelectSeparator } from '../ui/select';
+import { Separator } from '../ui/separator';
 
 const DrawerComponent = ({
   triggerLabel,
@@ -38,7 +37,7 @@ const DrawerComponent = ({
               {description}
             </DrawerDescription>
           </DrawerHeader>
-          <SelectSeparator />
+          <Separator />
           {body}
           <DrawerFooter className="mb-8 pt-0">
             <DrawerClose asChild>
