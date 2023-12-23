@@ -4,10 +4,10 @@ const ColouredBadge = ({ status, colorFn }) => {
   return (
     <Badge
       className={`w-[80px] flex justify-center px-1 font-normal rounded-full ${colorFn(
-        status.value
+        status?.value ? status.value : status
       )}`}
     >
-      {status.label}
+      {status?.label ? status.label : status}
     </Badge>
   );
 };
