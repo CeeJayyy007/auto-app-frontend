@@ -1,0 +1,48 @@
+import { DotsVerticalIcon } from '@radix-ui/react-icons';
+
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import AlertDialogComponent from '../alert/AlertDialog';
+import DrawerComponent from '../alert/Drawer';
+
+export const InventoryDataTableRowActions = ({ row }) => {
+  const { id } = row.original;
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="flex h-8 w-8 p-0 data-[state=open]:bg-muted focus:ring-0 focus-visible:ring-0 rounded-full"
+        >
+          <DotsVerticalIcon className="h-4 w-4" />
+          <span className="sr-only">Open menu</span>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-[160px]">
+        <DrawerComponent
+          actionLabel="Close"
+          triggerLabel="View"
+          title="View Inventory Item"
+          description={id}
+          cancelLabel="Cancel"
+        />
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuSeparator />
+
+        <AlertDialogComponent
+          actionLabel="Delete"
+          triggerLabel="Delete"
+          title="Delete Inventory Item"
+          description="Are you sure you want to delete this item?"
+          cancelLabel="Cancel"
+        />
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+};

@@ -10,6 +10,9 @@ import {
 import { avatarFallback } from '@/utils/helpers';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
+import AlertDialogComponent from '@/components/alert/AlertDialog';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import DrawerComponent from '@/components/alert/Drawer';
 
 const serviceData = [
   {
@@ -129,7 +132,28 @@ const Services = () => {
                     {service.description}
                   </CardDescription>
                 </div>
-                <IconDropdownMenu className="m-0" label={service.name} />
+                <IconDropdownMenu
+                  className="m-0"
+                  label={service.name}
+                  children={
+                    <DrawerComponent
+                      actionLabel="Close"
+                      triggerLabel="View"
+                      title={`View ${service.name} Service`}
+                      description={service.name}
+                      cancelLabel="Cancel"
+                    />
+                  }
+                  deleteAction={
+                    <AlertDialogComponent
+                      actionLabel="Delete"
+                      triggerLabel="Delete"
+                      title="Delete Service"
+                      description={`Are you sure you want to delete ${service.name} service?`}
+                      cancelLabel="Cancel"
+                    />
+                  }
+                />
               </div>
             </CardHeader>
 

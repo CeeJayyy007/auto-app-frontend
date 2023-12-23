@@ -9,7 +9,7 @@ import {
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
 import { Button } from '../ui/button';
 
-const IconDropdownMenu = ({ label, children, className }) => {
+const IconDropdownMenu = ({ label, children, className, deleteAction }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -27,7 +27,8 @@ const IconDropdownMenu = ({ label, children, className }) => {
         <DropdownMenuItem>Edit</DropdownMenuItem>
         {children}
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+        {deleteAction}
+        {/* <DropdownMenuItem>Delete</DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

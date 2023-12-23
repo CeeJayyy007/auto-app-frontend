@@ -3,9 +3,9 @@ import { Checkbox } from '@/components/ui/checkbox';
 
 import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
-import { DataTableRowActions } from '../dataTable/dataTableRowAction';
 import { inventoryStatusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
+import { InventoryDataTableRowActions } from './InventoryDataTableRowActions';
 
 export const columns = [
   {
@@ -135,6 +135,6 @@ export const columns = [
 
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />
+    cell: ({ row }) => <InventoryDataTableRowActions row={row} />
   }
 ];
