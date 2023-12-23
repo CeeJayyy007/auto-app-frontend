@@ -14,17 +14,8 @@ import ColouredBadge from '../badge/ColouredBadge';
 import { inventoryStatusColor } from '@/utils/helpers';
 
 export const InventoryDataTableRowActions = ({ row }) => {
-  console.log(row.original);
-  const {
-    id,
-    name,
-    quantity,
-    lowLevel,
-    initialPrice,
-    markUp,
-    finalPrice,
-    status
-  } = row.original;
+  const { name, quantity, lowLevel, initialPrice, markUp, finalPrice, status } =
+    row.original;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

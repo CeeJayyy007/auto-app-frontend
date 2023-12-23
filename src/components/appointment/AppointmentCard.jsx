@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 import { Button } from '@/components/ui/button';
 import ColouredBadge from '../badge/ColouredBadge';
+import ButtonLink from '../button/ButtonLink';
 
 const appointmentData = [
   {
@@ -52,7 +53,7 @@ const AppointmentCard = () => {
             <CardTitle className="text-gray-700">Appointments</CardTitle>
             <CardDescription>Details and overview.</CardDescription>
           </div>
-          <Button>View All</Button>
+          <ButtonLink to="/appointments">View All</ButtonLink>
         </div>
         <Separator />
       </CardHeader>

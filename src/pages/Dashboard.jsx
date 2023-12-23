@@ -13,6 +13,8 @@ import { Separator } from '@/components/ui/Separator';
 import Image from '@/components/image/Image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
+import { Link } from 'react-router-dom';
+import ButtonLink from '@/components/button/ButtonLink';
 
 const dashboardCardContent = [
   {
@@ -135,7 +137,9 @@ const Dashboard = () => {
                 You made {recentActivityData.length} activities this month.
               </CardDescription>
             </CardHeader>
-            <Button className="mt-4 mr-4">View all</Button>
+            <ButtonLink to="/activities" className="mt-4 mr-4">
+              View all
+            </ButtonLink>
           </div>
           <CardContent>
             {recentActivityData.map((activity) => (
@@ -171,7 +175,7 @@ const Dashboard = () => {
                 <CardTitle>Vehicle</CardTitle>
                 <CardDescription>Details and overview.</CardDescription>
               </div>
-              <Button>View all</Button>
+              <ButtonLink to="/profile">View all</ButtonLink>
             </div>
             <Separator className="my-4" />
           </CardHeader>
