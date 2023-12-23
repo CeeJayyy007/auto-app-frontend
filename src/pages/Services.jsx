@@ -10,6 +10,9 @@ import {
 import { avatarFallback } from '@/utils/helpers';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
+import AlertDialogComponent from '@/components/alert/AlertDialog';
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import DrawerComponent from '@/components/alert/Drawer';
 
 const serviceData = [
   {
@@ -129,7 +132,50 @@ const Services = () => {
                     {service.description}
                   </CardDescription>
                 </div>
-                <IconDropdownMenu className="m-0" label={service.name} />
+                <IconDropdownMenu
+                  className="m-0"
+                  label={service.name}
+                  viewAction={
+                    <DrawerComponent
+                      actionLabel="Close"
+                      triggerLabel="View"
+                      title={`Viewing ${service.name} Service`}
+                      description={service.description}
+                      cancelLabel="Cancel"
+                      body={
+                        <div className="flex flex-col space-y-4 py-4">
+                          <h4 className="text-sm font-semibold mx-4">
+                            Name: {service.name}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Price: {service.price}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Duration: {service.duration}
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Created By: Admin
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Updated By: Admin
+                          </h4>
+                          <h4 className="text-sm font-semibold mx-4">
+                            Updated on: 12/12/2023
+                          </h4>
+                        </div>
+                      }
+                    />
+                  }
+                  deleteAction={
+                    <AlertDialogComponent
+                      actionLabel="Delete"
+                      triggerLabel="Delete"
+                      title="Delete Service"
+                      description={`Are you sure you want to delete ${service.name} service?`}
+                      cancelLabel="Cancel"
+                    />
+                  }
+                />
               </div>
             </CardHeader>
 
