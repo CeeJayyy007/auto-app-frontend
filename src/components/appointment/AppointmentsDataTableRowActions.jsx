@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import EditAppointment from './EditAppointment';
+import AlertDialogComponent from '../alert/AlertDialog';
 
 export const AppointmentsDataTableRowActions = ({ row }) => {
   const { id } = row.original;
@@ -42,9 +43,22 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem>Create Request</DropdownMenuItem>
         <EditAppointment data={vehicleData} />
-        <DropdownMenuItem>Cancel</DropdownMenuItem>
+        <AlertDialogComponent
+          actionLabel="Cancel"
+          triggerLabel="Cancel"
+          title="Cancel Appointment"
+          description="Are you sure you want to cancel this appointment?"
+          cancelLabel="Cancel"
+        />
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Delete</DropdownMenuItem>
+
+        <AlertDialogComponent
+          actionLabel="Delete"
+          triggerLabel="Delete"
+          title="Delete Appointment"
+          description="Are you sure you want to delete this appointment?"
+          cancelLabel="Cancel"
+        />
       </DropdownMenuContent>
     </DropdownMenu>
   );

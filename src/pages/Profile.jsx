@@ -11,6 +11,7 @@ import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
+import AlertDialogComponent from '@/components/alert/AlertDialog';
 
 const vehicleData = [
   {
@@ -108,6 +109,15 @@ const Profile = () => {
               </h3>
               <IconDropdownMenu
                 label="User menu"
+                deleteAction={
+                  <AlertDialogComponent
+                    actionLabel="Delete"
+                    triggerLabel="Delete"
+                    title="Delete User"
+                    description="Are you sure you want to delete this user?"
+                    cancelLabel="Cancel"
+                  />
+                }
                 children={<DropdownMenuItem>Add Vehicle</DropdownMenuItem>}
               />
             </div>
@@ -141,7 +151,18 @@ const Profile = () => {
                   Click to view details
                 </p>
               </div>
-              <IconDropdownMenu label="Vehicle menu" />
+              <IconDropdownMenu
+                label="Vehicle menu"
+                deleteAction={
+                  <AlertDialogComponent
+                    actionLabel="Delete"
+                    triggerLabel="Delete"
+                    title="Delete Vehicle"
+                    description="Are you sure you want to delete this vehicle?"
+                    cancelLabel="Cancel"
+                  />
+                }
+              />
             </div>
             <ScrollArea className="max-w-[600px] overflow-x-auto">
               <RadioGroup
