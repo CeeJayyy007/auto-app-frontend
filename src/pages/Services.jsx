@@ -10,9 +10,8 @@ import {
 import { avatarFallback } from '@/utils/helpers';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
-import AlertDialogComponent from '@/components/alert/AlertDialog';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import DrawerComponent from '@/components/alert/Drawer';
+import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
+import DrawerComponent from '@/components/additionalDisplay/Drawer';
 
 const serviceData = [
   {

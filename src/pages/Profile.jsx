@@ -11,7 +11,7 @@ import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
-import AlertDialogComponent from '@/components/alert/AlertDialog';
+import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
 
 const vehicleData = [
   {

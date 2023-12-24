@@ -8,8 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import AlertDialogComponent from '../alert/AlertDialog';
-import DrawerComponent from '../alert/Drawer';
+import AlertDialogComponent from '../additionalDisplay/AlertDialog';
+import DrawerComponent from '../additionalDisplay/Drawer';
 import ColouredBadge from '../badge/ColouredBadge';
 import { inventoryStatusColor } from '@/utils/helpers';
 
@@ -54,7 +54,7 @@ export const InventoryDataTableRowActions = ({ row }) => {
               <h4 className="text-sm font-semibold mx-4">Created by: Admin</h4>
               <h4 className="text-sm font-semibold mx-4">Updated by: Admin</h4>
               <h4 className="text-sm font-semibold mx-4">
-                Updated on: 12/12/2023
+                Last updated on: 12/12/2023
               </h4>
             </div>
           }
