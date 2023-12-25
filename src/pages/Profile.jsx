@@ -11,7 +11,16 @@ import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
-import AlertDialogComponent from '@/components/alert/AlertDialog';
+import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
+import SideSheet from '@/components/additionalDisplay/SideSheet';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select';
 
 const vehicleData = [
   {
@@ -109,6 +118,82 @@ const Profile = () => {
               </h3>
               <IconDropdownMenu
                 label="User menu"
+                editAction={
+                  <SideSheet
+                    triggerLabel="Edit"
+                    title="Edit User Profile"
+                    description="Edit User Profile details and click Save Profile when done."
+                    actionLabel="Save Profile"
+                    body={
+                      <div className="flex flex-col space-y-4 py-4">
+                        <div className="grid ">
+                          <Label
+                            htmlFor="firstName"
+                            className="text-left mb-2 sr-only"
+                          >
+                            First Name
+                          </Label>
+                          <Input placeholder="First Name" name="firstName" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="lastName"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Last Name
+                          </Label>
+                          <Input placeholder="Last Name" name="lastName" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="email"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Email
+                          </Label>
+                          <Input
+                            placeholder="Email"
+                            name="email"
+                            type="email"
+                          />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="phone"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Phone Number
+                          </Label>
+                          <Input
+                            placeholder="Phone Number"
+                            name="phone"
+                            typ="tel"
+                          />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="date"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Select Vehicle
+                          </Label>
+                          <Select>
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Select vehicle" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {vehicleData.map((item) => (
+                                <SelectItem key={item.make} value={item}>
+                                  {`${item.make} ${item.model} ${item.year} `}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                    }
+                  />
+                }
                 deleteAction={
                   <AlertDialogComponent
                     actionLabel="Delete"
@@ -118,7 +203,57 @@ const Profile = () => {
                     cancelLabel="Cancel"
                   />
                 }
-                children={<DropdownMenuItem>Add Vehicle</DropdownMenuItem>}
+                extraActions={
+                  <SideSheet
+                    triggerLabel="Add Vehicle"
+                    title="Add Vehicle Profile"
+                    description="Add Vehicle Profile details and click Add Vehicle when done."
+                    actionLabel="Add Vehicle"
+                    body={
+                      <div className="flex flex-col space-y-4 py-4">
+                        <div className="grid ">
+                          <Label
+                            htmlFor="make"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Make
+                          </Label>
+                          <Input placeholder="Make" name="make" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="model"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Model
+                          </Label>
+                          <Input placeholder="Model" name="model" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="year"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Year
+                          </Label>
+                          <Input placeholder="Year" name="year" type="number" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="registrationNumber"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Regristration Number
+                          </Label>
+                          <Input
+                            placeholder="Registration Number"
+                            name="registrationNumber"
+                          />
+                        </div>
+                      </div>
+                    }
+                  />
+                }
               />
             </div>
             <div className="flex flex-row items-center">
@@ -153,6 +288,57 @@ const Profile = () => {
               </div>
               <IconDropdownMenu
                 label="Vehicle menu"
+                editAction={
+                  <SideSheet
+                    triggerLabel="Edit"
+                    title="Edit Vehicle Profile"
+                    description="Edit Vehicle Profile details and click Save Profile when done."
+                    actionLabel="Save Profile"
+                    body={
+                      <div className="flex flex-col space-y-4 py-4">
+                        <div className="grid ">
+                          <Label
+                            htmlFor="make"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Make
+                          </Label>
+                          <Input placeholder="Make" name="make" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="model"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Model
+                          </Label>
+                          <Input placeholder="Model" name="model" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="year"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Year
+                          </Label>
+                          <Input placeholder="Year" name="year" type="number" />
+                        </div>
+                        <div className="grid ">
+                          <Label
+                            htmlFor="registrationNumber"
+                            className="text-left mb-2 sr-only"
+                          >
+                            Regristration Number
+                          </Label>
+                          <Input
+                            placeholder="Registration Number"
+                            name="registrationNumber"
+                          />
+                        </div>
+                      </div>
+                    }
+                  />
+                }
                 deleteAction={
                   <AlertDialogComponent
                     actionLabel="Delete"

@@ -10,9 +10,11 @@ import {
 import { avatarFallback } from '@/utils/helpers';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
-import AlertDialogComponent from '@/components/alert/AlertDialog';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
-import DrawerComponent from '@/components/alert/Drawer';
+import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
+import DrawerComponent from '@/components/additionalDisplay/Drawer';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import SideSheet from '@/components/additionalDisplay/SideSheet';
 
 const serviceData = [
   {
@@ -118,7 +120,48 @@ const Services = () => {
     <div>
       <div className="flex flex-row justify-between">
         <h3 className="mb-4 font-bold text-gray-700">Activities</h3>
-        <Button>Add Service</Button>
+        {/* Add Service */}
+        <SideSheet
+          type="button"
+          triggerLabel="Add Service"
+          title="Add Service"
+          description="Add Service details and click Add Service when done."
+          actionLabel="Add Service"
+          body={
+            <div className="flex flex-col space-y-4 py-4">
+              <div className="grid ">
+                <Label htmlFor="name" className="text-left mb-2 sr-only">
+                  Name
+                </Label>
+                <Input placeholder="Name" name="name" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="description" className="text-left mb-2 sr-only">
+                  Description
+                </Label>
+                <Input placeholder="Description" name="description" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="price" className="text-left mb-2 sr-only">
+                  Price
+                </Label>
+                <Input placeholder="Price" name="price" type="number" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="duration" className="text-left mb-2 sr-only">
+                  Duration
+                </Label>
+                <Input placeholder="Duration" name="duration" type="number" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="avatar" className="text-left mb-2 sr-only">
+                  Avatar
+                </Label>
+                <Input placeholder="Avatar" name="avatar" type="url" />
+              </div>
+            </div>
+          }
+        />
       </div>
 
       <div className="grid grid-cols-4 gap-4">

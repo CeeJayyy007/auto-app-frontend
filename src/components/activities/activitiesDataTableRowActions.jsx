@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
-import AlertDialogComponent from '../alert/AlertDialog';
+import AlertDialogComponent from '../additionalDisplay/AlertDialog';
 
 export const ActivitiesDataTableRowActions = ({ row }) => {
   const navigate = useNavigate();
@@ -32,10 +32,19 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        {/* View */}
         <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        {/* Cancel */}
+        <AlertDialogComponent
+          actionLabel="Cancel"
+          triggerLabel="Cancel"
+          title="Cancel Maintenance Record"
+          description="Are you sure you want to cancel this maintenance record?"
+          cancelLabel="Cancel"
+        />
 
+        <DropdownMenuSeparator />
+        {/* Delete */}
         <AlertDialogComponent
           actionLabel="Delete"
           triggerLabel="Delete"

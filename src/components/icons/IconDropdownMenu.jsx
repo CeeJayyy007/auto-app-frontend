@@ -11,9 +11,10 @@ import { Button } from '../ui/button';
 
 const IconDropdownMenu = ({
   label,
-  children,
+  extraActions,
   className,
   viewAction,
+  editAction,
   deleteAction
 }) => {
   return (
@@ -30,9 +31,9 @@ const IconDropdownMenu = ({
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {viewAction}
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        {children}
+        {viewAction && viewAction}
+        {editAction && editAction}
+        {extraActions && extraActions}
         <DropdownMenuSeparator />
         {deleteAction}
       </DropdownMenuContent>
