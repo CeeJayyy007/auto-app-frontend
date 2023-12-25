@@ -12,6 +12,9 @@ import AlertDialogComponent from '../additionalDisplay/AlertDialog';
 import DrawerComponent from '../additionalDisplay/Drawer';
 import ColouredBadge from '../badge/ColouredBadge';
 import { inventoryStatusColor } from '@/utils/helpers';
+import SideSheet from '../additionalDisplay/SideSheet';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
 
 export const InventoryDataTableRowActions = ({ row }) => {
   const { name, quantity, lowLevel, initialPrice, markUp, finalPrice, status } =
@@ -60,9 +63,69 @@ export const InventoryDataTableRowActions = ({ row }) => {
           }
           cancelLabel="Cancel"
         />
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        {/* Edit */}
+        <SideSheet
+          triggerLabel="Edit"
+          title="Edit Inventory Item"
+          description="Edit Inventory Item details and click Save Inventory Item when done."
+          actionLabel="Save Inventory Item"
+          body={
+            <div className="flex flex-col space-y-4 py-4">
+              <div className="grid ">
+                <Label htmlFor="name" className="text-left mb-2 sr-only">
+                  Name
+                </Label>
+                <Input placeholder="Name" name="name" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="quantity" className="text-left mb-2 sr-only">
+                  Quantity
+                </Label>
+                <Input placeholder="Quantity" name="quantity" type="number" />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="lowLevel" className="text-left mb-2 sr-only">
+                  Low Level
+                </Label>
+                <Input placeholder="Low Level" name="lowLevel" type="number" />
+              </div>
+              <div className="grid ">
+                <Label
+                  htmlFor="initialPrice"
+                  className="text-left mb-2 sr-only"
+                >
+                  Initial Price
+                </Label>
+                <Input
+                  placeholder="Initial Price"
+                  name="initialPrice"
+                  type="number"
+                />
+              </div>
+              <div className="grid ">
+                <Label htmlFor="markUp" className="text-left mb-2 sr-only">
+                  Mark Up
+                </Label>
+                <Input placeholder="Mark Up" name="markUp" type="number" />
+              </div>
+              <div className="grid ">
+                <Label
+                  htmlFor="initialPrice"
+                  className="text-left mb-2 sr-only"
+                >
+                  Final Price
+                </Label>
+                <Input
+                  placeholder="Final Price"
+                  name="finalPrice"
+                  type="number"
+                />
+              </div>
+            </div>
+          }
+        />
         <DropdownMenuSeparator />
-
+        {/* Delete */}
         <AlertDialogComponent
           actionLabel="Delete"
           triggerLabel="Delete"

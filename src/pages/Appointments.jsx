@@ -42,8 +42,8 @@ const Appointments = () => {
           type="button"
           triggerLabel="Add Appointment"
           title="Add Appointment"
-          description="Add Appointment details and click Save Appointment when done."
-          actionLabel="Save Appointment"
+          description="Add Appointment details and click Add Appointment when done."
+          actionLabel="Add Appointment"
           body={
             <div className="flex flex-col space-y-4 py-4">
               <div className="grid ">

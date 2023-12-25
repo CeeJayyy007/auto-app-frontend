@@ -58,9 +58,10 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
         {/* Create request */}
         <DrawerComponent
           type="button"
+          description="Create service request from the following appointment details."
           actionLabel="Create Request"
           triggerLabel="Create Request"
-          title="Create Service Request from Appointment"
+          title="Create Service Request"
           body={
             <div className="flex flex-col space-y-4 py-4">
               <h4 className="text-sm font-semibold mx-4">Date: {date}</h4>

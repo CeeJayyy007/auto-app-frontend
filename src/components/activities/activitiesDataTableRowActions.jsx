@@ -32,10 +32,19 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
+        {/* View */}
         <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        <DropdownMenuSeparator />
+        {/* Cancel */}
+        <AlertDialogComponent
+          actionLabel="Cancel"
+          triggerLabel="Cancel"
+          title="Cancel Maintenance Record"
+          description="Are you sure you want to cancel this maintenance record?"
+          cancelLabel="Cancel"
+        />
 
+        <DropdownMenuSeparator />
+        {/* Delete */}
         <AlertDialogComponent
           actionLabel="Delete"
           triggerLabel="Delete"
