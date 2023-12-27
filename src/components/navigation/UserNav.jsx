@@ -9,16 +9,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
+import { logoutUser } from '@/reducers/userReducers';
 import { avatarFallback } from '@/utils/helpers';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const UserNav = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleLogout = () => {
-    console.log('logout');
-    localStorage.removeItem('token');
-    navigate('/sign-in');
+  const handleLogout = async () => {
+    await dispatch(logoutUser());
+    navigate('sign-in');
   };
 
   return (
