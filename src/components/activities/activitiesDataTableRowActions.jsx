@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { useNavigate } from 'react-router-dom';
-import AlertDialogComponent from '../additionalDisplay/AlertDialog';
+import AlertDialogComponent from '../display/AlertDialog';
 
 export const ActivitiesDataTableRowActions = ({ row }) => {
   const navigate = useNavigate();

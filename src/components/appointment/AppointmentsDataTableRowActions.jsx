@@ -7,8 +7,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import AlertDialogComponent from '../additionalDisplay/AlertDialog';
-import SideSheet from '../additionalDisplay/SideSheet';
+import AlertDialogComponent from '../display/AlertDialog';
+import SideSheet from '../display/SideSheet';
 import { Label } from '@/components/ui/label';
 import DatePicker from '../datePicker/DatePicker';
 import RecordCombobox from '../maintenanceRecord/RecordCombobox';
@@ -20,7 +20,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import DrawerComponent from '../additionalDisplay/Drawer';
+import DrawerComponent from '../display/Drawer';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
 import { services as servicesData } from '../activities/data';

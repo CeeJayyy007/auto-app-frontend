@@ -15,11 +15,8 @@ const Authentication = () => {
   // user context
   const dispatchUser = useUserDispatch();
 
-  // useNotification
-  const { setNotification } = useNotification();
-
   // useAuthentication
-  const { login } = useAuthentication(dispatchUser, setNotification, navigate);
+  const { login } = useAuthentication(dispatchUser, navigate);
 
   return (
     <>

@@ -8,11 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import AlertDialogComponent from '../additionalDisplay/AlertDialog';
-import DrawerComponent from '../additionalDisplay/Drawer';
+import AlertDialogComponent from '../display/AlertDialog';
+import DrawerComponent from '../display/Drawer';
 import ColouredBadge from '../badge/ColouredBadge';
 import { inventoryStatusColor } from '@/utils/helpers';
-import SideSheet from '../additionalDisplay/SideSheet';
+import SideSheet from '../display/SideSheet';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 

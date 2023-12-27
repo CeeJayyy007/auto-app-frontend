@@ -7,7 +7,7 @@ import {
   vehicles
 } from '../components/activities/data';
 import { DataTable } from '@/components/dataTable/dataTable';
-import SideSheet from '@/components/additionalDisplay/SideSheet';
+import SideSheet from '@/components/display/SideSheet';
 import { Label } from '@/components/ui/label';
 import {
   Select,

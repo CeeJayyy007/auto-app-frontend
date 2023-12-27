@@ -11,8 +11,8 @@ import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
-import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
-import SideSheet from '@/components/additionalDisplay/SideSheet';
+import AlertDialogComponent from '@/components/display/AlertDialog';
+import SideSheet from '@/components/display/SideSheet';
 import { Input } from '@/components/ui/input';
 import {
   Select,

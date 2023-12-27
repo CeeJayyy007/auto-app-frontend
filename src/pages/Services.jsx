@@ -10,11 +10,11 @@ import {
 import { avatarFallback } from '@/utils/helpers';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
-import AlertDialogComponent from '@/components/additionalDisplay/AlertDialog';
-import DrawerComponent from '@/components/additionalDisplay/Drawer';
+import AlertDialogComponent from '@/components/display/AlertDialog';
+import DrawerComponent from '@/components/display/Drawer';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import SideSheet from '@/components/additionalDisplay/SideSheet';
+import SideSheet from '@/components/display/SideSheet';
 
 const serviceData = [
   {

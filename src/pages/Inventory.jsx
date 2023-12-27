@@ -3,7 +3,7 @@ import { inventoryData } from '@/components/inventory/data';
 import { Button } from '@/components/ui/button';
 import { statuses } from '@/components/inventory/data';
 import { DataTable } from '@/components/dataTable/dataTable';
-import SideSheet from '@/components/additionalDisplay/SideSheet';
+import SideSheet from '@/components/display/SideSheet';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
