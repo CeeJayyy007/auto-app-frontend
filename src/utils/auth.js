@@ -1,10 +1,5 @@
-const checkAuth = () => {
-  const user = localStorage.getItem('loggedInUser');
-
-  if (!user) {
-    return false;
-  }
-  return true;
+const checkAuth = async () => {
+  return await !!localStorage.getItem('loggedInUser');
 };
 
 export default checkAuth;
