@@ -13,11 +13,9 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { LoginFormSchema } from './AuthValidation';
-import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ className, login, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
-  const navigate = useNavigate();
 
   const form = useForm({
     resolver: zodResolver(LoginFormSchema),

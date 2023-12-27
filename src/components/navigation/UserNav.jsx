@@ -11,20 +11,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { useUserDispatch } from '@/context/UserContext';
 import useAuthentication from '@/hooks/useAuthentication';
-import useNotification from '@/hooks/useNotification';
 import { avatarFallback } from '@/utils/helpers';
 import { useNavigate } from 'react-router-dom';
 
 const UserNav = () => {
   const navigate = useNavigate();
   const dispatchUser = useUserDispatch();
-  const { setNotification } = useNotification();
 
-  const { handleLogout } = useAuthentication(
-    dispatchUser,
-    setNotification,
-    navigate
-  );
+  const { handleLogout } = useAuthentication(dispatchUser, navigate);
 
   return (
     <DropdownMenu>

@@ -6,20 +6,14 @@ import {
 } from './navUtils';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useAuthentication from '@/hooks/useAuthentication';
-import useNotification from '@/hooks/useNotification';
 import { useUserDispatch } from '@/context/UserContext';
 
 const Sidebar = () => {
   let location = useLocation();
   const navigate = useNavigate();
   const dispatchUser = useUserDispatch();
-  const { setNotification } = useNotification();
 
-  const { handleLogout } = useAuthentication(
-    dispatchUser,
-    setNotification,
-    navigate
-  );
+  const { handleLogout } = useAuthentication(dispatchUser, navigate);
 
   const handleClick = async (path) => {
     if (path === '/logout') {
