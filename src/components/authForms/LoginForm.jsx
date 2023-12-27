@@ -29,9 +29,6 @@ const LoginForm = ({ className, login, ...props }) => {
 
   const onSubmit = async (data) => {
     try {
-      // localStorage.setItem('token', JSON.stringify(data));
-      // console.log('token', localStorage.getItem('token'));
-      // navigate('/');
       await login(data);
       form.reset();
     } catch (error) {
@@ -81,7 +78,11 @@ const LoginForm = ({ className, login, ...props }) => {
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? <Icons.eyeClose /> : <Icons.eyeOpen />}
+                        {showPassword ? (
+                          <Icons.eyeClose />
+                        ) : (
+                          <Icons.eyeOpen className="fill-gray-400" />
+                        )}
                       </Button>
                       <Input
                         placeholder="Password"

@@ -156,7 +156,11 @@ const CreateAccountForm = ({ className, ...props }) => {
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
                       >
-                        {showPassword ? <Icons.eyeClose /> : <Icons.eyeOpen />}
+                        {showPassword ? (
+                          <Icons.eyeClose />
+                        ) : (
+                          <Icons.eyeOpen className="fill-gray-400" />
+                        )}
                       </Button>
                       <Input
                         placeholder="Password"
