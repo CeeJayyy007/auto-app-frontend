@@ -1,8 +1,11 @@
 import { useEffect } from 'react';
 import loginService from '../services/login';
 import { useMutation } from '@tanstack/react-query';
+import { useToast } from '@/components/ui/use-toast';
 
-const useAuthentication = (dispatchUser, setNotification, navigate) => {
+const useAuthentication = (dispatchUser, navigate) => {
+  const { toast } = useToast();
+
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser');
     if (loggedInUserJSON) {
@@ -19,7 +22,14 @@ const useAuthentication = (dispatchUser, setNotification, navigate) => {
       navigate('/', { replace: true });
     },
     onError: (error) => {
-      setNotification('Wrong username or password', true);
+      const message = error?.response?.data?.error || 'Something went wrong';
+
+      toast({
+        title: 'Authentication Error',
+        description: message,
+        variant: 'error',
+        duration: 5000
+      });
     }
   });
 
