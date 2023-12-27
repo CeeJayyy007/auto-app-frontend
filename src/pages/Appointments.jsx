@@ -4,7 +4,7 @@ import { DataTable } from '@/components/dataTable/dataTable';
 import { Button } from '@/components/ui/button';
 import { services, statuses, vehicles } from '../components/appointment/data';
 import { Label } from '@/components/ui/label';
-import SideSheet from '@/components/additionalDisplay/SideSheet';
+import SideSheet from '@/components/display/SideSheet';
 import DatePicker from '@/components/datePicker/DatePicker';
 import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
 import { Textarea } from '@/components/ui/textarea';

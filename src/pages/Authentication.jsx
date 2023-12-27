@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import CreateAccountForm from '@/components/authForms/CreateAccountForm';
 import { Icons } from '@/components/icons/icons';
 import LoginForm from '@/components/authForms/LoginForm';
-import useNotification from '@/hooks/useNotification';
 import useAuthentication from '@/hooks/useAuthentication';
 import { useNavigate } from 'react-router-dom';
 import { useUserDispatch } from '@/context/UserContext';
@@ -15,11 +14,8 @@ const Authentication = () => {
   // user context
   const dispatchUser = useUserDispatch();
 
-  // useNotification
-  const { setNotification } = useNotification();
-
   // useAuthentication
-  const { login } = useAuthentication(dispatchUser, setNotification, navigate);
+  const { login } = useAuthentication(dispatchUser, navigate);
 
   return (
     <>
