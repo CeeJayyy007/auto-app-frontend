@@ -1,39 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import CreateAccountForm from '@/components/authForms/CreateAccountForm';
 import { Icons } from '@/components/icons/icons';
 import LoginForm from '@/components/authForms/LoginForm';
-import {
-  loginUser,
-  logoutUser,
-  setUserFromLocalStorage
-} from '../reducers/userReducers';
-import { useDispatch } from 'react-redux';
+import useNotification from '@/hooks/useNotification';
+import useAuthentication from '@/hooks/useAuthentication';
 import { useNavigate } from 'react-router-dom';
+import { useUserDispatch } from '@/context/UserContext';
 
 const Authentication = () => {
   const [toggleAuth, setToggleAuth] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loggedInUserJSON = window.localStorage.getItem('loggedInUser');
+  // user context
+  const dispatchUser = useUserDispatch();
 
-    if (loggedInUserJSON) {
-      dispatch(setUserFromLocalStorage(loggedInUserJSON));
-    }
-  }, []);
+  // useNotification
+  const { setNotification } = useNotification();
 
-  // login handler
-  const login = async (credentials) => {
-    try {
-      await dispatch(loginUser(credentials));
-      navigate('/');
-    } catch (exception) {
-      const error = exception.response.data.error;
-      console.log('Wrong username or password', error);
-    }
-  };
+  // useAuthentication
+  const { login } = useAuthentication(dispatchUser, setNotification, navigate);
 
   return (
     <>

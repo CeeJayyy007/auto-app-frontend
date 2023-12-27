@@ -15,7 +15,7 @@ const privateRoutes = () => {
     {
       element: <Layout />,
       children: [
-        { path: '/', element: <Dashboard /> },
+        { path: '/', element: <Dashboard replace /> },
         { path: 'profile', element: <Profile /> },
         { path: 'appointments', element: <Appointments /> },
         { path: 'activities', element: <Activities /> },

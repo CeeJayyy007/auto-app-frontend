@@ -9,19 +9,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { logoutUser } from '@/reducers/userReducers';
+import { useUserDispatch } from '@/context/UserContext';
+import useAuthentication from '@/hooks/useAuthentication';
+import useNotification from '@/hooks/useNotification';
 import { avatarFallback } from '@/utils/helpers';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const UserNav = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatchUser = useUserDispatch();
+  const { setNotification } = useNotification();
 
-  const handleLogout = async () => {
-    await dispatch(logoutUser());
-    navigate('sign-in');
-  };
+  const { handleLogout } = useAuthentication(
+    dispatchUser,
+    setNotification,
+    navigate
+  );
 
   return (
     <DropdownMenu>
