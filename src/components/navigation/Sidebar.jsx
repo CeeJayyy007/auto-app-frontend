@@ -1,22 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import IconButton from '@/components/button/IconButton';
 import {
   sidebarContent as content,
   bottomNavContent as bottomContent
 } from './navUtils';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '@/reducers/userReducers';
+import useAuthentication from '@/hooks/useAuthentication';
+import useNotification from '@/hooks/useNotification';
+import { useUserDispatch } from '@/context/UserContext';
 
 const Sidebar = () => {
   let location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatchUser = useUserDispatch();
+  const { setNotification } = useNotification();
+
+  const { handleLogout } = useAuthentication(
+    dispatchUser,
+    setNotification,
+    navigate
+  );
 
   const handleClick = async (path) => {
     if (path === '/logout') {
-      await dispatch(logoutUser());
-      navigate('sign-in');
+      handleLogout();
     } else {
       navigate(path);
     }
