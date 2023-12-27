@@ -15,7 +15,7 @@ import {
 import { LoginFormSchema } from './AuthValidation';
 import { useNavigate } from 'react-router-dom';
 
-const LoginForm = ({ className, ...props }) => {
+const LoginForm = ({ className, login, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
   const navigate = useNavigate();
 
@@ -29,9 +29,10 @@ const LoginForm = ({ className, ...props }) => {
 
   const onSubmit = async (data) => {
     try {
-      localStorage.setItem('token', JSON.stringify(data));
-      console.log('token', localStorage.getItem('token'));
-      navigate('/');
+      // localStorage.setItem('token', JSON.stringify(data));
+      // console.log('token', localStorage.getItem('token'));
+      // navigate('/');
+      await login(data);
       form.reset();
     } catch (error) {
       form.setError('submitError', {

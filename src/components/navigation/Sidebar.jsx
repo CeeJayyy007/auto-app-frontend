@@ -5,16 +5,18 @@ import {
   bottomNavContent as bottomContent
 } from './navUtils';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '@/reducers/userReducers';
 
 const Sidebar = () => {
   let location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleClick = (path) => {
+  const handleClick = async (path) => {
     if (path === '/logout') {
-      console.log(path);
-      localStorage.removeItem('token');
-      navigate('/sign-in');
+      await dispatch(logoutUser());
+      navigate('sign-in');
     } else {
       navigate(path);
     }

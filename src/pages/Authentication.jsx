@@ -1,11 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import CreateAccountForm from '@/components/authForms/CreateAccountForm';
 import { Icons } from '@/components/icons/icons';
 import LoginForm from '@/components/authForms/LoginForm';
+import {
+  loginUser,
+  logoutUser,
+  setUserFromLocalStorage
+} from '../reducers/userReducers';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const Authentication = () => {
   const [toggleAuth, setToggleAuth] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loggedInUserJSON = window.localStorage.getItem('loggedInUser');
+
+    if (loggedInUserJSON) {
+      dispatch(setUserFromLocalStorage(loggedInUserJSON));
+    }
+  }, []);
+
+  // login handler
+  const login = async (credentials) => {
+    try {
+      await dispatch(loginUser(credentials));
+      navigate('/');
+    } catch (exception) {
+      const error = exception.response.data.error;
+      console.log('Wrong username or password', error);
+    }
+  };
 
   return (
     <>
@@ -61,7 +89,7 @@ const Authentication = () => {
               </p>
             </div>
             {/* auth form */}
-            {toggleAuth ? <LoginForm /> : <CreateAccountForm />}
+            {toggleAuth ? <LoginForm login={login} /> : <CreateAccountForm />}
             <p className="px-4 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{' '}
               <Button size="sm" variant="link" href="/terms">

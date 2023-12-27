@@ -1,7 +1,7 @@
 const checkAuth = () => {
-  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('loggedInUser');
 
-  if (!token) {
+  if (!user) {
     return false;
   }
   return true;
