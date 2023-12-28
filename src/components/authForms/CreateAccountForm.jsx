@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form';
 import { CreateAccountFormSchema } from './AuthValidation';
 
-const CreateAccountForm = ({ className, ...props }) => {
+const CreateAccountForm = ({ className, register, ...props }) => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const form = useForm({
@@ -23,7 +23,7 @@ const CreateAccountForm = ({ className, ...props }) => {
     defaultValues: {
       firstName: '',
       lastName: '',
-      userName: '',
+      username: '',
       phone: '',
       email: '',
       password: ''
@@ -32,7 +32,7 @@ const CreateAccountForm = ({ className, ...props }) => {
 
   const onSubmit = async (data) => {
     try {
-      console.log(data);
+      await register(data);
       form.reset();
     } catch (error) {
       form.setError('submitError', {
@@ -87,7 +87,7 @@ const CreateAccountForm = ({ className, ...props }) => {
 
             <FormField
               control={form.control}
-              name="userName"
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only">Username</FormLabel>
@@ -98,7 +98,7 @@ const CreateAccountForm = ({ className, ...props }) => {
                       {...field}
                     />
                   </FormControl>
-                  {form.formState.errors.userName && <FormMessage />}
+                  {form.formState.errors.username && <FormMessage />}
                 </FormItem>
               )}
             />

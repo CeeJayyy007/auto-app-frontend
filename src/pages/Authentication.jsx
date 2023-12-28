@@ -15,7 +15,7 @@ const Authentication = () => {
   const dispatchUser = useUserDispatch();
 
   // useAuthentication
-  const { login } = useAuthentication(dispatchUser, navigate);
+  const { login, register } = useAuthentication(dispatchUser, navigate);
 
   return (
     <>
@@ -71,7 +71,11 @@ const Authentication = () => {
               </p>
             </div>
             {/* auth form */}
-            {toggleAuth ? <LoginForm login={login} /> : <CreateAccountForm />}
+            {toggleAuth ? (
+              <LoginForm login={login} />
+            ) : (
+              <CreateAccountForm register={register} />
+            )}
             <p className="px-4 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{' '}
               <Button size="sm" variant="link" href="/terms">
