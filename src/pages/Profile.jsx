@@ -21,6 +21,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { useUserValue } from '@/context/UserContext';
 
 const vehicleData = [
   {
@@ -41,16 +42,6 @@ const vehicleData = [
   }
 ];
 
-const userData = {
-  id: 1,
-  firstName: 'John',
-  lastName: 'Jackson',
-  username: 'johndoe001',
-  email: 'johnjackson@mail.com',
-  phone: '0712345678',
-  role: 'User'
-};
-
 const userStatsData = {
   memberSince: '12/12/2020',
   allTimeSpend: 10000,
@@ -65,7 +56,8 @@ const Profile = () => {
     setLoaded(true);
   }, []);
 
-  const { firstName, lastName, role, email, phone } = userData;
+  const user = useUserValue();
+  const { firstName, lastName, roles, email, phone } = user || {};
   const name = `${firstName} ${lastName}`;
 
   return (
@@ -271,7 +263,7 @@ const Profile = () => {
                   {phone}
                 </p>
                 <Badge className="w-[80px] flex justify-center px-1 font-normal rounded-full bg-green-100 text-green-400 border-green-400">
-                  {role}
+                  {roles}
                 </Badge>
               </div>
             </div>

@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { useUserDispatch } from '@/context/UserContext';
+import { useUserDispatch, useUserValue } from '@/context/UserContext';
 import useAuthentication from '@/hooks/useAuthentication';
 import { avatarFallback } from '@/utils/helpers';
 import { useNavigate } from 'react-router-dom';
@@ -17,6 +17,10 @@ import { useNavigate } from 'react-router-dom';
 const UserNav = () => {
   const navigate = useNavigate();
   const dispatchUser = useUserDispatch();
+  const user = useUserValue();
+
+  const { firstName, lastName, email } = user || {};
+  const name = `${firstName} ${lastName}`;
 
   const { handleLogout } = useAuthentication(dispatchUser, navigate);
 
@@ -26,16 +30,18 @@ const UserNav = () => {
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src="" alt="profile-avatar" />
-            <AvatarFallback>{avatarFallback('User 1')}</AvatarFallback>
+            <AvatarFallback className="bg-green-100 font-bold">
+              {avatarFallback(name)}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 px-2 pb-2" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">User 1</p>
+            <p className="text-sm font-bold leading-none">{name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              user1@example.com
+              {email}
             </p>
           </div>
         </DropdownMenuLabel>
