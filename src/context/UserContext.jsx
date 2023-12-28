@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import { createContext, useReducer, useContext } from 'react';
 
 const initialState = null;
