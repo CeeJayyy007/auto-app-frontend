@@ -5,7 +5,26 @@ export const avatarFallback = (name) => {
 };
 
 export const commaSeparatedArray = (array) => {
+  if (!array) return '---';
+
+  if (array.length === 1) {
+    return array[0];
+  }
+
   return array.join(', ');
+};
+
+// format data array and return array of given length
+export const formatDataArray = (array, length) => {
+  if (!array) return [];
+
+  if (array.length === 1) {
+    return array;
+  }
+
+  const newArray = array.slice(0, length);
+
+  return newArray;
 };
 
 export const statusColor = (status) => {
