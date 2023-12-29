@@ -8,7 +8,6 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
 import AppointmentCard from '@/components/appointment/AppointmentCard';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
 import AlertDialogComponent from '@/components/display/AlertDialog';
@@ -22,24 +21,13 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { useUserValue } from '@/context/UserContext';
+import { useQuery } from '@tanstack/react-query';
+import profileService from '@/services/profile';
 
-const vehicleData = [
-  {
-    id: 1,
-    make: 'Lamborghini',
-    model: 'Aventador',
-    year: '2022',
-    registrationNumber: 'LND123XA',
-    image: '/src/assets/lambo.jpeg'
-  },
-  {
-    id: 2,
-    make: 'Mercedes',
-    model: 'Benz',
-    year: '2021',
-    registrationNumber: 'LND123XX',
-    image: '/src/assets/benz.jpeg'
-  }
+const rolesData = [
+  { label: 'User', value: 'User' },
+  { label: 'Admin', value: 'Admin' },
+  { label: 'Super Admin', value: 'SuperAdmin' }
 ];
 
 const userStatsData = {
@@ -57,8 +45,37 @@ const Profile = () => {
   }, []);
 
   const user = useUserValue();
-  const { firstName, lastName, roles, email, phone } = user || {};
+
+  const result = useQuery({
+    queryKey: ['profile', user?.id],
+    queryFn: profileService.getAllUserDetails,
+    onError: (error) => {
+      console.log('error', error);
+    },
+    refetchOnWindowFocus: true
+  });
+
+  const profile = result.data || {};
+
+  // do not render anything if profile data is still null
+  if (!profile) {
+    return null;
+  }
+
+  if (result.isLoading) {
+    return <div>loading data...</div>;
+  } else if (result.isError) {
+    return <div>error loading data</div>;
+  }
+
+  const { firstName, lastName, roles, email, phone } = profile.user;
+  const vehicles = profile.vehicles;
+  const appointments = profile.appointments;
+
   const name = `${firstName} ${lastName}`;
+
+  console.log('vehicles', vehicles);
+  console.log('appointments', appointments);
 
   return (
     <div className="flex flex-col">
@@ -164,19 +181,19 @@ const Profile = () => {
                         </div>
                         <div className="grid ">
                           <Label
-                            htmlFor="date"
+                            htmlFor="roles"
                             className="text-left mb-2 sr-only"
                           >
-                            Select Vehicle
+                            Select Role
                           </Label>
                           <Select>
                             <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select vehicle" />
+                              <SelectValue placeholder="Select Role" />
                             </SelectTrigger>
                             <SelectContent>
-                              {vehicleData.map((item) => (
-                                <SelectItem key={item.make} value={item}>
-                                  {`${item.make} ${item.model} ${item.year} `}
+                              {rolesData.map((item) => (
+                                <SelectItem key={item.label} value={item.value}>
+                                  {item.label}
                                 </SelectItem>
                               ))}
                             </SelectContent>
@@ -342,13 +359,13 @@ const Profile = () => {
                 }
               />
             </div>
-            <ScrollArea className="max-w-[600px] overflow-x-auto">
+            <ScrollArea className="max-w-[610px] whitespace-nowrap ">
               <RadioGroup
-                defaultValue={vehicleData[0].registrationNumber}
+                defaultValue={vehicles[0].registrationNumber}
                 className="flex flex-row justify-center space-x-4 mt-4"
               >
-                {vehicleData.map((vehicle) => (
-                  <div key={vehicle.registrationNumber}>
+                {vehicles.map((vehicle) => (
+                  <div key={vehicle.registrationNumber} className="mb-4">
                     <RadioGroupItem
                       value={vehicle.registrationNumber}
                       id={vehicle.registrationNumber}
@@ -367,7 +384,7 @@ const Profile = () => {
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
-          <AppointmentCard />
+          <AppointmentCard appointments={appointments} />
         </div>
       </div>
     </div>
