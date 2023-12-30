@@ -13,7 +13,7 @@ const useErrorHandler = () => {
       duration: 5000
     });
 
-    if (error.includes('token')) {
+    if (error.includes('jwt expired')) {
       window.localStorage.removeItem('loggedInUser');
       dispatchUser({ type: 'LOGOUT' });
       getToast();

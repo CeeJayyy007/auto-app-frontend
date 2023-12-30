@@ -1,23 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from 'react';
 import profileService from '../services/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useToast } from '@/components/ui/use-toast';
-import useErrorHandler from './useErrorhandler';
+import useErrorHandler from './useErrorHandler';
 
 const useProfile = (navigate, userId) => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
 
-  const getAllUserDetailsQuery = useQuery({
+  const result = useQuery({
     queryKey: ['profile', userId],
-    queryFn: profileService.getAllUserDetails,
+    queryFn: () => profileService.getAllUserDetails(userId),
     onSuccess: (data) => {
       queryClient.setQueryData('profile', data);
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
       errorHandler(error, 'Authentication Error', message);
     }
   });
@@ -84,8 +81,6 @@ const useProfile = (navigate, userId) => {
     }
   });
 
-  const result = getAllUserDetailsQuery.data;
-
   const editUser = (user) => {
     editUserMutation.mutate(user);
   };
@@ -106,7 +101,14 @@ const useProfile = (navigate, userId) => {
     removeVehicleMutation.mutate(vehicle);
   };
 
-  return { editUser, editVehicle, addVehicle, removeUser, removeVehicle };
+  return {
+    editUser,
+    editVehicle,
+    addVehicle,
+    removeUser,
+    removeVehicle,
+    result
+  };
 };
 
 export default useProfile;
