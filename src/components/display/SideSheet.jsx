@@ -39,13 +39,13 @@ const SideSheet = ({
           <SheetDescription>{description}</SheetDescription>
         </SheetHeader>
         {body}
-        <SheetFooter>
+        {/* <SheetFooter>
           <SheetClose asChild>
             <Button type="submit" className="w-full">
               {actionLabel}
             </Button>
           </SheetClose>
-        </SheetFooter>
+        </SheetFooter> */}
       </SheetContent>
     </Sheet>
   );
