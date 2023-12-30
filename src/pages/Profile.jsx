@@ -21,12 +21,15 @@ import {
   SelectValue
 } from '@/components/ui/select';
 import { useUserValue } from '@/context/UserContext';
-import { useQuery } from '@tanstack/react-query';
-import profileService from '@/services/profile';
 import useProfile from '@/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
-import { useProfileDispatch } from '@/context/ProfileContext';
-import { set } from 'date-fns';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVehicle } from '@/reducers/vehicleReducers';
+import VehicleForm from '@/components/profile/VehicleForm';
+import {
+  AddVehicleFormSchema,
+  EditVehicleFormSchema
+} from '@/components/profile/VehicleFormValidation';
 
 const rolesData = [
   { label: 'User', value: 'User' },
@@ -44,14 +47,19 @@ const userStatsData = {
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
-  const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const dispatch = useDispatch();
+  const selectedVehicle = useSelector((state) => state.vehicle);
 
   useEffect(() => {
     setLoaded(true);
   }, []);
 
   const user = useUserValue();
-  const { result } = useProfile(navigate, user?.id);
+  const { result, addVehicle } = useProfile(
+    navigate,
+    user?.id,
+    selectedVehicle
+  );
 
   const profile = result.data || {};
 
@@ -70,6 +78,12 @@ const Profile = () => {
   const vehicles = profile.vehicles;
   const appointments = profile.appointments;
   const name = `${firstName} ${lastName}`;
+
+  const handleSelectVehicle = (vehicle) => {
+    dispatch(setVehicle(vehicle));
+  };
+
+  console.log('vehicle', selectedVehicle);
 
   return (
     <div className="flex flex-col">
@@ -129,6 +143,8 @@ const Profile = () => {
               <h3 className="text-xl font-semibold mx-4 text-gray-700">
                 User Profile
               </h3>
+
+              {/* Edit User Profile */}
               <IconDropdownMenu
                 label="User menu"
                 editAction={
@@ -216,54 +232,19 @@ const Profile = () => {
                     cancelLabel="Cancel"
                   />
                 }
+                // Add Vehicle Profile
                 extraActions={
                   <SideSheet
                     triggerLabel="Add Vehicle"
                     title="Add Vehicle Profile"
                     description="Add Vehicle Profile details and click Add Vehicle when done."
-                    actionLabel="Add Vehicle"
+                    // actionLabel="Add Vehicle"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="make"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Make
-                          </Label>
-                          <Input placeholder="Make" name="make" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="model"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Model
-                          </Label>
-                          <Input placeholder="Model" name="model" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="year"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Year
-                          </Label>
-                          <Input placeholder="Year" name="year" type="number" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="registrationNumber"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Regristration Number
-                          </Label>
-                          <Input
-                            placeholder="Registration Number"
-                            name="registrationNumber"
-                          />
-                        </div>
-                      </div>
+                      <VehicleForm
+                        formAction={addVehicle}
+                        formValidation={AddVehicleFormSchema}
+                        buttonText="Add Vehicle"
+                      />
                     }
                   />
                 }
@@ -363,14 +344,12 @@ const Profile = () => {
                 }
               />
             </div>
-            <ScrollArea className="max-w-[610px] whitespace-nowrap ">
+            <ScrollArea className="whitespace-nowrap overflow-auto max-w-[610px] ">
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
-                defaultValue={vehicles[0]}
+                defaultValue={selectedVehicle ? selectedVehicle : vehicles[0]}
                 value={selectedVehicle ? selectedVehicle : vehicles[0]}
-                onValueChange={(value) => {
-                  setSelectedVehicle(value);
-                }}
+                onValueChange={(value) => handleSelectVehicle(value)}
               >
                 {vehicles.map((vehicle) => (
                   <div key={vehicle.registrationNumber} className="mb-4">
@@ -389,7 +368,7 @@ const Profile = () => {
                   </div>
                 ))}
               </RadioGroup>
-              <ScrollBar orientation="horizontal" />
+              {/* <ScrollBar orientation="horizontal" /> */}
             </ScrollArea>
           </div>
           <AppointmentCard appointments={appointments} />
