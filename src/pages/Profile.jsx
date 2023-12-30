@@ -23,6 +23,10 @@ import {
 import { useUserValue } from '@/context/UserContext';
 import { useQuery } from '@tanstack/react-query';
 import profileService from '@/services/profile';
+import useProfile from '@/hooks/useProfile';
+import { useNavigate } from 'react-router-dom';
+import { useProfileDispatch } from '@/context/ProfileContext';
+import { set } from 'date-fns';
 
 const rolesData = [
   { label: 'User', value: 'User' },
@@ -39,21 +43,15 @@ const userStatsData = {
 
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
 
   useEffect(() => {
     setLoaded(true);
   }, []);
 
   const user = useUserValue();
-
-  const result = useQuery({
-    queryKey: ['profile', user?.id],
-    queryFn: profileService.getAllUserDetails,
-    onError: (error) => {
-      console.log('error', error);
-    },
-    refetchOnWindowFocus: true
-  });
+  const { result } = useProfile(navigate, user?.id);
 
   const profile = result.data || {};
 
@@ -71,11 +69,7 @@ const Profile = () => {
   const { firstName, lastName, roles, email, phone } = profile.user;
   const vehicles = profile.vehicles;
   const appointments = profile.appointments;
-
   const name = `${firstName} ${lastName}`;
-
-  console.log('vehicles', vehicles);
-  console.log('appointments', appointments);
 
   return (
     <div className="flex flex-col">
@@ -85,7 +79,9 @@ const Profile = () => {
           <div className="grid grid-cols-3 pt-4 mx-8">
             <div className="">
               <p className="text-muted-foreground text-green-300">Make</p>
-              <p className="text-xl text-white mt-1">Toyota</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.make : vehicles[0].make}
+              </p>
             </div>
             <Separator
               orientation="vertical"
@@ -93,13 +89,17 @@ const Profile = () => {
             />
             <div>
               <p className="text-muted-foreground text-green-300">Model</p>
-              <p className="text-xl text-white mt-1">Corolla</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.model : vehicles[0].model}
+              </p>
             </div>
           </div>
           <div className="grid grid-cols-3 mx-8">
             <div className="">
               <p className="text-muted-foreground text-green-300">Year</p>
-              <p className="text-xl text-white mt-1">2016</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.year : vehicles[0].year}
+              </p>
             </div>
             <Separator
               orientation="vertical"
@@ -107,7 +107,11 @@ const Profile = () => {
             />
             <div className="">
               <p className="text-muted-foreground text-green-300">Reg. No.</p>
-              <p className="text-xl text-white mt-1">LND123XA</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle
+                  ? selectedVehicle.registrationNumber
+                  : vehicles[0].registrationNumber}
+              </p>
             </div>
           </div>
           <img
@@ -361,14 +365,18 @@ const Profile = () => {
             </div>
             <ScrollArea className="max-w-[610px] whitespace-nowrap ">
               <RadioGroup
-                defaultValue={vehicles[0].registrationNumber}
                 className="flex flex-row justify-center space-x-4 mt-4"
+                defaultValue={vehicles[0]}
+                value={selectedVehicle ? selectedVehicle : vehicles[0]}
+                onValueChange={(value) => {
+                  setSelectedVehicle(value);
+                }}
               >
                 {vehicles.map((vehicle) => (
                   <div key={vehicle.registrationNumber} className="mb-4">
                     <RadioGroupItem
-                      value={vehicle.registrationNumber}
                       id={vehicle.registrationNumber}
+                      value={vehicle}
                       className="peer sr-only"
                     />
                     <Label
