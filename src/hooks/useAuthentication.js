@@ -50,7 +50,7 @@ const useAuthentication = (dispatchUser, navigate) => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedInUser');
+    window.localStorage.clear();
     dispatchUser({ type: 'LOGOUT' });
     navigate('/sign-in', { replace: true });
   };
