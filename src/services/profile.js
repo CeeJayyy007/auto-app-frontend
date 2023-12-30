@@ -1,20 +1,14 @@
 import axios from 'axios';
+import { token } from '@/utils/auth';
 const baseUrl = '/api/users';
 const vehicleUrl = '/api/vehicles';
 
-let token = null;
-
-const setToken = (newToken) => {
-  token = `bearer ${newToken}`;
-};
-
-const getAllUserDetails = async (data) => {
+const getAllUserDetails = async (id) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.get(`${baseUrl}/${data?.queryKey[1]}`, config);
-
+  const response = await axios.get(`${baseUrl}/${id}`, config);
   return response.data;
 };
 
@@ -24,7 +18,6 @@ const addVehicle = async (newObject) => {
   };
 
   const response = await axios.post(vehicleUrl, newObject, config);
-
   return response.data;
 };
 
@@ -82,6 +75,5 @@ export default {
   updateUser,
   updateVehicle,
   removeUser,
-  removeVehicle,
-  setToken
+  removeVehicle
 };
