@@ -2,10 +2,21 @@
 import profileService from '../services/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
+import { useToast } from '@/components/ui/use-toast';
+import { get } from 'react-hook-form';
 
-const useProfile = (navigate, userId) => {
+const useProfile = (navigate, userId, selectedVehicle) => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
+  const { toast } = useToast();
+
+  const getToast = ({ title, description }) =>
+    toast({
+      title: title,
+      description: description,
+      variant: 'success',
+      duration: 5000
+    });
 
   const result = useQuery({
     queryKey: ['profile', userId],
@@ -22,13 +33,12 @@ const useProfile = (navigate, userId) => {
   const editUserMutation = useMutation({
     mutationFn: profileService.updateUser,
     onSuccess: (data) => {
-      queryClient.invalidateQueries('user');
-      navigate('/', { replace: true });
+      queryClient.invalidateQueries('profile');
+      getToast('Profile Updated', 'Your profile has been updated');
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Profile Update Error', message);
     }
   });
 
@@ -39,19 +49,21 @@ const useProfile = (navigate, userId) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Vehicle Edit Error', message);
     }
   });
 
   const addVehicleMutation = useMutation({
-    mutationFn: profileService.addVehicle,
+    mutationFn: (params) => profileService.addVehicle(...params),
     onSuccess: (data) => {
-      queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries(['profile']);
+      getToast({
+        title: 'Profile Updated',
+        description: 'Vehicle added to your profile'
+      });
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
       errorHandler(error, 'Authentication Error', message);
     }
   });
@@ -64,7 +76,6 @@ const useProfile = (navigate, userId) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
       errorHandler(error, 'Authentication Error', message);
     }
   });
@@ -76,7 +87,6 @@ const useProfile = (navigate, userId) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
       errorHandler(error, 'Authentication Error', message);
     }
   });
@@ -90,7 +100,7 @@ const useProfile = (navigate, userId) => {
   };
 
   const addVehicle = (vehicle) => {
-    addVehicleMutation.mutate(vehicle);
+    addVehicleMutation.mutate([vehicle, userId]);
   };
 
   const removeUser = (user) => {

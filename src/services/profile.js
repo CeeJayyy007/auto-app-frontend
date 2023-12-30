@@ -12,12 +12,16 @@ const getAllUserDetails = async (id) => {
   return response.data;
 };
 
-const addVehicle = async (newObject) => {
+const addVehicle = async (newObject, id) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.post(vehicleUrl, newObject, config);
+  const response = await axios.post(
+    `${baseUrl}/${id}/add-vehicle`,
+    newObject,
+    config
+  );
   return response.data;
 };
 
