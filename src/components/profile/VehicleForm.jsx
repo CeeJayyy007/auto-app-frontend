@@ -21,16 +21,21 @@ const VehicleForm = ({
   const form = useForm({
     resolver: zodResolver(formValidation),
     defaultValues: {
-      make: vehicle.make || '',
-      model: vehicle.model || '',
-      year: parseInt(vehicle.year) || 0,
-      registrationNumber: vehicle.registrationNumber || ''
+      make: vehicle ? vehicle.make : '',
+      model: vehicle ? vehicle.model : '',
+      year: vehicle ? vehicle.year : '',
+      registrationNumber: vehicle ? vehicle.registrationNumber : ''
     }
   });
 
   const onSubmit = async (data) => {
     try {
-      await formAction(data, vehicle.id);
+      if (vehicle) {
+        await formAction(data, vehicle.id);
+      } else {
+        await formAction(data);
+      }
+
       form.reset();
     } catch (error) {
       form.setError('submitError', {
