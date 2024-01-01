@@ -101,6 +101,33 @@ const vehicleData = [
   }
 ];
 
+const appointmentData = [
+  {
+    id: 1,
+    date: '15/12/2023',
+    note: 'Urgent fix',
+    services: ['oil change', 'tyre change'],
+    status: { value: 'completed', label: 'Completed' },
+    createdAt: '12/12/2021'
+  },
+  {
+    id: 2,
+    date: '12/12/2023',
+    note: 'Change oil',
+    services: ['oil change', 'tyre change'],
+    status: { value: 'pending', label: 'Pending' },
+    createdAt: '12/12/2022'
+  },
+  {
+    id: 3,
+    date: '11/12/2023',
+    note: 'Fix the issues',
+    services: ['steering fix', 'tyre change'],
+    status: { value: 'canceled', label: 'Canceled' },
+    createdAt: '12/12/2023'
+  }
+];
+
 const Dashboard = () => {
   return (
     <div className="space-y-4">
@@ -167,7 +194,7 @@ const Dashboard = () => {
         </Card>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-8">
-        <AppointmentCard />
+        <AppointmentCard appointments={appointmentData} />
         <Card className="col-span-4">
           <CardHeader>
             <div className="flex flex-row justify-between items-start">

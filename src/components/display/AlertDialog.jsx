@@ -37,7 +37,11 @@ const AlertDialogComponent = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
-          <AlertDialogAction variant="destructive" className="min-w-[100px]">
+          <AlertDialogAction
+            variant="destructive"
+            className="min-w-[100px]"
+            onClick={onClick}
+          >
             {actionLabel}
           </AlertDialogAction>
         </AlertDialogFooter>

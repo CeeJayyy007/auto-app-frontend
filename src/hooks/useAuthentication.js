@@ -2,10 +2,10 @@
 import { useEffect } from 'react';
 import authService from '../services/auth';
 import { useMutation } from '@tanstack/react-query';
-import { useToast } from '@/components/ui/use-toast';
+import useErrorHandler from './useErrorHandler';
 
 const useAuthentication = (dispatchUser, navigate) => {
-  const { toast } = useToast();
+  const { errorHandler } = useErrorHandler();
 
   useEffect(() => {
     const loggedInUserJSON = window.localStorage.getItem('loggedInUser');
@@ -24,13 +24,7 @@ const useAuthentication = (dispatchUser, navigate) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
-      toast({
-        title: 'Authentication Error',
-        description: message,
-        variant: 'error',
-        duration: 5000
-      });
+      errorHandler(error, 'Authentication Error', message);
     }
   });
 
@@ -43,13 +37,7 @@ const useAuthentication = (dispatchUser, navigate) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-
-      toast({
-        title: 'Authentication Error',
-        description: message,
-        variant: 'error',
-        duration: 5000
-      });
+      errorHandler(error, 'Authentication Error', message);
     }
   });
 
@@ -62,7 +50,7 @@ const useAuthentication = (dispatchUser, navigate) => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem('loggedInUser');
+    window.localStorage.clear();
     dispatchUser({ type: 'LOGOUT' });
     navigate('/sign-in', { replace: true });
   };

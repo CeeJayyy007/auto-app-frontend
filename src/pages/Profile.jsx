@@ -8,39 +8,25 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
 import AppointmentCard from '@/components/appointment/AppointmentCard';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
-import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
 import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { useUserValue } from '@/context/UserContext';
-
-const vehicleData = [
-  {
-    id: 1,
-    make: 'Lamborghini',
-    model: 'Aventador',
-    year: '2022',
-    registrationNumber: 'LND123XA',
-    image: '/src/assets/lambo.jpeg'
-  },
-  {
-    id: 2,
-    make: 'Mercedes',
-    model: 'Benz',
-    year: '2021',
-    registrationNumber: 'LND123XX',
-    image: '/src/assets/benz.jpeg'
-  }
-];
+import useProfile from '@/hooks/useProfile';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setVehicle } from '@/reducers/vehicleReducers';
+import VehicleForm from '@/components/profile/VehicleForm';
+import {
+  AddVehicleFormSchema,
+  EditVehicleFormSchema
+} from '@/components/profile/VehicleFormValidation';
+import {
+  AddUserFormSchema,
+  EditUserFormSchema
+} from '@/components/profile/UserFormValidation';
+import UserForm from '@/components/profile/UserForm';
 
 const userStatsData = {
   memberSince: '12/12/2020',
@@ -51,14 +37,38 @@ const userStatsData = {
 
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const selectedVehicle = useSelector((state) => state.vehicle);
 
   useEffect(() => {
     setLoaded(true);
   }, []);
-
   const user = useUserValue();
-  const { firstName, lastName, roles, email, phone } = user || {};
+  const { result, addVehicle, editVehicle, removeVehicle, editUser } =
+    useProfile(navigate, user?.id, selectedVehicle);
+
+  const profile = result.data || {};
+
+  // do not render anything if profile data is still null
+  if (!profile) {
+    return null;
+  }
+
+  if (result.isLoading) {
+    return <div>loading data...</div>;
+  } else if (result.isError) {
+    return <div>error loading data</div>;
+  }
+
+  const { firstName, lastName, roles, email, phone } = profile.user;
+  const vehicles = profile.vehicles.sort((a, b) => a.id - b.id);
+  const appointments = profile.appointments;
   const name = `${firstName} ${lastName}`;
+
+  const handleSelectVehicle = (vehicle) => {
+    dispatch(setVehicle(vehicle));
+  };
 
   return (
     <div className="flex flex-col">
@@ -68,7 +78,9 @@ const Profile = () => {
           <div className="grid grid-cols-3 pt-4 mx-8">
             <div className="">
               <p className="text-muted-foreground text-green-300">Make</p>
-              <p className="text-xl text-white mt-1">Toyota</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.make : vehicles[0].make}
+              </p>
             </div>
             <Separator
               orientation="vertical"
@@ -76,13 +88,17 @@ const Profile = () => {
             />
             <div>
               <p className="text-muted-foreground text-green-300">Model</p>
-              <p className="text-xl text-white mt-1">Corolla</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.model : vehicles[0].model}
+              </p>
             </div>
           </div>
           <div className="grid grid-cols-3 mx-8">
             <div className="">
               <p className="text-muted-foreground text-green-300">Year</p>
-              <p className="text-xl text-white mt-1">2016</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle ? selectedVehicle.year : vehicles[0].year}
+              </p>
             </div>
             <Separator
               orientation="vertical"
@@ -90,7 +106,11 @@ const Profile = () => {
             />
             <div className="">
               <p className="text-muted-foreground text-green-300">Reg. No.</p>
-              <p className="text-xl text-white mt-1">LND123XA</p>
+              <p className="text-xl text-white mt-1">
+                {selectedVehicle
+                  ? selectedVehicle.registrationNumber
+                  : vehicles[0].registrationNumber}
+              </p>
             </div>
           </div>
           <img
@@ -108,81 +128,23 @@ const Profile = () => {
               <h3 className="text-xl font-semibold mx-4 text-gray-700">
                 User Profile
               </h3>
+
+              {/* Edit User Profile */}
               <IconDropdownMenu
                 label="User menu"
                 editAction={
                   <SideSheet
                     triggerLabel="Edit"
                     title="Edit User Profile"
-                    description="Edit User Profile details and click Save Profile when done."
+                    description="Edit User Profile details and click Edit User when done."
                     actionLabel="Save Profile"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="firstName"
-                            className="text-left mb-2 sr-only"
-                          >
-                            First Name
-                          </Label>
-                          <Input placeholder="First Name" name="firstName" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="lastName"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Last Name
-                          </Label>
-                          <Input placeholder="Last Name" name="lastName" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="email"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Email
-                          </Label>
-                          <Input
-                            placeholder="Email"
-                            name="email"
-                            type="email"
-                          />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="phone"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Phone Number
-                          </Label>
-                          <Input
-                            placeholder="Phone Number"
-                            name="phone"
-                            typ="tel"
-                          />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="date"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Select Vehicle
-                          </Label>
-                          <Select>
-                            <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select vehicle" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {vehicleData.map((item) => (
-                                <SelectItem key={item.make} value={item}>
-                                  {`${item.make} ${item.model} ${item.year} `}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
+                      <UserForm
+                        user={profile.user}
+                        formAction={editUser}
+                        formValidation={EditUserFormSchema}
+                        buttonText="Edit User"
+                      />
                     }
                   />
                 }
@@ -195,54 +157,18 @@ const Profile = () => {
                     cancelLabel="Cancel"
                   />
                 }
+                // Add Vehicle Profile
                 extraActions={
                   <SideSheet
                     triggerLabel="Add Vehicle"
                     title="Add Vehicle Profile"
                     description="Add Vehicle Profile details and click Add Vehicle when done."
-                    actionLabel="Add Vehicle"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="make"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Make
-                          </Label>
-                          <Input placeholder="Make" name="make" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="model"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Model
-                          </Label>
-                          <Input placeholder="Model" name="model" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="year"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Year
-                          </Label>
-                          <Input placeholder="Year" name="year" type="number" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="registrationNumber"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Regristration Number
-                          </Label>
-                          <Input
-                            placeholder="Registration Number"
-                            name="registrationNumber"
-                          />
-                        </div>
-                      </div>
+                      <VehicleForm
+                        formAction={addVehicle}
+                        formValidation={AddVehicleFormSchema}
+                        buttonText="Add Vehicle"
+                      />
                     }
                   />
                 }
@@ -268,8 +194,8 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-3 rounded-[14px] bg-white p-4">
-            <div className="flex flex-row justify-between items-start">
+          <div className="col-span-3 rounded-[14px] bg-white p-4 ">
+            <div className="flex flex-row justify-between items-start ">
               <div>
                 <h3 className="text-xl font-semibold text-gray-700">
                   Vehicles
@@ -279,7 +205,7 @@ const Profile = () => {
                 </p>
               </div>
               <IconDropdownMenu
-                label="Vehicle menu"
+                label="Vehicle Menu"
                 editAction={
                   <SideSheet
                     triggerLabel="Edit"
@@ -287,47 +213,12 @@ const Profile = () => {
                     description="Edit Vehicle Profile details and click Save Profile when done."
                     actionLabel="Save Profile"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="make"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Make
-                          </Label>
-                          <Input placeholder="Make" name="make" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="model"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Model
-                          </Label>
-                          <Input placeholder="Model" name="model" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="year"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Year
-                          </Label>
-                          <Input placeholder="Year" name="year" type="number" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="registrationNumber"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Regristration Number
-                          </Label>
-                          <Input
-                            placeholder="Registration Number"
-                            name="registrationNumber"
-                          />
-                        </div>
-                      </div>
+                      <VehicleForm
+                        vehicle={selectedVehicle || vehicles[0]}
+                        formAction={editVehicle}
+                        formValidation={EditVehicleFormSchema}
+                        buttonText="Edit Vehicle"
+                      />
                     }
                   />
                 }
@@ -338,20 +229,27 @@ const Profile = () => {
                     title="Delete Vehicle"
                     description="Are you sure you want to delete this vehicle?"
                     cancelLabel="Cancel"
+                    onClick={() =>
+                      removeVehicle(
+                        selectedVehicle ? selectedVehicle.id : vehicles[0].id
+                      )
+                    }
                   />
                 }
               />
             </div>
-            <ScrollArea className="max-w-[600px] overflow-x-auto">
+            <ScrollArea className="relative max-w-[620px]">
               <RadioGroup
-                defaultValue={vehicleData[0].registrationNumber}
                 className="flex flex-row justify-center space-x-4 mt-4"
+                defaultValue={selectedVehicle ? selectedVehicle : vehicles[0]}
+                value={selectedVehicle ? selectedVehicle : vehicles[0]}
+                onValueChange={(value) => handleSelectVehicle(value)}
               >
-                {vehicleData.map((vehicle) => (
-                  <div key={vehicle.registrationNumber}>
+                {vehicles.map((vehicle) => (
+                  <div key={vehicle.registrationNumber} className="mb-4">
                     <RadioGroupItem
-                      value={vehicle.registrationNumber}
                       id={vehicle.registrationNumber}
+                      value={vehicle}
                       className="peer sr-only"
                     />
                     <Label
@@ -367,7 +265,7 @@ const Profile = () => {
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
-          <AppointmentCard />
+          <AppointmentCard appointments={appointments} />
         </div>
       </div>
     </div>

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import userReducer from './reducers/userReducers';
+import vehicleReducer from './reducers/vehicleReducers';
 
 const store = configureStore({
   reducer: {
-    user: userReducer
+    vehicle: vehicleReducer
   }
 });
 

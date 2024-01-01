@@ -14,37 +14,17 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
-import { commaSeparatedArray, statusColor } from '@/utils/helpers';
-import { Button } from '@/components/ui/button';
+import {
+  commaSeparatedArray,
+  formatDataArray,
+  statusColor
+} from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
 import ButtonLink from '../button/ButtonLink';
 
-const appointmentData = [
-  {
-    id: 1,
-    date: '15/12/2023',
-    note: 'Urgent fix',
-    services: ['oil change', 'tyre change'],
-    status: { value: 'completed', label: 'Completed' }
-  },
-  {
-    id: 2,
-    date: '12/12/2023',
-    note: 'Change oil',
-    services: ['oil change', 'tyre change'],
-    status: { value: 'pending', label: 'Pending' }
-  },
-  {
-    id: 3,
-    date: '11/12/2023',
-    note: 'Fix the issues',
-    services: ['steering fix', 'tyre change'],
-    status: { value: 'canceled', label: 'Canceled' }
-  }
-];
+const AppointmentCard = ({ appointments }) => {
+  const appointmentData = formatDataArray(appointments, 4);
 
-const AppointmentCard = () => {
   return (
     <Card className="col-span-4">
       <CardHeader className="pb-0">
@@ -70,7 +50,7 @@ const AppointmentCard = () => {
           </TableHeader>
           <TableBody className="py-0">
             {appointmentData.map((appointment) => (
-              <TableRow key={appointment.date}>
+              <TableRow key={appointment.createdAt}>
                 <TableCell className="font-medium">{appointment.id}</TableCell>
                 <TableCell>{appointment.date}</TableCell>
                 <TableCell>{appointment.note}</TableCell>

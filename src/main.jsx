@@ -4,13 +4,17 @@ import './styles/globals.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { UserContextProvider } from './context/UserContext';
 import { Toaster } from './components/ui/toaster.jsx';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
     <UserContextProvider>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
       <Toaster />
     </UserContextProvider>
   </QueryClientProvider>
