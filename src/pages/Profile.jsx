@@ -12,14 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
 import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
-import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import { useUserValue } from '@/context/UserContext';
 import useProfile from '@/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
@@ -30,12 +22,11 @@ import {
   AddVehicleFormSchema,
   EditVehicleFormSchema
 } from '@/components/profile/VehicleFormValidation';
-
-const rolesData = [
-  { label: 'User', value: 'User' },
-  { label: 'Admin', value: 'Admin' },
-  { label: 'Super Admin', value: 'SuperAdmin' }
-];
+import {
+  AddUserFormSchema,
+  EditUserFormSchema
+} from '@/components/profile/UserFormValidation';
+import UserForm from '@/components/profile/UserForm';
 
 const userStatsData = {
   memberSince: '12/12/2020',
@@ -53,13 +44,9 @@ const Profile = () => {
   useEffect(() => {
     setLoaded(true);
   }, []);
-
   const user = useUserValue();
-  const { result, addVehicle, editVehicle } = useProfile(
-    navigate,
-    user?.id,
-    selectedVehicle
-  );
+  const { result, addVehicle, editVehicle, removeVehicle, editUser } =
+    useProfile(navigate, user?.id, selectedVehicle);
 
   const profile = result.data || {};
 
@@ -75,15 +62,13 @@ const Profile = () => {
   }
 
   const { firstName, lastName, roles, email, phone } = profile.user;
-  const vehicles = profile.vehicles;
+  const vehicles = profile.vehicles.sort((a, b) => a.id - b.id);
   const appointments = profile.appointments;
   const name = `${firstName} ${lastName}`;
 
   const handleSelectVehicle = (vehicle) => {
     dispatch(setVehicle(vehicle));
   };
-
-  console.log('selected vehicle', selectedVehicle, vehicles[0]);
 
   return (
     <div className="flex flex-col">
@@ -151,75 +136,15 @@ const Profile = () => {
                   <SideSheet
                     triggerLabel="Edit"
                     title="Edit User Profile"
-                    description="Edit User Profile details and click Save Profile when done."
+                    description="Edit User Profile details and click Edit User when done."
                     actionLabel="Save Profile"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="firstName"
-                            className="text-left mb-2 sr-only"
-                          >
-                            First Name
-                          </Label>
-                          <Input placeholder="First Name" name="firstName" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="lastName"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Last Name
-                          </Label>
-                          <Input placeholder="Last Name" name="lastName" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="email"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Email
-                          </Label>
-                          <Input
-                            placeholder="Email"
-                            name="email"
-                            type="email"
-                          />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="phone"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Phone Number
-                          </Label>
-                          <Input
-                            placeholder="Phone Number"
-                            name="phone"
-                            typ="tel"
-                          />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="roles"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Select Role
-                          </Label>
-                          <Select>
-                            <SelectTrigger className="w-[180px]">
-                              <SelectValue placeholder="Select Role" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {rolesData.map((item) => (
-                                <SelectItem key={item.label} value={item.value}>
-                                  {item.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
+                      <UserForm
+                        user={profile.user}
+                        formAction={editUser}
+                        formValidation={EditUserFormSchema}
+                        buttonText="Edit User"
+                      />
                     }
                   />
                 }
@@ -238,7 +163,6 @@ const Profile = () => {
                     triggerLabel="Add Vehicle"
                     title="Add Vehicle Profile"
                     description="Add Vehicle Profile details and click Add Vehicle when done."
-                    // actionLabel="Add Vehicle"
                     body={
                       <VehicleForm
                         formAction={addVehicle}
@@ -305,6 +229,11 @@ const Profile = () => {
                     title="Delete Vehicle"
                     description="Are you sure you want to delete this vehicle?"
                     cancelLabel="Cancel"
+                    onClick={() =>
+                      removeVehicle(
+                        selectedVehicle ? selectedVehicle.id : vehicles[0].id
+                      )
+                    }
                   />
                 }
               />

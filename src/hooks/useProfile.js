@@ -10,11 +10,11 @@ const useProfile = (navigate, userId, selectedVehicle) => {
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (selectedVehicle) {
-      queryClient.setQueryData('selectedVehicle', selectedVehicle);
-    }
-  }, [selectedVehicle]);
+  //   useEffect(() => {
+  //     if (selectedVehicle) {
+  //       queryClient.setQueryData('selectedVehicle', selectedVehicle);
+  //     }
+  //   }, [selectedVehicle]);
 
   const getToast = ({ title, description }) =>
     toast({
@@ -32,13 +32,13 @@ const useProfile = (navigate, userId, selectedVehicle) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Profile Update Error', message);
     }
   });
 
   const editUserMutation = useMutation({
     mutationFn: profileService.updateUser,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('profile');
       getToast('Profile Updated', 'Your profile has been updated');
     },
@@ -51,7 +51,7 @@ const useProfile = (navigate, userId, selectedVehicle) => {
   const editVehicleMutation = useMutation({
     mutationFn: (params) => profileService.updateVehicle(...params),
     onSuccess: (data) => {
-      queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('profile');
       getToast({
         title: 'Profile Updated',
         description: 'Vehicle updated'
@@ -74,30 +74,34 @@ const useProfile = (navigate, userId, selectedVehicle) => {
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Add Vehicle Error', message);
     }
   });
 
   const removeUserMutation = useMutation({
     mutationFn: profileService.removeUser,
     onSuccess: (data) => {
-      queryClient.invalidateQueries('user');
+      queryClient.invalidateQueries('profile');
       navigate('/', { replace: true });
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Profile Update Error', message);
     }
   });
 
   const removeVehicleMutation = useMutation({
     mutationFn: profileService.removeVehicle,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries('user');
+    onSuccess: () => {
+      queryClient.invalidateQueries('profile');
+      getToast({
+        title: 'Profile Updated',
+        description: 'Vehicle deleted from your profile'
+      });
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Delete Vehicle Error', message);
     }
   });
 
@@ -117,8 +121,8 @@ const useProfile = (navigate, userId, selectedVehicle) => {
     removeUserMutation.mutate(user);
   };
 
-  const removeVehicle = (vehicle) => {
-    removeVehicleMutation.mutate(vehicle);
+  const removeVehicle = (id) => {
+    removeVehicleMutation.mutate(id);
   };
 
   return {
