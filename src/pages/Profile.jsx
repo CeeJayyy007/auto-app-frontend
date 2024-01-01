@@ -55,7 +55,7 @@ const Profile = () => {
   }, []);
 
   const user = useUserValue();
-  const { result, addVehicle } = useProfile(
+  const { result, addVehicle, editVehicle } = useProfile(
     navigate,
     user?.id,
     selectedVehicle
@@ -83,7 +83,7 @@ const Profile = () => {
     dispatch(setVehicle(vehicle));
   };
 
-  console.log('vehicle', selectedVehicle);
+  console.log('selected vehicle', selectedVehicle, vehicles[0]);
 
   return (
     <div className="flex flex-col">
@@ -270,8 +270,8 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-3 rounded-[14px] bg-white p-4">
-            <div className="flex flex-row justify-between items-start">
+          <div className="col-span-3 rounded-[14px] bg-white p-4 ">
+            <div className="flex flex-row justify-between items-start ">
               <div>
                 <h3 className="text-xl font-semibold text-gray-700">
                   Vehicles
@@ -281,7 +281,7 @@ const Profile = () => {
                 </p>
               </div>
               <IconDropdownMenu
-                label="Vehicle menu"
+                label="Vehicle Menu"
                 editAction={
                   <SideSheet
                     triggerLabel="Edit"
@@ -289,47 +289,12 @@ const Profile = () => {
                     description="Edit Vehicle Profile details and click Save Profile when done."
                     actionLabel="Save Profile"
                     body={
-                      <div className="flex flex-col space-y-4 py-4">
-                        <div className="grid ">
-                          <Label
-                            htmlFor="make"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Make
-                          </Label>
-                          <Input placeholder="Make" name="make" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="model"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Model
-                          </Label>
-                          <Input placeholder="Model" name="model" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="year"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Year
-                          </Label>
-                          <Input placeholder="Year" name="year" type="number" />
-                        </div>
-                        <div className="grid ">
-                          <Label
-                            htmlFor="registrationNumber"
-                            className="text-left mb-2 sr-only"
-                          >
-                            Regristration Number
-                          </Label>
-                          <Input
-                            placeholder="Registration Number"
-                            name="registrationNumber"
-                          />
-                        </div>
-                      </div>
+                      <VehicleForm
+                        vehicle={selectedVehicle || vehicles[0]}
+                        formAction={editVehicle}
+                        formValidation={EditVehicleFormSchema}
+                        buttonText="Edit Vehicle"
+                      />
                     }
                   />
                 }
@@ -344,7 +309,7 @@ const Profile = () => {
                 }
               />
             </div>
-            <ScrollArea className="whitespace-nowrap overflow-auto max-w-[610px] ">
+            <ScrollArea className="relative max-w-[620px]">
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
                 defaultValue={selectedVehicle ? selectedVehicle : vehicles[0]}
@@ -368,7 +333,7 @@ const Profile = () => {
                   </div>
                 ))}
               </RadioGroup>
-              {/* <ScrollBar orientation="horizontal" /> */}
+              <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
           <AppointmentCard appointments={appointments} />

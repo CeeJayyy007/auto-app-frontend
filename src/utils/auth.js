@@ -1,5 +1,5 @@
 export const token = `Bearer ${
-  JSON.parse(window.localStorage.getItem('loggedInUser')).token
+  JSON.parse(window.localStorage.getItem('loggedInUser'))?.token
 }`;
 
 const checkAuth = async () => {

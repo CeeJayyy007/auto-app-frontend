@@ -25,30 +25,22 @@ const addVehicle = async (newObject, id) => {
   return response.data;
 };
 
-const updateUser = async (newObject) => {
+const updateUser = async (newObject, id) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.put(
-    `${baseUrl}/${newObject.id}`,
-    newObject,
-    config
-  );
+  const response = await axios.put(`${baseUrl}/${id}`, newObject, config);
 
   return response.data;
 };
 
-const updateVehicle = async (newObject) => {
+const updateVehicle = async (newObject, id) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.put(
-    `${vehicleUrl}/${newObject.id}`,
-    newObject,
-    config
-  );
+  const response = await axios.put(`${vehicleUrl}/${id}`, newObject, config);
 
   return response.data;
 };

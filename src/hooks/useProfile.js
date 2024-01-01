@@ -3,12 +3,18 @@ import profileService from '../services/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
 import { useToast } from '@/components/ui/use-toast';
-import { get } from 'react-hook-form';
+import { useEffect } from 'react';
 
 const useProfile = (navigate, userId, selectedVehicle) => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (selectedVehicle) {
+      queryClient.setQueryData('selectedVehicle', selectedVehicle);
+    }
+  }, [selectedVehicle]);
 
   const getToast = ({ title, description }) =>
     toast({
@@ -43,9 +49,13 @@ const useProfile = (navigate, userId, selectedVehicle) => {
   });
 
   const editVehicleMutation = useMutation({
-    mutationFn: profileService.updateVehicle,
+    mutationFn: (params) => profileService.updateVehicle(...params),
     onSuccess: (data) => {
       queryClient.invalidateQueries('user');
+      getToast({
+        title: 'Profile Updated',
+        description: 'Vehicle updated'
+      });
     },
     onError: (error) => {
       const message = error?.response?.data?.error || 'Something went wrong';
@@ -95,8 +105,8 @@ const useProfile = (navigate, userId, selectedVehicle) => {
     editUserMutation.mutate(user);
   };
 
-  const editVehicle = (vehicle) => {
-    editVehicleMutation.mutate(vehicle);
+  const editVehicle = (vehicle, vehicleId) => {
+    editVehicleMutation.mutate([vehicle, vehicleId]);
   };
 
   const addVehicle = (vehicle) => {
