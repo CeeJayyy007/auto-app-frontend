@@ -1,9 +1,9 @@
-export const token = `Bearer ${
-  JSON.parse(window.localStorage.getItem('loggedInUser'))?.token
-}`;
+import storePersist from '../store/storePersist';
+
+export const token = `Bearer ${storePersist.get('loggedInUser')?.token}`;
 
 const checkAuth = async () => {
-  return await !!localStorage.getItem('loggedInUser');
+  return await !!storePersist.get('loggedInUser');
 };
 
 export default checkAuth;

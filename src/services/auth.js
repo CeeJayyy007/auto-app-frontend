@@ -7,7 +7,6 @@ const login = async (credentials) => {
 };
 
 const register = async (credentials) => {
-  console.log('credentials', credentials);
   const response = await axios.post('/api/users', credentials);
   return response.data;
 };

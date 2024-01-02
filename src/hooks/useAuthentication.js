@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import authService from '../services/auth';
 import { useMutation } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
+import storePersist from '@/store/storePersist';
 
 const useAuthentication = (dispatchUser, navigate) => {
   const { errorHandler } = useErrorHandler();
 
   useEffect(() => {
-    const loggedInUserJSON = window.localStorage.getItem('loggedInUser');
-    if (loggedInUserJSON) {
-      const user = JSON.parse(loggedInUserJSON);
+    const user = storePersist.get('loggedInUser');
+    if (user) {
       dispatchUser({ type: 'SET_USER', payload: user });
     }
   }, []);
@@ -18,7 +18,7 @@ const useAuthentication = (dispatchUser, navigate) => {
   const loginMutation = useMutation({
     mutationFn: authService.login,
     onSuccess: (data) => {
-      window.localStorage.setItem('loggedInUser', JSON.stringify(data));
+      storePersist.set('loggedInUser', data);
       dispatchUser({ type: 'SET_USER', payload: data });
       navigate('/', { replace: true });
     },
@@ -30,7 +30,7 @@ const useAuthentication = (dispatchUser, navigate) => {
   const registerMutation = useMutation({
     mutationFn: authService.register,
     onSuccess: (data) => {
-      window.localStorage.setItem('loggedInUser', JSON.stringify(data));
+      storePersist.set('loggedInUser', data);
       dispatchUser({ type: 'SET_USER', payload: data });
       navigate('/', { replace: true });
     },
@@ -48,7 +48,7 @@ const useAuthentication = (dispatchUser, navigate) => {
   };
 
   const handleLogout = () => {
-    window.localStorage.clear();
+    storePersist.clear();
     dispatchUser({ type: 'LOGOUT' });
     navigate('/sign-in', { replace: true });
   };

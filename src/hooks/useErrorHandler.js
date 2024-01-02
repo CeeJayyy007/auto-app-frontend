@@ -2,6 +2,7 @@ import { useToast } from '@/components/ui/use-toast';
 import codeMessage from '../utils/codeMessage';
 import { useUserDispatch } from '@/context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import storePersist from '@/store/storePersist';
 
 const useErrorHandler = () => {
   const dispatchUser = useUserDispatch();
@@ -12,8 +13,7 @@ const useErrorHandler = () => {
     const { response } = error;
 
     if (response && response.data.error.includes('jwt')) {
-      console.log('jwt error');
-      window.localStorage.clear();
+      storePersist.clear();
       dispatchUser({ type: 'LOGOUT' });
       navigate('/sign-in', { replace: true });
       toast({

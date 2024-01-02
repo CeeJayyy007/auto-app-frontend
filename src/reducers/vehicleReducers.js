@@ -1,3 +1,4 @@
+import storePersist from '@/store/storePersist';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = null;
@@ -7,7 +8,7 @@ const vehicleSlice = createSlice({
   initialState,
   reducers: {
     setVehicle(state, action) {
-      window.localStorage.setItem('vehicle', JSON.stringify(action.payload));
+      storePersist.set('vehicle', action.payload);
       return action.payload;
     }
   }
