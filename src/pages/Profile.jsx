@@ -14,8 +14,6 @@ import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
 import useProfile from '@/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { setVehicle } from '@/reducers/vehicleReducers';
 import VehicleForm from '@/components/profile/VehicleForm';
 import {
   AddVehicleFormSchema,
@@ -26,6 +24,7 @@ import {
   EditUserFormSchema
 } from '@/components/profile/UserFormValidation';
 import UserForm from '@/components/profile/UserForm';
+import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
 
 const userStatsData = {
   memberSince: '12/12/2020',
@@ -37,15 +36,15 @@ const userStatsData = {
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const selectedVehicle = useSelector((state) => state.vehicle);
+  const dispatchVehicle = useVehicleDispatch();
+  const selectedVehicle = useVehicleValue();
 
   useEffect(() => {
     setLoaded(true);
   }, []);
 
   const { result, addVehicle, editVehicle, removeVehicle, editUser } =
-    useProfile(navigate, selectedVehicle);
+    useProfile(navigate);
 
   const profile = result.data || {};
 
@@ -66,7 +65,7 @@ const Profile = () => {
   const name = `${firstName} ${lastName}`;
 
   const handleSelectVehicle = (vehicle) => {
-    dispatch(setVehicle(vehicle));
+    dispatchVehicle({ type: 'SET_VEHICLE', payload: vehicle });
   };
 
   return (
@@ -240,8 +239,8 @@ const Profile = () => {
             <ScrollArea className="relative max-w-[620px]">
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
-                defaultValue={selectedVehicle ? selectedVehicle : vehicles[0]}
-                value={selectedVehicle ? selectedVehicle : vehicles[0]}
+                defaultValue={vehicles[0]}
+                // value={selectedVehicle}
                 onValueChange={(value) => handleSelectVehicle(value)}
               >
                 {vehicles.map((vehicle) => (

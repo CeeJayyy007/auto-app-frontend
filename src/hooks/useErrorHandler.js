@@ -12,7 +12,7 @@ const useErrorHandler = () => {
   const errorHandler = (error, title) => {
     const { response } = error;
 
-    if (response && response.data.error.includes('jwt')) {
+    if (response && response.data.error.includes('jwt expired')) {
       storePersist.clear();
       dispatchUser({ type: 'LOGOUT' });
       navigate('/sign-in', { replace: true });
