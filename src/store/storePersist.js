@@ -15,7 +15,7 @@ export const localStorageHealthCheck = async () => {
       if (!isJsonString(result)) {
         window.localStorage.removeItem(localStorage.key(i));
       }
-      if (result && Object.keys(localStorage.key(i)).length == 0) {
+      if (result && Object.keys(localStorage.key(i)).length === 0) {
         window.localStorage.removeItem(localStorage.key(i));
       }
     } catch (error) {
