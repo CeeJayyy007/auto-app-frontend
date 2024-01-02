@@ -4,11 +4,7 @@ const baseUrl = '/api/users';
 const vehicleUrl = '/api/vehicles';
 
 const getAllUserDetails = async (id) => {
-  const config = {
-    headers: { Authorization: token }
-  };
-
-  const response = await axios.get(`${baseUrl}/${id}`, config);
+  const response = await axios.get(`${baseUrl}/${id}`);
   return response.data;
 };
 

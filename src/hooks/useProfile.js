@@ -2,19 +2,15 @@
 import profileService from '../services/profile';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
+import { useUserValue } from '@/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
-import { useEffect } from 'react';
 
-const useProfile = (navigate, userId, selectedVehicle) => {
+const useProfile = (navigate) => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
 
-  //   useEffect(() => {
-  //     if (selectedVehicle) {
-  //       queryClient.setQueryData('selectedVehicle', selectedVehicle);
-  //     }
-  //   }, [selectedVehicle]);
+  const userId = useUserValue()?.id;
 
   const getToast = ({ title, description }) =>
     toast({
@@ -102,7 +98,7 @@ const useProfile = (navigate, userId, selectedVehicle) => {
 
   const removeVehicleMutation = useMutation({
     mutationFn: profileService.removeVehicle,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('profile');
 
       getToast({

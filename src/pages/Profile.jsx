@@ -12,7 +12,6 @@ import { Badge } from '@/components/ui/badge';
 import ProfileStats from '@/components/profile/ProfileStats';
 import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
-import { useUserValue } from '@/context/UserContext';
 import useProfile from '@/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,9 +43,9 @@ const Profile = () => {
   useEffect(() => {
     setLoaded(true);
   }, []);
-  const user = useUserValue();
+
   const { result, addVehicle, editVehicle, removeVehicle, editUser } =
-    useProfile(navigate, user?.id, selectedVehicle);
+    useProfile(navigate, selectedVehicle);
 
   const profile = result.data || {};
 
