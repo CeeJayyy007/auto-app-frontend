@@ -17,7 +17,6 @@ const addVehicle = async (newObject, id) => {
     headers: { Authorization: token }
   };
 
-  console.log('newObject', newObject, id, config);
   const response = await axios.post(
     `${baseUrl}/${id}/add-vehicle`,
     newObject,
@@ -31,14 +30,11 @@ const updateUser = async (newObject) => {
     headers: { Authorization: token }
   };
 
-  console.log('newObject', newObject, newObject.id, config);
-
   const response = await axios.put(
     `${baseUrl}/${newObject.id}`,
     newObject,
     config
   );
-
   return response.data;
 };
 
@@ -48,7 +44,6 @@ const updateVehicle = async (newObject, id) => {
   };
 
   const response = await axios.put(`${vehicleUrl}/${id}`, newObject, config);
-
   return response.data;
 };
 
@@ -58,7 +53,6 @@ const removeUser = async (id) => {
   };
 
   const response = await axios.delete(`${baseUrl}/${id}`, config);
-
   return response.data;
 };
 
@@ -67,10 +61,7 @@ const removeVehicle = async (id) => {
     headers: { Authorization: token }
   };
 
-  console.log('id', id, config);
-
   const response = await axios.delete(`${vehicleUrl}/${id}`, config);
-
   return response.data;
 };
 

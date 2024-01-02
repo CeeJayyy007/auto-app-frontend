@@ -23,8 +23,7 @@ const useAuthentication = (dispatchUser, navigate) => {
       navigate('/', { replace: true });
     },
     onError: (error) => {
-      const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Authentication Error');
     }
   });
 
@@ -36,8 +35,7 @@ const useAuthentication = (dispatchUser, navigate) => {
       navigate('/', { replace: true });
     },
     onError: (error) => {
-      const message = error?.response?.data?.error || 'Something went wrong';
-      errorHandler(error, 'Authentication Error', message);
+      errorHandler(error, 'Authentication Error');
     }
   });
 
