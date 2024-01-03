@@ -10,6 +10,7 @@ import {
 } from '../ui/form';
 import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SheetClose } from '../ui/sheet';
 
 const VehicleForm = ({
   vehicle,
@@ -27,6 +28,8 @@ const VehicleForm = ({
       registrationNumber: vehicle ? vehicle.registrationNumber : ''
     }
   });
+
+  console.log(form.formState.errors);
 
   const onSubmit = async (data) => {
     try {
@@ -122,7 +125,7 @@ const VehicleForm = ({
                 </FormItem>
               )}
             />
-
+            {/* <SheetClose asChild> */}
             <Button
               className="mt-8"
               disabled={form.formState.isLoading}
@@ -130,6 +133,7 @@ const VehicleForm = ({
             >
               {buttonText}
             </Button>
+            {/* </SheetClose> */}
           </div>
         </form>
       </Form>

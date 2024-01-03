@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/select';
 import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SheetClose } from '../ui/sheet';
 
 const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
   const form = useForm({
@@ -167,7 +168,7 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
                 </FormItem>
               )}
             />
-
+            {/* <SheetClose asChild> */}
             <Button
               className="mt-8"
               disabled={form.formState.isLoading}
@@ -175,6 +176,7 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
             >
               {buttonText}
             </Button>
+            {/* </SheetClose> */}
           </div>
         </form>
       </Form>

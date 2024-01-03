@@ -134,14 +134,14 @@ const Profile = () => {
                   <SideSheet
                     triggerLabel="Edit"
                     title="Edit User Profile"
-                    description="Edit User Profile details and click Edit User when done."
+                    description="Edit User Profile details and click Save when done."
                     actionLabel="Save Profile"
                     body={
                       <UserForm
                         user={profile.user}
                         formAction={editUser}
                         formValidation={EditUserFormSchema}
-                        buttonText="Edit User"
+                        buttonText="Save"
                       />
                     }
                   />
@@ -208,14 +208,14 @@ const Profile = () => {
                   <SideSheet
                     triggerLabel="Edit"
                     title="Edit Vehicle Profile"
-                    description="Edit Vehicle Profile details and click Save Profile when done."
+                    description="Edit Vehicle Profile details and click Save when done."
                     actionLabel="Save Profile"
                     body={
                       <VehicleForm
                         vehicle={selectedVehicle || vehicles[0]}
                         formAction={editVehicle}
                         formValidation={EditVehicleFormSchema}
-                        buttonText="Edit Vehicle"
+                        buttonText="Save"
                       />
                     }
                   />
