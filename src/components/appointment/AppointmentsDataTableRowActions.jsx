@@ -56,87 +56,95 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* Create request */}
-        <DrawerComponent
-          type="button"
-          description="Create service request from the following appointment details."
-          actionLabel="Create Request"
-          triggerLabel="Create Request"
-          title="Create Service Request"
-          body={
-            <div className="flex flex-col space-y-4 py-4">
-              <h4 className="text-sm font-semibold mx-4">Date: {date}</h4>
-              <h4 className="text-sm font-semibold mx-4">Vehicle: {vehicle}</h4>
-              <div className="flex flex-row flex-between items-center">
-                <h4 className="text-sm font-semibold mx-4">Status: </h4>
-                <ColouredBadge status={status} colorFn={statusColor} />
+        {status === 'pending' && (
+          <DrawerComponent
+            type="button"
+            description="Create service request from the following appointment details."
+            actionLabel="Create Request"
+            triggerLabel="Create Request"
+            title="Create Service Request"
+            body={
+              <div className="flex flex-col space-y-4 py-4">
+                <h4 className="text-sm font-semibold mx-4">Date: {date}</h4>
+                <h4 className="text-sm font-semibold mx-4">
+                  Vehicle: {vehicle}
+                </h4>
+                <div className="flex flex-row flex-between items-center">
+                  <h4 className="text-sm font-semibold mx-4">Status: </h4>
+                  <ColouredBadge status={status} colorFn={statusColor} />
+                </div>
+                <h4 className="text-sm font-semibold mx-4">Note: {note}</h4>
+                <h4 className="text-sm font-semibold mx-4">
+                  Services: {commaSeparatedArray(services)}
+                </h4>
+                <h4 className="text-sm font-semibold mx-4">
+                  Last updated on: 12/12/2023
+                </h4>
               </div>
-              <h4 className="text-sm font-semibold mx-4">Note: {note}</h4>
-              <h4 className="text-sm font-semibold mx-4">
-                Services: {commaSeparatedArray(services)}
-              </h4>
-              <h4 className="text-sm font-semibold mx-4">
-                Last updated on: 12/12/2023
-              </h4>
-            </div>
-          }
-          cancelLabel="Cancel"
-        />
+            }
+            cancelLabel="Cancel"
+          />
+        )}
 
         {/* Edit */}
-        <SideSheet
-          triggerLabel="Edit"
-          title="Edit Appointment"
-          description="Edit Appointment and click save when done."
-          actionLabel="Save Appointment"
-          body={
-            <div className="flex flex-col space-y-4 py-4">
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select Date
-                </Label>
-                <DatePicker />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select Vehicle
-                </Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select vehicle" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {vehicleData.map((item) => (
-                      <SelectItem key={item.make} value={item}>
-                        {`${item.make} ${item.model} ${item.year} `}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid items-center">
-                <Label htmlFor="services" className="text-left mb-2 sr-only">
-                  Select Services
-                </Label>
-                <RecordCombobox data={servicesData} name="services" />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="note" className="text-left mb-2 sr-only">
-                  Note
-                </Label>
-                <Textarea placeholder="Enter service request note." />
-              </div>
-            </div>
-          }
-        />
 
+        {(status === 'pending' || status === 'in-progress') && (
+          <SideSheet
+            triggerLabel="Edit"
+            title="Edit Appointment"
+            description="Edit Appointment and click save when done."
+            actionLabel="Save Appointment"
+            body={
+              <div className="flex flex-col space-y-4 py-4">
+                <div className="grid ">
+                  <Label htmlFor="date" className="text-left mb-2 sr-only">
+                    Select Date
+                  </Label>
+                  <DatePicker />
+                </div>
+                <div className="grid ">
+                  <Label htmlFor="date" className="text-left mb-2 sr-only">
+                    Select Vehicle
+                  </Label>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Select vehicle" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {vehicleData.map((item) => (
+                        <SelectItem key={item.make} value={item}>
+                          {`${item.make} ${item.model} ${item.year} `}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="grid items-center">
+                  <Label htmlFor="services" className="text-left mb-2 sr-only">
+                    Select Services
+                  </Label>
+                  <RecordCombobox data={servicesData} name="services" />
+                </div>
+                <div className="grid ">
+                  <Label htmlFor="note" className="text-left mb-2 sr-only">
+                    Note
+                  </Label>
+                  <Textarea placeholder="Enter service request note." />
+                </div>
+              </div>
+            }
+          />
+        )}
         {/* Cancel */}
-        <AlertDialogComponent
-          actionLabel="Cancel"
-          triggerLabel="Cancel"
-          title="Cancel Appointment"
-          description="Are you sure you want to cancel this appointment?"
-          cancelLabel="Cancel"
-        />
+        {(status === 'pending' || status === 'in-progress') && (
+          <AlertDialogComponent
+            actionLabel="Cancel"
+            triggerLabel="Cancel"
+            title="Cancel Appointment"
+            description="Are you sure you want to cancel this appointment?"
+            cancelLabel="Cancel"
+          />
+        )}
         <DropdownMenuSeparator />
 
         {/* Delete */}

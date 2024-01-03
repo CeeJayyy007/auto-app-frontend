@@ -14,11 +14,13 @@ import AlertDialogComponent from '../display/AlertDialog';
 export const ActivitiesDataTableRowActions = ({ row }) => {
   const navigate = useNavigate();
 
-  const { id } = row.original;
+  const { id, status } = row.original;
 
   const handleView = () => {
     navigate(`/maintenance-record/${id}`);
   };
+
+  console.log(status);
 
   return (
     <DropdownMenu>
@@ -33,16 +35,18 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* View */}
+
         <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
         {/* Cancel */}
-        <AlertDialogComponent
-          actionLabel="Cancel"
-          triggerLabel="Cancel"
-          title="Cancel Maintenance Record"
-          description="Are you sure you want to cancel this maintenance record?"
-          cancelLabel="Cancel"
-        />
-
+        {status === 'in-progress' && (
+          <AlertDialogComponent
+            actionLabel="Cancel"
+            triggerLabel="Cancel"
+            title="Cancel Maintenance Record"
+            description="Are you sure you want to cancel this maintenance record?"
+            cancelLabel="Cancel"
+          />
+        )}
         <DropdownMenuSeparator />
         {/* Delete */}
         <AlertDialogComponent
