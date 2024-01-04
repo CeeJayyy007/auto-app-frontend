@@ -1,20 +1,17 @@
 import { columns } from '@/components/appointment/column';
 import { appointmentData } from '@/components/appointment/data';
 import { DataTable } from '@/components/dataTable/dataTable';
-import { Button } from '@/components/ui/button';
 import { services, statuses, vehicles } from '../components/appointment/data';
-import { Label } from '@/components/ui/label';
 import SideSheet from '@/components/display/SideSheet';
-import DatePicker from '@/components/datePicker/DatePicker';
-import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
-import { Textarea } from '@/components/ui/textarea';
+import AppointmentForm from '@/components/appointment/AppointmentForm';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
+  AddAppointmentFormSchema,
+  EditAppointmentFormSchema
+} from '@/components/appointment/AppointmentValidation';
+import useAppointment from '@/hooks/useAppointment';
+import { useUserValue } from '@/context/UserContext';
+import { get } from 'react-hook-form';
+import useProfile from '@/hooks/useProfile';
 
 const vehicleData = [
   {
@@ -32,6 +29,26 @@ const vehicleData = [
 ];
 
 const Appointments = () => {
+  const { result } = useProfile();
+  const { addAppointment } = useAppointment();
+
+  // do not render anything if profile data is still null
+  if (!result?.data) {
+    return null;
+  }
+
+  const user = result?.data?.user[0];
+  const { Vehicles, Appointments: appointments } = user;
+  const vehiclesData = Vehicles.sort((a, b) => b.id - a.id);
+
+  console.log(vehiclesData);
+
+  if (result.isLoading) {
+    return <div>loading data...</div>;
+  } else if (result.isError) {
+    return <div>error loading data</div>;
+  }
+
   return (
     <div>
       <div className="flex flex-row justify-between">
@@ -42,48 +59,21 @@ const Appointments = () => {
           type="button"
           triggerLabel="Add Appointment"
           title="Add Appointment"
-          description="Add Appointment details and click Add Appointment when done."
+          description="Add Appointment details and click Add Appointment when done..."
           actionLabel="Add Appointment"
           body={
-            <div className="flex flex-col space-y-4 py-4">
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select Date
-                </Label>
-                <DatePicker />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select Vehicle
-                </Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select vehicle" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {vehicleData.map((item) => (
-                      <SelectItem key={item.make} value={item}>
-                        {`${item.make} ${item.model} ${item.year} `}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid items-center">
-                <Label htmlFor="services" className="text-left mb-2 sr-only">
-                  Select Services
-                </Label>
-                <RecordCombobox data={services} name="services" />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="note" className="text-left mb-2 sr-only">
-                  Note
-                </Label>
-                <Textarea placeholder="Enter service request note." />
-              </div>
-            </div>
+            <AppointmentForm
+              userId={user.id}
+              appointment={appointments}
+              vehicles={vehiclesData}
+              formAction={addAppointment}
+              formValidation={AddAppointmentFormSchema}
+              buttonText="Add Appointment"
+            />
           }
         />
+
+        {/* Edit appointment */}
       </div>
       <div className="rounded-[14px] bg-white p-8">
         <DataTable

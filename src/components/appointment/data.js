@@ -19,60 +19,74 @@ export const statuses = [
 
 export const services = [
   {
+    id: 1,
     label: 'Oil Change',
     value: 'Oil Change'
   },
   {
+    id: 2,
     label: 'Tyre Change',
     value: 'Tyre Change'
   },
   {
+    id: 3,
     label: 'Steering',
     value: 'Steering'
   },
   {
+    id: 4,
     label: 'Wheel Alignment',
     value: 'Wheel Alignment'
   },
   {
+    id: 5,
     label: 'Brake',
     value: 'Brake'
   },
   {
-    label: 'Engine',
-    value: 'Engine'
-  },
-  {
-    label: 'Suspension',
-    value: 'Suspension'
-  },
-  {
-    label: 'Air Conditioning',
-    value: 'Air Conditioning'
-  },
-  {
-    label: 'Electrical',
-    value: 'Electrical'
-  },
-  {
-    label: 'Exhaust',
-    value: 'Exhaust'
-  },
-  {
-    label: 'Transmission',
-    value: 'Transmission'
-  },
-  {
-    label: 'Battery',
-    value: 'Battery'
-  },
-  {
+    id: 6,
     label: 'Cooling',
     value: 'Cooling'
   },
   {
+    id: 7,
     label: 'Wiper',
     value: 'Wiper'
+  },
+  {
+    id: 8,
+    label: 'Battery',
+    value: 'Battery'
+  },
+  {
+    id: 9,
+    label: 'Exhaust',
+    value: 'Exhaust'
+  },
+  {
+    id: 10,
+    label: 'Transmission',
+    value: 'Transmission'
+  },
+  {
+    id: 11,
+    label: 'Electrical',
+    value: 'Electrical'
+  },
+  {
+    id: 12,
+    label: 'Air Conditioning',
+    value: 'Air Conditioning'
+  },
+  {
+    id: 13,
+    label: 'Suspension',
+    value: 'Suspension'
+  },
+  {
+    id: 14,
+    label: 'Engine',
+    value: 'Engine'
   }
 ];
 

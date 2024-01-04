@@ -1,27 +1,43 @@
 import * as z from 'zod';
 
-const AddAppointmentSchema = z.object({
-  date: z.string().min(10, 'Must be at least 10 characters'),
-  time: z.string().min(5, 'Must be at least 5 characters'),
-  vehicle: z.array(z.string()).min(1, 'Must select at least 1 vehicle'),
-  services: z.array(z.string()).min(1, 'Must select at least 1 service'),
+const AddAppointmentFormSchema = z.object({
+  date: z.date({
+    required_error: 'Appointment date is required.'
+  }),
+  time: z.string({
+    required_error: 'Appointment time is required.'
+  }),
+  vehicleId: z.coerce.number({
+    required_error: 'Vehicle is required.'
+  }),
+  serviceId: z
+    .array(z.coerce.number())
+    .min(1, 'Must select at least 1 service'),
   note: z
     .string()
     .min(2, 'Must be at least 2 characters')
     .max(500, 'Must be less than 500 characters')
 });
 
-const EditAppointmentSchema = z
+const EditAppointmentFormSchema = z
   .object({
-    date: z.string().min(10, 'Must be at least 10 characters'),
-    time: z.string().min(5, 'Must be at least 5 characters'),
-    vehicle: z.array(z.string()).min(1, 'Must select at least 1 vehicle'),
-    services: z.array(z.string()).min(1, 'Must select at least 1 service'),
+    date: z.date({
+      required_error: 'Appointment date is required.'
+    }),
+    time: z.string({
+      required_error: 'Appointment time is required.'
+    }),
+    vehicleId: z.coerce.number({
+      required_error: 'Vehicle is required.'
+    }),
+    serviceId: z
+      .array(z.coerce.number())
+      .min(1, 'Must select at least 1 service'),
     note: z
       .string()
       .min(2, 'Must be at least 2 characters')
       .max(500, 'Must be less than 500 characters')
   })
-  .partials();
+  .optional();
 
-export default { AddAppointmentSchema, EditAppointmentSchema };
+export { AddAppointmentFormSchema, EditAppointmentFormSchema };

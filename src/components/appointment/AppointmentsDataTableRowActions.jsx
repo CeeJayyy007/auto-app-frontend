@@ -24,6 +24,7 @@ import DrawerComponent from '../display/Drawer';
 import { commaSeparatedArray, statusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
 import { services as servicesData } from '../activities/data';
+import AppointmentForm from './AppointmentForm';
 
 export const AppointmentsDataTableRowActions = ({ row }) => {
   const { date, vehicle, note, services, status } = row.original;
@@ -88,13 +89,22 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
 
         {/* Edit */}
 
-        {(status === 'pending' || status === 'in-progress') && (
+        {status === 'pending' && (
           <SideSheet
             triggerLabel="Edit"
             title="Edit Appointment"
             description="Edit Appointment and click save when done."
             actionLabel="Save Appointment"
             body={
+              // <AppointmentForm
+              //   userId={user.id}
+              //   appointment={appointments}
+              //   vehicles={vehiclesData}
+              //   formAction={addAppointment}
+              //   formValidation={AddAppointmentFormSchema}
+              //   buttonText="Add Appointment"
+              // />
+
               <div className="flex flex-col space-y-4 py-4">
                 <div className="grid ">
                   <Label htmlFor="date" className="text-left mb-2 sr-only">

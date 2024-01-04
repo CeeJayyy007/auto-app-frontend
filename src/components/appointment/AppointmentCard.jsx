@@ -43,16 +43,20 @@ const AppointmentCard = ({ appointments }) => {
             <TableRow>
               <TableHead>S/No.</TableHead>
               <TableHead>Date</TableHead>
+              <TableHead>Time</TableHead>
               <TableHead>Note</TableHead>
               <TableHead>Services</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="py-0">
-            {appointmentData.map((appointment) => (
+            {appointmentData.map((appointment, index) => (
               <TableRow key={appointment.createdAt}>
-                <TableCell className="font-medium">{appointment.id}</TableCell>
-                <TableCell>{appointment.date}</TableCell>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell>
+                  {new Date(appointment.date).toDateString()}
+                </TableCell>
+                <TableCell>{appointment.time}</TableCell>
                 <TableCell>{appointment.note}</TableCell>
                 <TableCell className="truncate">
                   {commaSeparatedArray(appointment.services)}
