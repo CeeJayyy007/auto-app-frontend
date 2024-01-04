@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Separator } from '@/components/ui/separator';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -39,10 +39,6 @@ const Profile = () => {
   const dispatchVehicle = useVehicleDispatch();
   const selectedVehicle = useVehicleValue();
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
-
   const { result, addVehicle, editVehicle, removeVehicle, editUser } =
     useProfile(navigate);
 
@@ -59,13 +55,16 @@ const Profile = () => {
     return <div>error loading data</div>;
   }
 
-  const { firstName, lastName, roles, email, phone } = profile.user;
-  const vehicles = profile.vehicles.sort((a, b) => a.id - b.id);
-  const appointments = profile.appointments;
+  const user = profile.user[0];
+  const { firstName, lastName, roles, email, phone } = user;
+  const { Vehicles, Appointments: appointments } = user;
+
+  const vehicles = Vehicles.sort((a, b) => b.id - a.id);
   const name = `${firstName} ${lastName}`;
 
   const handleSelectVehicle = (vehicle) => {
     dispatchVehicle({ type: 'SET_VEHICLE', payload: vehicle });
+    setLoaded(true);
   };
 
   return (
@@ -138,7 +137,7 @@ const Profile = () => {
                     actionLabel="Save Profile"
                     body={
                       <UserForm
-                        user={profile.user}
+                        user={user}
                         formAction={editUser}
                         formValidation={EditUserFormSchema}
                         buttonText="Save"
