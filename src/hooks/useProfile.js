@@ -22,13 +22,7 @@ const useProfile = (navigate) => {
 
   const result = useQuery({
     queryKey: ['profile', userId],
-    queryFn: () => profileService.getAllUserDetails(userId),
-    onSuccess: (data) => {
-      queryClient.setQueryData('profile', data);
-    },
-    onError: (error) => {
-      errorHandler(error, 'Profile Update Error');
-    }
+    queryFn: () => profileService.getAllUserDetails(userId)
   });
 
   const editUserMutation = useMutation({
