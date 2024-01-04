@@ -56,3 +56,22 @@ export const inventoryStatusColor = (status) => {
       return 'bg-destructive';
   }
 };
+
+export const generateTimeOptions = () => {
+  const options = [];
+  const startTime = 8 * 60; // 8 am in minutes
+  const endTime = 17 * 60; // 5 pm in minutes
+  const interval = 30; // 30-minute interval
+
+  for (let time = startTime; time <= endTime; time += interval) {
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
+
+    const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}`;
+    options.push({ label: formattedTime, value: formattedTime });
+  }
+
+  return options;
+};
