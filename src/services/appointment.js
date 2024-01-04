@@ -8,7 +8,7 @@ const getAll = async (id) => {
   return response.data;
 };
 
-const getUserAppointmentDetailsById = async (id) => {
+const getAppointmentById = async (id) => {
   console.log('id', id);
   const response = await axios.get(`${appointmentsUrl}/${id}`);
   return response.data;
@@ -60,7 +60,7 @@ const removeAppointment = async (id) => {
 
 export default {
   getAll,
-  getUserAppointmentDetailsById,
+  getAppointmentById,
   addAppointment,
   updateAppointment,
   cancelAppointment,

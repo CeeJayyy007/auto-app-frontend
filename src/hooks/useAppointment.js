@@ -28,14 +28,12 @@ const useAppointment = () => {
     }
   });
 
-  const getUserAppointmentDetailsQuery = useQuery({
+  const getAppointmentById = useQuery({
     queryKey: ['appointment'],
-    queryFn: ({ queryKey }) => {
-      const [_, id] = queryKey;
-      return appointmentService.getUserAppointmentDetailsById(id);
-    },
+    queryFn: () => appointmentService.getAppointmentById,
+    enabled: false,
     onSuccess: (data) => {
-      queryClient.setQueryData('appointment', data);
+      queryClient.setQueryData(['appointment'], data);
     },
     onError: (error) => {
       errorHandler(error, 'Appointment Error');
@@ -107,7 +105,7 @@ const useAppointment = () => {
   });
 
   const getUserAppointmentDetails = (id) => {
-    getUserAppointmentDetailsQuery.refetch(id);
+    getAppointmentById.refetch(id);
   };
 
   const editAppointment = (appointment) => {
