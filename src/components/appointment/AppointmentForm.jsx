@@ -30,28 +30,41 @@ import {
 import { generateTimeOptions } from '@/utils/helpers';
 import { Textarea } from '../ui/textarea';
 import RecordCombobox from '../maintenanceRecord/RecordCombobox';
-import { services } from './data';
 import { useState } from 'react';
 
 const AppointmentForm = ({
   userId,
   appointment,
   vehicles,
+  services,
+  rowData,
   formAction,
   formValidation,
   buttonText,
   props
 }) => {
+  const rowAppointmentData = rowData ? rowData : {};
+  const {
+    id,
+    date,
+    time,
+    vehicle,
+    services: selectedServices,
+    note
+  } = rowAppointmentData;
+
   const form = useForm({
     resolver: zodResolver(formValidation),
     defaultValues: {
-      date: '',
-      time: '',
-      vehicleId: '',
-      serviceId: [],
-      note: ''
+      date: date ? new Date(date) : '',
+      time: time ? time : '',
+      vehicleId: vehicle ? vehicle : '',
+      // serviceId: selectedServices ? selectedServices : [],
+      note: note ? note : ''
     }
   });
+
+  console.log('vehicle', vehicle);
 
   const [open, setOpen] = useState(false);
   const timeOptions = generateTimeOptions();
@@ -59,7 +72,11 @@ const AppointmentForm = ({
   const onSubmit = async (data) => {
     try {
       console.log('data', data);
-      await formAction(data, userId);
+      if (rowAppointmentData?.id) {
+        await formAction(data, id);
+      } else {
+        await formAction(data, userId);
+      }
       form.reset();
     } catch (error) {
       form.setError('submitError', {
@@ -128,15 +145,15 @@ const AppointmentForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only">Time</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger
                         className={cn(!field.value && 'text-muted-foreground')}
                       >
-                        <SelectValue placeholder="Select Time" />
+                        <SelectValue
+                          placeholder="Select Time"
+                          defaultValue={field.value ? field.value : ''}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -152,7 +169,6 @@ const AppointmentForm = ({
               )}
             />
             {/* Vehicle */}
-            {/* {vehicles === 'pending' ? ( */}
             <FormField
               control={form.control}
               name="vehicleId"
@@ -164,13 +180,16 @@ const AppointmentForm = ({
                       <SelectTrigger
                         className={cn(!field.value && 'text-muted-foreground')}
                       >
-                        <SelectValue placeholder="Select Vehicle" />
+                        <SelectValue
+                          placeholder="Select Vehicle"
+                          defaultValue={field.value ? field.value : ''}
+                        />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                       {vehicles.map((item) => (
                         <SelectItem key={item.id} value={item.id.toString()}>
-                          {`${item.make} ${item.model} ${item.year} `}
+                          {item.label}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -179,42 +198,8 @@ const AppointmentForm = ({
                 </FormItem>
               )}
             />
-            {/* ) : (
-              <FormField
-                control={form.control}
-                name="vehicle"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="sr-only">Selected Vehicle</FormLabel>
-                    <FormControl>
-                      <Input value={appointment.vehicle} {...field} />
-                    </FormControl>
-                    {form.formState.errors.vehicle && <FormMessage />}
-                  </FormItem>
-                )}
-              />
-            )} */}
 
             {/* Services */}
-            {/* <FormField
-              control={form.control}
-              name="serviceId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="sr-only">Services</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Services"
-                      value={appointment?.services || ''}
-                      disabled={form.formState.isLoading}
-                      {...field}
-                    />
-                  </FormControl>
-                  {form.formState.errors.serviceId && <FormMessage />}
-                </FormItem>
-              )}
-            /> */}
-
             <RecordCombobox
               data={services}
               name="services"
@@ -233,7 +218,7 @@ const AppointmentForm = ({
                   <FormControl>
                     <Textarea
                       placeholder="Enter appointment note here..."
-                      value={appointment?.note || ''}
+                      value={field.value}
                       disabled={form.formState.isLoading}
                       {...field}
                     />
