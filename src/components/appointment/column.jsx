@@ -1,12 +1,11 @@
 import { Checkbox } from '@/components/ui/checkbox';
-
-import { services, statuses, vehicles } from './data';
+import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
-import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import { commaSeparatedArray, getDate, statusColor } from '@/utils/helpers';
 import { AppointmentsDataTableRowActions } from './AppointmentsDataTableRowActions';
 import ColouredBadge from '../badge/ColouredBadge';
 
-export const columns = [
+export const columns = (vehicles, servicesOption, editAppointment) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -36,7 +35,11 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="S/No." />
     ),
-    cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    cell: ({ row }) => (
+      <div>
+        <span>{row.index + 1}</span>
+      </div>
+    ),
     enableSorting: false,
     enableHiding: false
   },
@@ -47,8 +50,21 @@ export const columns = [
     ),
     cell: ({ row }) => {
       return (
-        <div className="flex space-x-2">
-          <span className="max-w-[100px]">{row.getValue('date')}</span>
+        <div className="flex">
+          <span className="">{getDate(row.getValue('date'))}</span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'time',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Time" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex">
+          <span className="">{row.getValue('time')}</span>
         </div>
       );
     }
@@ -98,7 +114,7 @@ export const columns = [
       <DataTableColumnHeader column={column} title="Services" />
     ),
     cell: ({ row }) => {
-      const service = services.find((service) =>
+      const service = servicesOption.find((service) =>
         row.getValue('services').includes(service.value)
       );
 
@@ -145,6 +161,13 @@ export const columns = [
 
   {
     id: 'actions',
-    cell: ({ row }) => <AppointmentsDataTableRowActions row={row} />
+    cell: ({ row }) => (
+      <AppointmentsDataTableRowActions
+        row={row}
+        editAppointment={editAppointment}
+        vehicles={vehicles}
+        servicesOption={servicesOption}
+      />
+    )
   }
 ];
