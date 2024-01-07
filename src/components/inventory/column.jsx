@@ -1,6 +1,4 @@
-import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
-
 import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
 import { inventoryStatusColor } from '@/utils/helpers';
