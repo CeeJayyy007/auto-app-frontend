@@ -26,7 +26,6 @@ export const DataTable = ({
   columns,
   data,
   props,
-  services,
   placeholder,
   filterColumn
 }) => {
@@ -62,7 +61,6 @@ export const DataTable = ({
       <DataTableToolbar
         table={table}
         props={props}
-        services={services}
         placeholder={placeholder}
         filterColumn={filterColumn}
       />

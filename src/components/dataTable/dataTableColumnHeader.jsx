@@ -17,7 +17,11 @@ import {
 
 export const DataTableColumnHeader = ({ column, title, className }) => {
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return (
+      <div className={cn(className)}>
+        <span style={{ fontSize: '12px' }}>{title}</span>
+      </div>
+    );
   }
 
   return (
