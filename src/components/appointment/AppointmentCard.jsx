@@ -17,6 +17,7 @@ import {
 import {
   commaSeparatedArray,
   formatDataArray,
+  getDate,
   statusColor
 } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
@@ -40,7 +41,7 @@ const AppointmentCard = ({ appointments }) => {
       <CardContent>
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="text-xs">
               <TableHead>S/No.</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Time</TableHead>
@@ -49,13 +50,11 @@ const AppointmentCard = ({ appointments }) => {
               <TableHead>Status</TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody className="py-0">
+          <TableBody className="py-0 text-xs">
             {appointmentData.map((appointment, index) => (
               <TableRow key={appointment.createdAt}>
                 <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell>
-                  {new Date(appointment.date).toDateString()}
-                </TableCell>
+                <TableCell>{getDate(appointment.date)}</TableCell>
                 <TableCell>{appointment.time}</TableCell>
                 <TableCell>{appointment.note}</TableCell>
                 <TableCell className="truncate">

@@ -104,26 +104,29 @@ const vehicleData = [
 const appointmentData = [
   {
     id: 1,
-    date: '15/12/2023',
+    date: '2023-12-07T10:20:56.268Z',
+    time: '8:00',
     note: 'Urgent fix',
     services: ['oil change', 'tyre change'],
-    status: { value: 'completed', label: 'Completed' },
+    status: { value: 'Completed', label: 'Completed' },
     createdAt: '12/12/2021'
   },
   {
     id: 2,
-    date: '12/12/2023',
+    date: '2023-12-08T10:20:56.268Z',
+    time: '9:00',
     note: 'Change oil',
     services: ['oil change', 'tyre change'],
-    status: { value: 'pending', label: 'Pending' },
+    status: { value: 'Pending', label: 'Pending' },
     createdAt: '12/12/2022'
   },
   {
     id: 3,
-    date: '11/12/2023',
+    date: '2023-11-07T10:20:56.268Z',
+    time: '10:00',
     note: 'Fix the issues',
     services: ['steering fix', 'tyre change'],
-    status: { value: 'canceled', label: 'Canceled' },
+    status: { value: 'Canceled', label: 'Canceled' },
     createdAt: '12/12/2023'
   }
 ];
