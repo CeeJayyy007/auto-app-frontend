@@ -1,18 +1,18 @@
 export const statuses = [
   {
-    value: 'pending',
+    value: 'Pending',
     label: 'Pending'
   },
   {
-    value: 'in-progress',
+    value: 'In-Progress',
     label: 'In-Progress'
   },
   {
-    value: 'canceled',
+    value: 'Canceled',
     label: 'Canceled'
   },
   {
-    value: 'completed',
+    value: 'Completed',
     label: 'Completed'
   }
 ];
@@ -20,18 +20,18 @@ export const statuses = [
 export const services = [
   {
     id: 1,
-    label: 'Oil Change',
-    value: 'Oil Change'
+    label: 'Service One',
+    value: 1
   },
   {
     id: 2,
-    label: 'Tyre Change',
-    value: 'Tyre Change'
+    label: 'Service 2',
+    value: 2
   },
   {
     id: 3,
-    label: 'Steering',
-    value: 'Steering'
+    label: 'Service 3',
+    value: 3
   },
   {
     id: 4,

@@ -1,14 +1,14 @@
 export const statuses = [
   {
-    value: 'in-progress',
+    value: 'In-Progress',
     label: 'In-progress'
   },
   {
-    value: 'canceled',
+    value: 'Canceled',
     label: 'Canceled'
   },
   {
-    value: 'completed',
+    value: 'Completed',
     label: 'Completed'
   }
 ];
