@@ -20,9 +20,16 @@ const useProfile = (navigate) => {
       duration: 5000
     });
 
+  const allVehicles = useQuery({
+    queryKey: ['profile'],
+    queryFn: profileService.getAllVehicles,
+    refetchOnWindowFocus: true
+  });
+
   const result = useQuery({
     queryKey: ['profile', userId],
-    queryFn: () => profileService.getAllUserDetails(userId)
+    queryFn: () => profileService.getAllUserDetails(userId),
+    refetchOnWindowFocus: true
   });
 
   const editUserMutation = useMutation({
@@ -126,12 +133,13 @@ const useProfile = (navigate) => {
   };
 
   return {
+    result,
+    allVehicles,
     editUser,
     editVehicle,
     addVehicle,
     removeUser,
-    removeVehicle,
-    result
+    removeVehicle
   };
 };
 

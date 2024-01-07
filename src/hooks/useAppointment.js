@@ -3,11 +3,13 @@ import appointmentService from '../services/appointment';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
 import { useToast } from '@/components/ui/use-toast';
+import { useUserValue } from '@/context/UserContext';
 
 const useAppointment = () => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
+  const userId = useUserValue()?.id;
 
   const getToast = ({ title, description }) =>
     toast({
@@ -17,27 +19,10 @@ const useAppointment = () => {
       duration: 5000
     });
 
-  const getAll = useQuery({
-    queryKey: ['appointment'],
-    queryFn: appointmentService.getAll,
-    onSuccess: (data) => {
-      queryClient.setQueryData('appointment', data);
-    },
-    onError: (error) => {
-      errorHandler(error, 'Appointment Error');
-    }
-  });
-
-  const getAppointmentById = useQuery({
-    queryKey: ['appointment'],
-    queryFn: () => appointmentService.getAppointmentById,
-    enabled: false,
-    onSuccess: (data) => {
-      queryClient.setQueryData(['appointment'], data);
-    },
-    onError: (error) => {
-      errorHandler(error, 'Appointment Error');
-    }
+  const getAppointmentDetails = useQuery({
+    queryKey: ['appointment', userId],
+    queryFn: () => appointmentService.getAppointmentDetails(userId),
+    refetchOnWindowFocus: true
   });
 
   const addAppointmentMutation = useMutation({
@@ -57,7 +42,7 @@ const useAppointment = () => {
   });
 
   const editAppointmentMutation = useMutation({
-    mutationFn: appointmentService.updateAppointment,
+    mutationFn: (params) => appointmentService.updateAppointment(...params),
     onSuccess: (data) => {
       queryClient.invalidateQueries('appointment');
 
@@ -104,12 +89,8 @@ const useAppointment = () => {
     }
   });
 
-  const getUserAppointmentDetails = (id) => {
-    getAppointmentById.refetch(id);
-  };
-
-  const editAppointment = (appointment) => {
-    editAppointmentMutation.mutate(appointment);
+  const editAppointment = (appointment, id) => {
+    editAppointmentMutation.mutate([appointment, id]);
   };
 
   const addAppointment = (appointment, userId) => {
@@ -125,8 +106,7 @@ const useAppointment = () => {
   };
 
   return {
-    getAll,
-    getUserAppointmentDetails,
+    getAppointmentDetails,
     addAppointment,
     editAppointment,
     cancelAppointment,
