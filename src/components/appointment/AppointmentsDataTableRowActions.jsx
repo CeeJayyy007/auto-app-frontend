@@ -1,5 +1,4 @@
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,40 +8,22 @@ import {
 } from '@/components/ui/dropdown-menu';
 import AlertDialogComponent from '../display/AlertDialog';
 import SideSheet from '../display/SideSheet';
-import { Label } from '@/components/ui/label';
-import DatePicker from '../datePicker/DatePicker';
-import RecordCombobox from '../maintenanceRecord/RecordCombobox';
-import { Textarea } from '../ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
 import DrawerComponent from '../display/Drawer';
-import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import { commaSeparatedArray, getDate, statusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
-import { services as servicesData } from '../activities/data';
 import AppointmentForm from './AppointmentForm';
+import { EditAppointmentFormSchema } from './AppointmentValidation';
+import { useUserValue } from '@/context/UserContext';
 
-export const AppointmentsDataTableRowActions = ({ row }) => {
-  const { date, vehicle, note, services, status } = row.original;
+export const AppointmentsDataTableRowActions = ({
+  row,
+  editAppointment,
+  vehicles,
+  servicesOption
+}) => {
+  const { id, date, vehicle, note, services, status } = row.original;
 
-  const vehicleData = [
-    {
-      make: 'Toyota',
-      model: 'Camry',
-      year: '2021',
-      registrationNumber: 'LND123XA'
-    },
-    {
-      make: 'Mercedes',
-      model: 'Benz',
-      year: '2021',
-      registrationNumber: 'LND123XX'
-    }
-  ];
+  const user = useUserValue();
 
   return (
     <DropdownMenu>
@@ -57,7 +38,7 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* Create request */}
-        {status === 'pending' && (
+        {status === 'Pending' && (
           <DrawerComponent
             type="button"
             description="Create service request from the following appointment details."
@@ -66,7 +47,9 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
             title="Create Service Request"
             body={
               <div className="flex flex-col space-y-4 py-4">
-                <h4 className="text-sm font-semibold mx-4">Date: {date}</h4>
+                <h4 className="text-sm font-semibold mx-4">
+                  Date: {getDate(date)}
+                </h4>
                 <h4 className="text-sm font-semibold mx-4">
                   Vehicle: {vehicle}
                 </h4>
@@ -79,7 +62,7 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
                   Services: {commaSeparatedArray(services)}
                 </h4>
                 <h4 className="text-sm font-semibold mx-4">
-                  Last updated on: 12/12/2023
+                  Last updated on: {getDate(date)}
                 </h4>
               </div>
             }
@@ -88,65 +71,27 @@ export const AppointmentsDataTableRowActions = ({ row }) => {
         )}
 
         {/* Edit */}
-
-        {status === 'pending' && (
+        {status === 'Pending' && (
           <SideSheet
             triggerLabel="Edit"
             title="Edit Appointment"
             description="Edit Appointment and click save when done."
             actionLabel="Save Appointment"
             body={
-              // <AppointmentForm
-              //   userId={user.id}
-              //   appointment={appointments}
-              //   vehicles={vehiclesData}
-              //   formAction={addAppointment}
-              //   formValidation={AddAppointmentFormSchema}
-              //   buttonText="Add Appointment"
-              // />
-
-              <div className="flex flex-col space-y-4 py-4">
-                <div className="grid ">
-                  <Label htmlFor="date" className="text-left mb-2 sr-only">
-                    Select Date
-                  </Label>
-                  <DatePicker />
-                </div>
-                <div className="grid ">
-                  <Label htmlFor="date" className="text-left mb-2 sr-only">
-                    Select Vehicle
-                  </Label>
-                  <Select>
-                    <SelectTrigger className="w-[180px]">
-                      <SelectValue placeholder="Select vehicle" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {vehicleData.map((item) => (
-                        <SelectItem key={item.make} value={item}>
-                          {`${item.make} ${item.model} ${item.year} `}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="grid items-center">
-                  <Label htmlFor="services" className="text-left mb-2 sr-only">
-                    Select Services
-                  </Label>
-                  <RecordCombobox data={servicesData} name="services" />
-                </div>
-                <div className="grid ">
-                  <Label htmlFor="note" className="text-left mb-2 sr-only">
-                    Note
-                  </Label>
-                  <Textarea placeholder="Enter service request note." />
-                </div>
-              </div>
+              <AppointmentForm
+                userId={user.id}
+                vehicles={vehicles}
+                services={servicesOption}
+                rowData={row.original}
+                formAction={editAppointment}
+                formValidation={EditAppointmentFormSchema}
+                buttonText="Edit Appointment"
+              />
             }
           />
         )}
         {/* Cancel */}
-        {(status === 'pending' || status === 'in-progress') && (
+        {(status === 'Pending' || status === 'In-Progress') && (
           <AlertDialogComponent
             actionLabel="Cancel"
             triggerLabel="Cancel"

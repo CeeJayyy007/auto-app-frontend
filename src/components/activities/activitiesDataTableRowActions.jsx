@@ -35,10 +35,9 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* View */}
-
         <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
         {/* Cancel */}
-        {status === 'in-progress' && (
+        {status === 'In-Progress' && (
           <AlertDialogComponent
             actionLabel="Cancel"
             triggerLabel="Cancel"
