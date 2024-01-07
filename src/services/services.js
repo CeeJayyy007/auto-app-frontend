@@ -3,8 +3,8 @@ import { token } from '@/utils/auth';
 const baseUrl = '/api/users';
 const servicesUrl = '/api/services';
 
-const getAll = async (id) => {
-  const response = await axios.get(`${baseUrl}`);
+const getAll = async () => {
+  const response = await axios.get(servicesUrl);
   return response.data;
 };
 

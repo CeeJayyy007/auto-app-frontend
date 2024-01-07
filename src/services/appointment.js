@@ -4,13 +4,19 @@ const baseUrl = '/api/users';
 const appointmentsUrl = '/api/appointments';
 
 const getAll = async (id) => {
-  const response = await axios.get(`${baseUrl}`);
+  const response = await axios.get(`${appointmentsUrl}/${id}`);
   return response.data;
 };
 
 const getAppointmentById = async (id) => {
-  console.log('id', id);
   const response = await axios.get(`${appointmentsUrl}/${id}`);
+  return response.data;
+};
+
+const getAppointmentDetails = async (id) => {
+  const response = await axios.get(
+    `${appointmentsUrl}/appointment-details/${id}`
+  );
   return response.data;
 };
 
@@ -60,6 +66,7 @@ const removeAppointment = async (id) => {
 
 export default {
   getAll,
+  getAppointmentDetails,
   getAppointmentById,
   addAppointment,
   updateAppointment,

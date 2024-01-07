@@ -8,6 +8,11 @@ const getAllUserDetails = async (id) => {
   return response.data;
 };
 
+const getAllVehicles = async () => {
+  const response = await axios.get(vehicleUrl);
+  return response.data;
+};
+
 const addVehicle = async (newObject, id) => {
   const config = {
     headers: { Authorization: token }
@@ -63,6 +68,7 @@ const removeVehicle = async (id) => {
 
 export default {
   getAllUserDetails,
+  getAllVehicles,
   addVehicle,
   updateUser,
   updateVehicle,
