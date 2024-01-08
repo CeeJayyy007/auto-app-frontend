@@ -12,6 +12,8 @@ const useErrorHandler = () => {
   const errorHandler = (error, title) => {
     const { response } = error;
 
+    console.log('error', error);
+
     if (response && response.data.error.includes('jwt expired')) {
       storePersist.clear();
       dispatchUser({ type: 'LOGOUT' });
