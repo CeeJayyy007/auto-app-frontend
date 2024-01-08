@@ -53,8 +53,6 @@ const Appointments = () => {
     };
   });
 
-  console.log('services', vehicles, userVehiclesData);
-
   if (result.isLoading) {
     return <div>loading data...</div>;
   } else if (result.isError) {

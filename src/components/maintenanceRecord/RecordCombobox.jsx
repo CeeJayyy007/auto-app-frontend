@@ -25,9 +25,18 @@ import {
   FormMessage
 } from '../ui/form';
 
-const RecordCombobox = ({ data, name, form, label, formName }) => {
+const RecordCombobox = ({ data, rowData, name, form, label, formName }) => {
+  const rowRecordData = rowData ? rowData : {};
+
+  const { services: selectedServices } = rowRecordData;
+
+  const servicesObject = selectedServices?.reduce((acc, service) => {
+    acc[service] = service;
+    return acc;
+  }, {});
+
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState({});
+  const [selected, setSelected] = useState(servicesObject || '');
 
   const handleSelect = ({ value, label }) => {
     setSelected((prevSelected) => {
@@ -83,7 +92,7 @@ const RecordCombobox = ({ data, name, form, label, formName }) => {
               </FormControl>
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0 m-2" align="end">
-              <Command>
+              <Command onValueChange={field.onChange}>
                 <CommandInput
                   placeholder={`Search ${name}...`}
                   className="h-9"

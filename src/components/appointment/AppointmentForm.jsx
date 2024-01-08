@@ -34,7 +34,6 @@ import { useState } from 'react';
 
 const AppointmentForm = ({
   userId,
-  appointment,
   vehicles,
   services,
   rowData,
@@ -49,7 +48,9 @@ const AppointmentForm = ({
     date,
     time,
     vehicle,
+    vehicleId,
     services: selectedServices,
+    serviceId,
     note
   } = rowAppointmentData;
 
@@ -58,13 +59,11 @@ const AppointmentForm = ({
     defaultValues: {
       date: date ? new Date(date) : '',
       time: time ? time : '',
-      vehicleId: vehicle ? vehicle : '',
-      // serviceId: selectedServices ? selectedServices : [],
+      vehicleId: vehicle ? vehicleId : '',
+      serviceId: selectedServices ? serviceId : [],
       note: note ? note : ''
     }
   });
-
-  console.log('vehicle', vehicle);
 
   const [open, setOpen] = useState(false);
   const timeOptions = generateTimeOptions();
@@ -145,15 +144,15 @@ const AppointmentForm = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="sr-only">Time</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    value={field.value ? field.value : ''}
+                  >
                     <FormControl>
                       <SelectTrigger
                         className={cn(!field.value && 'text-muted-foreground')}
                       >
-                        <SelectValue
-                          placeholder="Select Time"
-                          defaultValue={field.value ? field.value : ''}
-                        />
+                        <SelectValue placeholder="Select Time" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -172,37 +171,44 @@ const AppointmentForm = ({
             <FormField
               control={form.control}
               name="vehicleId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="sr-only">Vehicle</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger
-                        className={cn(!field.value && 'text-muted-foreground')}
-                      >
-                        <SelectValue
-                          placeholder="Select Vehicle"
-                          defaultValue={field.value ? field.value : ''}
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {vehicles.map((item) => (
-                        <SelectItem key={item.id} value={item.id.toString()}>
-                          {item.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {form.formState.errors.vehicleId && <FormMessage />}
-                </FormItem>
-              )}
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel className="sr-only">Vehicle</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value ? field.value.toString() : ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            !field.value && 'text-muted-foreground'
+                          )}
+                        >
+                          <SelectValue placeholder="Select Vehicle">
+                            {vehicle && vehicle}
+                          </SelectValue>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {vehicles.map((item) => (
+                          <SelectItem key={item.id} value={item.id.toString()}>
+                            {item.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {form.formState.errors.vehicleId && <FormMessage />}
+                  </FormItem>
+                );
+              }}
             />
 
             {/* Services */}
             <RecordCombobox
               data={services}
               name="services"
+              rowData={rowData}
               form={form}
               label="Services"
               formName="serviceId"
