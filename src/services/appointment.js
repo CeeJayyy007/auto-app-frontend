@@ -46,12 +46,16 @@ const updateAppointment = async (newObject, id) => {
   return response.data;
 };
 
-const cancelAppointment = async (id) => {
+const createRequest = async (newObject) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.put(`${appointmentsUrl}/${id}`, config);
+  const response = await axios.post(
+    `${appointmentsUrl}/create-service-request`,
+    newObject,
+    config
+  );
   return response.data;
 };
 
@@ -70,6 +74,6 @@ export default {
   getAppointmentById,
   addAppointment,
   updateAppointment,
-  cancelAppointment,
+  createRequest,
   removeAppointment
 };
