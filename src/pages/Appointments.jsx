@@ -18,7 +18,8 @@ import {
 const Appointments = () => {
   const { result, allVehicles } = useProfile();
   const { allServices } = useServices();
-  const { addAppointment, editAppointment } = useAppointment();
+  const { addAppointment, editAppointment, removeAppointment } =
+    useAppointment();
 
   const user = result?.data?.user[0];
   const servicesData = allServices?.data;
@@ -88,7 +89,12 @@ const Appointments = () => {
       <div className="rounded-[14px] bg-white p-8">
         <DataTable
           data={appointmentData}
-          columns={columns(vehicles, servicesOption, editAppointment)}
+          columns={columns(
+            vehicles,
+            servicesOption,
+            editAppointment,
+            removeAppointment
+          )}
           props={{ services: servicesOption, statuses, vehicles }}
           placeholder="Search appointments..."
           filterColumn="note"

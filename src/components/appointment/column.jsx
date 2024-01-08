@@ -5,7 +5,12 @@ import { commaSeparatedArray, getDate, statusColor } from '@/utils/helpers';
 import { AppointmentsDataTableRowActions } from './AppointmentsDataTableRowActions';
 import ColouredBadge from '../badge/ColouredBadge';
 
-export const columns = (vehicles, servicesOption, editAppointment) => [
+export const columns = (
+  vehicles,
+  servicesOption,
+  editAppointment,
+  removeAppointment
+) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -165,6 +170,7 @@ export const columns = (vehicles, servicesOption, editAppointment) => [
       <AppointmentsDataTableRowActions
         row={row}
         editAppointment={editAppointment}
+        removeAppointment={removeAppointment}
         vehicles={vehicles}
         servicesOption={servicesOption}
       />

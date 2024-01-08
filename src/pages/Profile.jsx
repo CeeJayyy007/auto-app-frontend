@@ -239,7 +239,6 @@ const Profile = () => {
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
                 defaultValue={vehicles[0]}
-                // value={selectedVehicle}
                 onValueChange={(value) => handleSelectVehicle(value)}
               >
                 {vehicles.map((vehicle) => (

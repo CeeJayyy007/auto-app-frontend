@@ -14,10 +14,12 @@ import ColouredBadge from '../badge/ColouredBadge';
 import AppointmentForm from './AppointmentForm';
 import { EditAppointmentFormSchema } from './AppointmentValidation';
 import { useUserValue } from '@/context/UserContext';
+import { ca } from 'date-fns/locale';
 
 export const AppointmentsDataTableRowActions = ({
   row,
   editAppointment,
+  removeAppointment,
   vehicles,
   servicesOption
 }) => {
@@ -109,6 +111,7 @@ export const AppointmentsDataTableRowActions = ({
           title="Delete Appointment"
           description="Are you sure you want to delete this appointment?"
           cancelLabel="Cancel"
+          onClick={() => removeAppointment(id)}
         />
       </DropdownMenuContent>
     </DropdownMenu>
