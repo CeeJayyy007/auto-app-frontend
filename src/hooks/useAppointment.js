@@ -57,19 +57,19 @@ const useAppointment = () => {
     }
   });
 
-  const cancelAppointmentMutation = useMutation({
-    mutationFn: appointmentService.cancelAppointment,
+  const createServiceRequestMutation = useMutation({
+    mutationFn: appointmentService.createRequest,
     onSuccess: (data) => {
       queryClient.invalidateQueries('appointment');
 
       const message = data.message;
       getToast({
-        title: 'Appointment Canceled',
+        title: 'Service Request Created',
         description: message
       });
     },
     onError: (error) => {
-      errorHandler(error, 'Appointment Cancel Error');
+      errorHandler(error, 'Service Request Error');
     }
   });
 
@@ -97,8 +97,9 @@ const useAppointment = () => {
     addAppointmentMutation.mutate([appointment, userId]);
   };
 
-  const cancelAppointment = (id) => {
-    cancelAppointmentMutation.mutate(id);
+  const createServiceRequest = (appointment) => {
+    console.log('appointment', appointment);
+    createServiceRequestMutation.mutate(appointment);
   };
 
   const removeAppointment = (id) => {
@@ -109,7 +110,7 @@ const useAppointment = () => {
     getAppointmentDetails,
     addAppointment,
     editAppointment,
-    cancelAppointment,
+    createServiceRequest,
     removeAppointment
   };
 };
