@@ -14,18 +14,41 @@ import ColouredBadge from '../badge/ColouredBadge';
 import AppointmentForm from './AppointmentForm';
 import { EditAppointmentFormSchema } from './AppointmentValidation';
 import { useUserValue } from '@/context/UserContext';
-import { ca } from 'date-fns/locale';
 
 export const AppointmentsDataTableRowActions = ({
   row,
   editAppointment,
+  createServiceRequest,
   removeAppointment,
   vehicles,
   servicesOption
 }) => {
-  const { id, date, vehicle, note, services, status } = row.original;
-
+  const {
+    id,
+    date,
+    time,
+    vehicle,
+    note,
+    services,
+    status,
+    vehicleId,
+    serviceId
+  } = row.original;
+  const cancelObject = { status: 'Canceled' };
   const user = useUserValue();
+
+  const handleCreateServiceRequest = (appointmentId) => {
+    const data = {
+      appointmentId,
+      date,
+      time,
+      vehicleId: vehicleId,
+      note,
+      serviceId
+    };
+
+    createServiceRequest(data);
+  };
 
   return (
     <DropdownMenu>
@@ -47,6 +70,7 @@ export const AppointmentsDataTableRowActions = ({
             actionLabel="Create Request"
             triggerLabel="Create Request"
             title="Create Service Request"
+            onClick={() => handleCreateServiceRequest(id)}
             body={
               <div className="flex flex-col space-y-4 py-4">
                 <h4 className="text-sm font-semibold mx-4">
@@ -100,6 +124,7 @@ export const AppointmentsDataTableRowActions = ({
             title="Cancel Appointment"
             description="Are you sure you want to cancel this appointment?"
             cancelLabel="Cancel"
+            onClick={() => editAppointment(cancelObject, id)}
           />
         )}
         <DropdownMenuSeparator />

@@ -17,7 +17,8 @@ const DrawerComponent = ({
   description,
   actionLabel,
   body,
-  type
+  type,
+  onClick
 }) => {
   return (
     <Drawer>
@@ -41,7 +42,7 @@ const DrawerComponent = ({
           <Separator />
           {body}
           <DrawerFooter
-            className="mb-8 pt-0 
+            className="mb-8 pt-0
               flex flex-row justify-between space-x-2"
           >
             <DrawerClose asChild>
@@ -51,7 +52,7 @@ const DrawerComponent = ({
             </DrawerClose>
             {type === 'button' && (
               <DrawerClose asChild>
-                <Button type="submit" className="w-full">
+                <Button className="w-full" onClick={onClick}>
                   {actionLabel}
                 </Button>
               </DrawerClose>

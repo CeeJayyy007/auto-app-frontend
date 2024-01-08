@@ -9,6 +9,7 @@ export const columns = (
   vehicles,
   servicesOption,
   editAppointment,
+  createServiceRequest,
   removeAppointment
 ) => [
   {
@@ -171,6 +172,7 @@ export const columns = (
         row={row}
         editAppointment={editAppointment}
         removeAppointment={removeAppointment}
+        createServiceRequest={createServiceRequest}
         vehicles={vehicles}
         servicesOption={servicesOption}
       />
