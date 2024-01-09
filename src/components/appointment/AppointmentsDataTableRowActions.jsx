@@ -32,7 +32,8 @@ export const AppointmentsDataTableRowActions = ({
     services,
     status,
     vehicleId,
-    serviceId
+    serviceId,
+    updatedAt
   } = row.original;
   const cancelObject = { status: 'Canceled' };
   const user = useUserValue();
@@ -87,9 +88,11 @@ export const AppointmentsDataTableRowActions = ({
                 <h4 className="text-sm font-semibold mx-4">
                   Services: {commaSeparatedArray(services)}
                 </h4>
-                <h4 className="text-sm font-semibold mx-4">
-                  Last updated on: {getDate(date)}
-                </h4>
+                {updatedAt && (
+                  <h4 className="text-sm font-semibold mx-4">
+                    Last updated on: {getDate(updatedAt)}
+                  </h4>
+                )}
               </div>
             }
             cancelLabel="Cancel"
