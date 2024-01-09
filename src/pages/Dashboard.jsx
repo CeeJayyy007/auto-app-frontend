@@ -15,6 +15,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
 import { Link } from 'react-router-dom';
 import ButtonLink from '@/components/button/ButtonLink';
+import { useUserValue } from '@/context/UserContext';
 
 const dashboardCardContent = [
   {
@@ -132,8 +133,15 @@ const appointmentData = [
 ];
 
 const Dashboard = () => {
+  const user = useUserValue();
+
   return (
     <div className="space-y-4">
+      <div className="flex flex-row justify-between">
+        <h3 className="font-bold text-gray-700">
+          Welcome back, {user.firstName}
+        </h3>
+      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {dashboardCardContent.map((card) => (
           <Card className={card.bg} key={card.title}>
