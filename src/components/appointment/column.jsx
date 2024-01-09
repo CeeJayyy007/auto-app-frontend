@@ -91,7 +91,9 @@ export const columns = (
 
       return (
         <div className="flex items-center">
-          <span>{vehicle.label}</span>
+          <span className="max-w-[250px] truncate font-medium">
+            {vehicle.label}
+          </span>
         </div>
       );
     },
@@ -107,7 +109,7 @@ export const columns = (
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[400px] truncate font-medium">
+          <span className="max-w-[250px] truncate font-medium">
             {row.getValue('note')}
           </span>
         </div>
@@ -129,8 +131,10 @@ export const columns = (
       }
 
       return (
-        <div className="flex items-center max-w-[400px] truncate">
-          <span>{commaSeparatedArray(row.getValue('services'))}</span>
+        <div className="flex items-center">
+          <span className=" max-w-[250px] truncate">
+            {commaSeparatedArray(row.getValue('services'))}
+          </span>
         </div>
       );
     },
