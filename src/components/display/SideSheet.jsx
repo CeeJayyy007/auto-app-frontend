@@ -1,23 +1,14 @@
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger
 } from '@/components/ui/sheet';
 
-const SideSheet = ({
-  body,
-  triggerLabel,
-  title,
-  description,
-  actionLabel,
-  type
-}) => {
+const SideSheet = ({ body, triggerLabel, title, description, type }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -36,16 +27,9 @@ const SideSheet = ({
       <SheetContent>
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
-          <SheetDescription>{description}</SheetDescription>
+          <SheetDescription className="pb-4">{description}</SheetDescription>
         </SheetHeader>
         {body}
-        {/* <SheetFooter>
-          <SheetClose asChild>
-            <Button type="submit" className="w-full">
-              {actionLabel}
-            </Button>
-          </SheetClose>
-        </SheetFooter> */}
       </SheetContent>
     </Sheet>
   );

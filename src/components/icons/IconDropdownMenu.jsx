@@ -29,12 +29,17 @@ const IconDropdownMenu = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{label}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {label && (
+          <>
+            <DropdownMenuLabel>{label}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
+
         {viewAction && viewAction}
         {editAction && editAction}
         {extraActions && extraActions}
-        <DropdownMenuSeparator />
+        {deleteAction && <DropdownMenuSeparator />}
         {deleteAction}
       </DropdownMenuContent>
     </DropdownMenu>
