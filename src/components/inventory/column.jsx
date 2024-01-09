@@ -5,7 +5,7 @@ import { inventoryStatusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
 import { InventoryDataTableRowActions } from './InventoryDataTableRowActions';
 
-export const columns = [
+export const columns = (editInventory, deleteInventory) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -35,7 +35,7 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="S/No." />
     ),
-    cell: ({ row }) => <div className="w-[50px]">{row.getValue('id')}</div>,
+    cell: ({ row }) => <div className="w-[50px]">{row.index + 1}</div>,
     enableSorting: false,
     enableHiding: false
   },
@@ -47,7 +47,7 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span>{row.getValue('name')}</span>
+          <span className="truncate max-w-[300px]">{row.getValue('name')}</span>
         </div>
       );
     }
@@ -87,6 +87,19 @@ export const columns = [
       return (
         <div className="flex space-x-2">
           <span>{row.getValue('initialPrice')}</span>
+        </div>
+      );
+    }
+  },
+  {
+    accessorKey: 'markUp',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Mark Up" />
+    ),
+    cell: ({ row }) => {
+      return (
+        <div className="flex space-x-2">
+          <span>{row.getValue('markUp')}</span>
         </div>
       );
     }
@@ -133,6 +146,12 @@ export const columns = [
 
   {
     id: 'actions',
-    cell: ({ row }) => <InventoryDataTableRowActions row={row} />
+    cell: ({ row }) => (
+      <InventoryDataTableRowActions
+        row={row}
+        editInventory={editInventory}
+        deleteInventory={deleteInventory}
+      />
+    )
   }
 ];

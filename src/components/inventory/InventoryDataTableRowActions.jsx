@@ -1,24 +1,36 @@
 import { DotsVerticalIcon } from '@radix-ui/react-icons';
-
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import AlertDialogComponent from '../display/AlertDialog';
 import DrawerComponent from '../display/Drawer';
 import ColouredBadge from '../badge/ColouredBadge';
-import { inventoryStatusColor } from '@/utils/helpers';
+import { getDate, inventoryStatusColor } from '@/utils/helpers';
 import SideSheet from '../display/SideSheet';
-import { Label } from '../ui/label';
-import { Input } from '../ui/input';
+import { EditInventoryFormSchema } from './InventoryValidation';
+import InventoryForm from './InventoryForm';
 
-export const InventoryDataTableRowActions = ({ row }) => {
-  const { name, quantity, lowLevel, initialPrice, markUp, finalPrice, status } =
-    row.original;
+export const InventoryDataTableRowActions = ({
+  row,
+  editInventory,
+  deleteInventory
+}) => {
+  const {
+    id,
+    name,
+    quantity,
+    lowLevel,
+    initialPrice,
+    markUp,
+    finalPrice,
+    status,
+    createdAt,
+    updatedAt
+  } = row.original;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,10 +66,11 @@ export const InventoryDataTableRowActions = ({ row }) => {
               <h4 className="text-sm font-semibold mx-4">
                 Final Price (₦): {finalPrice}
               </h4>
-              <h4 className="text-sm font-semibold mx-4">Created by: Admin</h4>
-              <h4 className="text-sm font-semibold mx-4">Updated by: Admin</h4>
               <h4 className="text-sm font-semibold mx-4">
-                Last updated on: 12/12/2023
+                Created on: {getDate(createdAt)}
+              </h4>
+              <h4 className="text-sm font-semibold mx-4">
+                Last updated on: {getDate(updatedAt)}
               </h4>
             </div>
           }
@@ -70,58 +83,12 @@ export const InventoryDataTableRowActions = ({ row }) => {
           description="Edit Inventory Item details and click Save Inventory Item when done."
           actionLabel="Save Inventory Item"
           body={
-            <div className="flex flex-col space-y-4 py-4">
-              <div className="grid ">
-                <Label htmlFor="name" className="text-left mb-2 sr-only">
-                  Name
-                </Label>
-                <Input placeholder="Name" name="name" />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="quantity" className="text-left mb-2 sr-only">
-                  Quantity
-                </Label>
-                <Input placeholder="Quantity" name="quantity" type="number" />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="lowLevel" className="text-left mb-2 sr-only">
-                  Low Level
-                </Label>
-                <Input placeholder="Low Level" name="lowLevel" type="number" />
-              </div>
-              <div className="grid ">
-                <Label
-                  htmlFor="initialPrice"
-                  className="text-left mb-2 sr-only"
-                >
-                  Initial Price
-                </Label>
-                <Input
-                  placeholder="Initial Price"
-                  name="initialPrice"
-                  type="number"
-                />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="markUp" className="text-left mb-2 sr-only">
-                  Mark Up
-                </Label>
-                <Input placeholder="Mark Up" name="markUp" type="number" />
-              </div>
-              <div className="grid ">
-                <Label
-                  htmlFor="initialPrice"
-                  className="text-left mb-2 sr-only"
-                >
-                  Final Price
-                </Label>
-                <Input
-                  placeholder="Final Price"
-                  name="finalPrice"
-                  type="number"
-                />
-              </div>
-            </div>
+            <InventoryForm
+              rowData={row.original}
+              formAction={editInventory}
+              formValidation={EditInventoryFormSchema}
+              buttonText="Edit Inventory Item"
+            />
           }
         />
         <DropdownMenuSeparator />
@@ -132,6 +99,7 @@ export const InventoryDataTableRowActions = ({ row }) => {
           title="Delete Inventory Item"
           description="Are you sure you want to delete this item?"
           cancelLabel="Cancel"
+          onClick={() => deleteInventory(id)}
         />
       </DropdownMenuContent>
     </DropdownMenu>
