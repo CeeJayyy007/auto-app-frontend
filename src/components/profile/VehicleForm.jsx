@@ -11,6 +11,7 @@ import {
 import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SheetClose } from '../ui/sheet';
+import { cn } from '@/lib/utils';
 
 const VehicleForm = ({
   vehicle,
@@ -58,7 +59,9 @@ const VehicleForm = ({
               name="make"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Make</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Make
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Make"
@@ -76,7 +79,9 @@ const VehicleForm = ({
               name="model"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Model</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Model
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Model"
@@ -94,7 +99,9 @@ const VehicleForm = ({
               name="year"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Year</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Year
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="number"
@@ -113,7 +120,9 @@ const VehicleForm = ({
               name="registrationNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Registration Number</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Registration Number
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Registration Number"

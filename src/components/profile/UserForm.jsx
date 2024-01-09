@@ -18,6 +18,7 @@ import {
 import { Input } from '../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SheetClose } from '../ui/sheet';
+import { cn } from '@/lib/utils';
 
 const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
   const form = useForm({
@@ -54,7 +55,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">First Name</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    First Name
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="First Name"
@@ -72,7 +75,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Last Name</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Last Name
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Last Name"
@@ -90,7 +95,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Username</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Username
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Username"
@@ -108,7 +115,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Email</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Email
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -127,7 +136,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="phone"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Phone Number</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Phone Number
+                  </FormLabel>
                   <FormControl>
                     <Input
                       placeholder="Phone Number"
@@ -145,7 +156,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
               name="roles"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Role</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Role
+                  </FormLabel>
 
                   <Select
                     onValueChange={field.onChange}

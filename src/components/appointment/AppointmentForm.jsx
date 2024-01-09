@@ -70,7 +70,6 @@ const AppointmentForm = ({
 
   const onSubmit = async (data) => {
     try {
-      console.log('data', data);
       if (rowAppointmentData?.id) {
         await formAction(data, id);
       } else {
@@ -96,7 +95,9 @@ const AppointmentForm = ({
               name="date"
               render={({ field }) => (
                 <FormItem className="flex flex-col">
-                  <FormLabel className="sr-only">Appointment Date</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Appointment Date
+                  </FormLabel>
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -143,7 +144,9 @@ const AppointmentForm = ({
               name="time"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Time</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Time
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     value={field.value ? field.value : ''}
@@ -174,7 +177,9 @@ const AppointmentForm = ({
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="sr-only">Vehicle</FormLabel>
+                    <FormLabel className={cn(!field.value && 'sr-only')}>
+                      Vehicle
+                    </FormLabel>
                     <Select
                       onValueChange={field.onChange}
                       value={field.value ? field.value.toString() : ''}
@@ -220,7 +225,9 @@ const AppointmentForm = ({
               name="note"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="sr-only">Note</FormLabel>
+                  <FormLabel className={cn(!field.value && 'sr-only')}>
+                    Note
+                  </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter appointment note here..."
