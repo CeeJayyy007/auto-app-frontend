@@ -81,7 +81,7 @@ const useAppointment = () => {
       const message = data.message;
       getToast({
         title: 'Appointment Deleted',
-        description: message
+        description: 'Appointment Deleted Successfully'
       });
     },
     onError: (error) => {
