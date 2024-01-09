@@ -1,14 +1,14 @@
 export const statuses = [
   {
-    value: 'low stock',
+    value: 'Low Stock',
     label: 'Low Stock'
   },
   {
-    value: 'out of stock',
+    value: 'Out of Stock',
     label: 'Out of Stock'
   },
   {
-    value: 'in stock',
+    value: 'In Stock',
     label: 'In Stock'
   }
 ];

@@ -19,7 +19,7 @@ const addService = async (newObject, id) => {
   };
 
   const response = await axios.post(
-    `${baseUrl}/${id}/add-service`,
+    `${baseUrl}/${id}/create-service`,
     newObject,
     config
   );
@@ -39,6 +39,8 @@ const removeService = async (id) => {
   const config = {
     headers: { Authorization: token }
   };
+
+  console.log('id to delete', id);
 
   const response = await axios.delete(`${servicesUrl}/${id}`, config);
   return response.data;
