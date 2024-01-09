@@ -48,11 +48,11 @@ export const statusColor = (status) => {
 
 export const inventoryStatusColor = (status) => {
   switch (status) {
-    case 'out of stock':
+    case 'Out of Stock':
       return 'bg-red-100 text-red-400 border-red-400';
-    case 'low stock':
+    case 'Low Stock':
       return 'bg-orange-100 text-orange-400 border-orange-400';
-    case 'in stock':
+    case 'In Stock':
       return 'bg-green-100 text-green-400 border-green-400';
     default:
       return 'bg-destructive';
@@ -108,4 +108,37 @@ export const findVehicleInfo = (vehicleId, allVehiclesData) => {
 
 export const getDate = (date) => {
   return format(new Date(date), 'dd MMM yyyy');
+};
+
+export const generateDurationOptions = (minMinutes, maxMinutes, step) => {
+  const durationOptions = [];
+
+  for (let minutes = minMinutes; minutes <= maxMinutes; minutes += step) {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    const label =
+      hours > 0
+        ? `${hours} hour${hours > 1 ? 's' : ''}${
+            remainingMinutes > 0 ? ` ${remainingMinutes} minutes` : ''
+          }`
+        : `${remainingMinutes} minutes`;
+
+    durationOptions.push({ label, value: minutes });
+  }
+
+  return durationOptions;
+};
+
+export const getDurationLabel = (minutes) => {
+  const hours = Math.floor(minutes / 60);
+  const remainingMinutes = minutes % 60;
+
+  if (hours > 0) {
+    return `${hours} hour${hours > 1 ? 's' : ''}${
+      remainingMinutes > 0 ? ` ${remainingMinutes} minutes` : ''
+    }`;
+  } else {
+    return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
+  }
 };
