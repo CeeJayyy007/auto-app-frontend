@@ -54,10 +54,14 @@ const AppointmentCard = ({ appointments }) => {
             {appointmentData.map((appointment, index) => (
               <TableRow key={appointment.createdAt}>
                 <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell>{getDate(appointment.date)}</TableCell>
+                <TableCell className="min-w-[80px]">
+                  {getDate(appointment.date)}
+                </TableCell>
                 <TableCell>{appointment.time}</TableCell>
-                <TableCell>{appointment.note}</TableCell>
-                <TableCell className="truncate">
+                <TableCell className="max-w-[150px] truncate ">
+                  {appointment.note}
+                </TableCell>
+                <TableCell className="max-w-[150px] truncate ">
                   {commaSeparatedArray(appointment.services)}
                 </TableCell>
                 <TableCell>
