@@ -72,8 +72,10 @@ const RecordCombobox = ({ data, rowData, name, form, label, formName }) => {
       control={form.control}
       name={formName}
       render={({ field }) => (
-        <FormItem className="flex flex-col">
-          <FormLabel className="sr-only">{label}</FormLabel>
+        <FormItem className={cn('flex flex-col', selectedServices && 'mt-2')}>
+          <FormLabel className={cn(!selectedServices && 'sr-only')}>
+            {label}
+          </FormLabel>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
               <FormControl>
