@@ -11,7 +11,7 @@ export const DataTableToolbar = ({
   filterColumn
 }) => {
   const isFiltered = table.getState().columnFilters.length > 0;
-  const { services, statuses, inventories, vehicles } = props;
+  const { services, statuses, inventories, vehicles, users } = props;
 
   return (
     <div className="flex items-center justify-between">
@@ -24,10 +24,18 @@ export const DataTableToolbar = ({
           }
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        {statuses && (
+        {statuses && !users && (
           <DataTableFacetedFilter
             column={table.getColumn('status')}
             title="Status"
+            options={statuses}
+          />
+        )}
+
+        {statuses && users && (
+          <DataTableFacetedFilter
+            column={table.getColumn('roles')}
+            title="Role"
             options={statuses}
           />
         )}

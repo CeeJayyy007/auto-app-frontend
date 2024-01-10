@@ -3,7 +3,14 @@ import { token } from '@/utils/auth';
 const baseUrl = '/api/users';
 const vehicleUrl = '/api/vehicles';
 
-const getAllUserDetails = async (id) => {
+const getAll = async () => {
+  console.log('get all users');
+  const response = await axios.get(baseUrl);
+  return response.data;
+};
+
+const getUserDetailsById = async (id) => {
+  console.log('user details id', id);
   const response = await axios.get(`${baseUrl}/${id}`);
   return response.data;
 };
@@ -13,16 +20,12 @@ const getAllVehicles = async () => {
   return response.data;
 };
 
-const addVehicle = async (newObject, id) => {
+const addUser = async (newObject) => {
   const config = {
     headers: { Authorization: token }
   };
 
-  const response = await axios.post(
-    `${baseUrl}/${id}/add-vehicle`,
-    newObject,
-    config
-  );
+  const response = await axios.post(baseUrl, newObject, config);
   return response.data;
 };
 
@@ -33,6 +36,19 @@ const updateUser = async (newObject) => {
 
   const response = await axios.put(
     `${baseUrl}/${newObject.id}`,
+    newObject,
+    config
+  );
+  return response.data;
+};
+
+const addVehicle = async (newObject, id) => {
+  const config = {
+    headers: { Authorization: token }
+  };
+
+  const response = await axios.post(
+    `${baseUrl}/${id}/add-vehicle`,
     newObject,
     config
   );
@@ -67,10 +83,12 @@ const removeVehicle = async (id) => {
 };
 
 export default {
-  getAllUserDetails,
+  getAll,
+  getUserDetailsById,
   getAllVehicles,
-  addVehicle,
+  addUser,
   updateUser,
+  addVehicle,
   updateVehicle,
   removeUser,
   removeVehicle
