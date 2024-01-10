@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { Button } from '../ui/button';
+import { Button } from '../../ui/button';
 import {
   Form,
   FormControl,
@@ -7,7 +7,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage
-} from '../ui/form';
+} from '../../ui/form';
 import {
   Select,
   SelectContent,
@@ -15,9 +15,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { Input } from '../ui/input';
+import { Input } from '../../ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SheetClose } from '../ui/sheet';
+import { SheetClose } from '../../ui/sheet';
 import { cn } from '@/lib/utils';
 
 const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {

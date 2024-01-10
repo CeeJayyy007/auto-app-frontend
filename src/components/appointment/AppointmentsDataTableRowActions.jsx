@@ -11,8 +11,8 @@ import SideSheet from '../display/SideSheet';
 import DrawerComponent from '../display/Drawer';
 import { commaSeparatedArray, getDate, statusColor } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
-import AppointmentForm from './AppointmentForm';
-import { EditAppointmentFormSchema } from './AppointmentValidation';
+import AppointmentForm from './appointmentForm/AppointmentForm';
+import { EditAppointmentFormSchema } from './appointmentForm/AppointmentValidation';
 import { useUserValue } from '@/context/UserContext';
 
 export const AppointmentsDataTableRowActions = ({

@@ -9,6 +9,7 @@ import Services from './pages/Services';
 import Inventory from './pages/Inventory';
 import MaintenaceRecord from './pages/MaintenanceRecord';
 import Analytics from './pages/Analytics';
+import Users from './pages/Users';
 
 const privateRoutes = () => {
   return [
@@ -16,6 +17,7 @@ const privateRoutes = () => {
       element: <Layout />,
       children: [
         { path: '/', element: <Dashboard replace /> },
+        { path: 'users', element: <Users /> },
         { path: 'profile', element: <Profile /> },
         { path: 'appointments', element: <Appointments /> },
         { path: 'activities', element: <Activities /> },

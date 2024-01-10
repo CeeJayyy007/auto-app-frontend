@@ -3,8 +3,8 @@ import { statuses } from '@/components/inventory/data';
 import { DataTable } from '@/components/dataTable/dataTable';
 import SideSheet from '@/components/display/SideSheet';
 import useInventory from '@/hooks/useInventory';
-import InventoryForm from '@/components/inventory/InventoryForm';
-import { AddInventoryFormSchema } from '@/components/inventory/InventoryValidation';
+import InventoryForm from '@/components/inventory/inventoryForm/InventoryForm';
+import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/InventoryValidation';
 
 const Inventory = () => {
   const { allInventory, addInventory, editInventory, deleteInventory } =

@@ -11,8 +11,8 @@ import DrawerComponent from '../display/Drawer';
 import ColouredBadge from '../badge/ColouredBadge';
 import { getDate, inventoryStatusColor } from '@/utils/helpers';
 import SideSheet from '../display/SideSheet';
-import { EditInventoryFormSchema } from './InventoryValidation';
-import InventoryForm from './InventoryForm';
+import { EditInventoryFormSchema } from './inventoryForm/InventoryValidation';
+import InventoryForm from './inventoryForm/InventoryForm';
 
 export const InventoryDataTableRowActions = ({
   row,

@@ -1,10 +1,9 @@
 import { columns } from '@/components/appointment/column';
-import { appointmentData } from '@/components/appointment/data';
 import { DataTable } from '@/components/dataTable/dataTable';
 import { statuses } from '../components/appointment/data';
 import SideSheet from '@/components/display/SideSheet';
-import AppointmentForm from '@/components/appointment/AppointmentForm';
-import { AddAppointmentFormSchema } from '@/components/appointment/AppointmentValidation';
+import AppointmentForm from '@/components/appointment/appointmentForm/AppointmentForm';
+import { AddAppointmentFormSchema } from '@/components/appointment/appointmentForm/AppointmentValidation';
 import useAppointment from '@/hooks/useAppointment';
 import useProfile from '@/hooks/useProfile';
 import useServices from '@/hooks/useServices';
@@ -16,7 +15,6 @@ import {
 } from '@/utils/helpers';
 
 const Appointments = () => {
-  const { result, allVehicles } = useProfile();
   const { allServices } = useServices();
   const {
     addAppointment,
@@ -24,6 +22,7 @@ const Appointments = () => {
     removeAppointment,
     createServiceRequest
   } = useAppointment();
+  const { result, allVehicles } = useProfile();
 
   const user = result?.data?.user[0];
   const servicesData = allServices?.data;

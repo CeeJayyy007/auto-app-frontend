@@ -20,22 +20,44 @@ const useProfile = (navigate) => {
       duration: 5000
     });
 
+  const result = useQuery({
+    queryKey: ['profile', userId],
+    queryFn: () => profileService.getUserDetailsById(userId)
+  });
+
+  const allUsers = useQuery({
+    queryKey: ['users'],
+    queryFn: profileService.getAll
+  });
+
   const allVehicles = useQuery({
     queryKey: ['profile'],
     queryFn: profileService.getAllVehicles,
     refetchOnWindowFocus: true
   });
 
-  const result = useQuery({
-    queryKey: ['profile', userId],
-    queryFn: () => profileService.getAllUserDetails(userId),
-    refetchOnWindowFocus: true
+  const addProfileMutation = useMutation({
+    mutationFn: profileService.addUser,
+    onSuccess: (data) => {
+      queryClient.invalidateQueries(['profile']);
+      queryClient.invalidateQueries(['users']);
+
+      const message = data.message;
+      getToast({
+        title: 'Profile Created',
+        description: message
+      });
+    },
+    onError: (error) => {
+      errorHandler(error, 'Add Profile Error');
+    }
   });
 
   const editUserMutation = useMutation({
     mutationFn: profileService.updateUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries('profile');
+      queryClient.invalidateQueries(['users']);
 
       const message = data.message;
       getToast({
@@ -84,6 +106,7 @@ const useProfile = (navigate) => {
     mutationFn: profileService.removeUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries('profile');
+      queryClient.invalidateQueries(['users']);
 
       const message = data.message;
       getToast({
@@ -112,6 +135,10 @@ const useProfile = (navigate) => {
     }
   });
 
+  const addProfile = (profile) => {
+    addProfileMutation.mutate(profile);
+  };
+
   const editUser = (user) => {
     editUserMutation.mutate(user);
   };
@@ -124,7 +151,7 @@ const useProfile = (navigate) => {
     addVehicleMutation.mutate([vehicle, userId]);
   };
 
-  const removeUser = (user) => {
+  const removeProfile = (user) => {
     removeUserMutation.mutate(user);
   };
 
@@ -133,12 +160,14 @@ const useProfile = (navigate) => {
   };
 
   return {
+    allUsers,
     result,
     allVehicles,
+    addProfile,
     editUser,
     editVehicle,
     addVehicle,
-    removeUser,
+    removeProfile,
     removeVehicle
   };
 };
