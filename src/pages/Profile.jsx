@@ -14,16 +14,16 @@ import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
 import useProfile from '@/hooks/useProfile';
 import { useNavigate } from 'react-router-dom';
-import VehicleForm from '@/components/profile/VehicleForm';
+import VehicleForm from '@/components/profile/vehicleForm/VehicleForm';
 import {
   AddVehicleFormSchema,
   EditVehicleFormSchema
-} from '@/components/profile/VehicleFormValidation';
+} from '@/components/profile/vehicleForm/VehicleFormValidation';
 import {
   AddUserFormSchema,
   EditUserFormSchema
-} from '@/components/profile/UserFormValidation';
-import UserForm from '@/components/profile/UserForm';
+} from '@/components/profile/userForm/UserFormValidation';
+import UserForm from '@/components/profile/userForm/UserForm';
 import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
 
 const userStatsData = {
