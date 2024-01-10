@@ -165,7 +165,9 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
                     defaultValue={user ? user.roles : ''}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger
+                        className={cn(!field.value && 'text-muted-foreground')}
+                      >
                         <SelectValue placeholder="Select Role" />
                       </SelectTrigger>
                     </FormControl>

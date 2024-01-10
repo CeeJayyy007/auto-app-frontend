@@ -85,7 +85,7 @@ const RecordCombobox = ({ data, rowData, name, form, label, formName }) => {
                   aria-expanded={open}
                   className={cn(
                     'w-full justify-between mb-2',
-                    !field.value && 'text-muted-foreground'
+                    !selectedServices && 'text-muted-foreground'
                   )}
                 >
                   {lastSelectedLabel}

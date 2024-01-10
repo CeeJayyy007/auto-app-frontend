@@ -139,7 +139,7 @@ const Dashboard = () => {
     <div className="space-y-4">
       <div className="flex flex-row justify-between">
         <h3 className="font-bold text-gray-700">
-          Welcome back, {user.firstName}
+          Welcome back, {user?.firstName}
         </h3>
       </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
