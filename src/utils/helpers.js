@@ -59,6 +59,19 @@ export const inventoryStatusColor = (status) => {
   }
 };
 
+export const rolesColor = (role) => {
+  switch (role) {
+    case 'User':
+      return 'bg-green-100 text-green-400 border-green-400';
+    case 'Admin':
+      return 'bg-blue-100 text-blue-400 border-blue-400';
+    case 'Super Admin':
+      return 'bg-purple-100 text-purple-400 border-purple-400';
+    default:
+      return 'bg-destructive';
+  }
+};
+
 export const generateTimeOptions = () => {
   const options = [];
   const startTime = 8 * 60; // 8 am in minutes
