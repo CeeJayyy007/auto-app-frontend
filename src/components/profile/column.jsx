@@ -136,7 +136,7 @@ export const columns = (removeProfile) => [
   {
     id: 'actions',
     cell: ({ row }) => (
-      <UsersDataTableRowActions row={row} deleteInventory={removeProfile} />
+      <UsersDataTableRowActions row={row} removeProfile={removeProfile} />
     )
   }
 ];
