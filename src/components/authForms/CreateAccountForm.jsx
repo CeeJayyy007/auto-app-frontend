@@ -23,7 +23,6 @@ const CreateAccountForm = ({ className, register, ...props }) => {
     defaultValues: {
       firstName: '',
       lastName: '',
-      username: '',
       phone: '',
       email: '',
       password: ''
@@ -81,24 +80,6 @@ const CreateAccountForm = ({ className, register, ...props }) => {
                     />
                   </FormControl>
                   {form.formState.errors.lastName && <FormMessage />}
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="sr-only">Username</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Username"
-                      disabled={form.formState.isLoading}
-                      {...field}
-                    />
-                  </FormControl>
-                  {form.formState.errors.username && <FormMessage />}
                 </FormItem>
               )}
             />
