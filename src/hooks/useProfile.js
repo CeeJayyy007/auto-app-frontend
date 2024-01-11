@@ -5,7 +5,7 @@ import useErrorHandler from './useErrorHandler';
 import { useUserValue } from '@/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
 
-const useProfile = (navigate) => {
+const useProfile = () => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
@@ -104,19 +104,17 @@ const useProfile = (navigate) => {
 
   const removeUserMutation = useMutation({
     mutationFn: profileService.removeUser,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('profile');
       queryClient.invalidateQueries(['users']);
 
-      const message = data.message;
       getToast({
         title: 'Profile Updated',
-        description: message
+        description: 'User deleted successfully'
       });
-      navigate('/', { replace: true });
     },
     onError: (error) => {
-      errorHandler(error, 'Profile Update Error');
+      errorHandler(error, 'Profile Delete Error');
     }
   });
 
@@ -143,16 +141,16 @@ const useProfile = (navigate) => {
     editUserMutation.mutate(user);
   };
 
+  const removeProfile = (id) => {
+    removeUserMutation.mutate(id);
+  };
+
   const editVehicle = (vehicle, vehicleId) => {
     editVehicleMutation.mutate([vehicle, vehicleId]);
   };
 
   const addVehicle = (vehicle) => {
     addVehicleMutation.mutate([vehicle, userId]);
-  };
-
-  const removeProfile = (user) => {
-    removeUserMutation.mutate(user);
   };
 
   const removeVehicle = (id) => {

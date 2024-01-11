@@ -10,8 +10,7 @@ import {
 import AlertDialogComponent from '../display/AlertDialog';
 
 export const UsersDataTableRowActions = ({ row, removeProfile }) => {
-  const { id, firstName, lastName, email, phone, vehicles, roles } =
-    row.original;
+  const { id } = row.original;
 
   return (
     <DropdownMenu>
@@ -27,7 +26,7 @@ export const UsersDataTableRowActions = ({ row, removeProfile }) => {
       <DropdownMenuContent align="end" className="w-[160px]">
         {/* View */}
         <DropdownMenuItem>View</DropdownMenuItem>
-        {/* Edit */}
+
         <DropdownMenuSeparator />
         {/* Delete */}
         <AlertDialogComponent
