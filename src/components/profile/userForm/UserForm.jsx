@@ -21,15 +21,17 @@ import { SheetClose } from '../../ui/sheet';
 import { cn } from '@/lib/utils';
 
 const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
+  const { firstName, lastName, email, phone, username, roles } = user;
+
   const form = useForm({
     resolver: zodResolver(formValidation),
     defaultValues: {
-      firstName: user ? user.firstName : '',
-      lastName: user ? user.lastName : '',
-      email: user ? user.email : '',
-      phone: user ? user.phone : '',
-      username: user ? user.username : '',
-      roles: user ? user.roles : ''
+      firstName: firstName ? firstName : '',
+      lastName: lastName ? lastName : '',
+      email: email ? email : '',
+      phone: phone ? phone : '',
+      username: username ? username : '',
+      roles: roles ? roles : ''
     }
   });
 
@@ -162,20 +164,22 @@ const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
 
                   <Select
                     onValueChange={field.onChange}
-                    defaultValue={user ? user.roles : ''}
+                    defaultValue={field.value}
                   >
                     <FormControl>
                       <SelectTrigger
                         className={cn(!field.value && 'text-muted-foreground')}
                       >
-                        <SelectValue placeholder="Select Role" />
+                        <SelectValue placeholder="Select Role">
+                          {field.value}
+                        </SelectValue>
                       </SelectTrigger>
                     </FormControl>
 
                     <SelectContent>
-                      <SelectItem value="user">User</SelectItem>
-                      <SelectItem value="admin">Admin</SelectItem>
-                      <SelectItem value="superAdmin">Super Admin</SelectItem>
+                      <SelectItem value="User">User</SelectItem>
+                      <SelectItem value="Admin">Admin</SelectItem>
+                      <SelectItem value="Super Admin">Super Admin</SelectItem>
                     </SelectContent>
                   </Select>
 
