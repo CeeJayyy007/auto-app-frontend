@@ -19,10 +19,7 @@ import {
   AddVehicleFormSchema,
   EditVehicleFormSchema
 } from '@/components/profile/vehicleForm/VehicleFormValidation';
-import {
-  AddUserFormSchema,
-  EditUserFormSchema
-} from '@/components/profile/userForm/UserFormValidation';
+import { EditUserFormSchema } from '@/components/profile/userForm/UserFormValidation';
 import UserForm from '@/components/profile/userForm/UserForm';
 import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
 
