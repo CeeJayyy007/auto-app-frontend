@@ -1,4 +1,4 @@
-import { get, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from '../../ui/button';
 import {
   Form,
@@ -56,17 +56,10 @@ const ActivitiesForm = ({
     return `${vehicle?.make} ${vehicle?.model} ${vehicle?.year}`;
   };
 
-  console.log(
-    'selectedUser here',
-    selectedUser?.Vehicles,
-    selectedUser?.Vehicles.length
-  );
-
   const onSubmit = async (data) => {
     try {
-      console.log('data here', data);
-      //   await formAction(data);
-      //   form.reset();
+      await formAction(data);
+      form.reset();
     } catch (error) {
       form.setError('submitError', {
         type: 'manual',
