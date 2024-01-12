@@ -1,8 +1,8 @@
-import { inventories, services } from '@/components/activities/data';
 import getIcon from '@/components/icons/getIcon';
 import MaintenanceRecordTable from '@/components/maintenanceRecord/MaintenanceRecordTable';
 import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
 import RecordTotalTable from '@/components/maintenanceRecord/RecordTotalTable';
+import { Form } from '@/components/ui/form';
 import {
   Select,
   SelectContent,
@@ -10,6 +10,9 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
 
 const inventoryData = [
   {
@@ -116,6 +119,29 @@ const statusData = [
 ];
 
 const MaintenaceRecord = () => {
+  const location = useLocation();
+  const { services, inventories } = location.state || {};
+
+  const form = useForm({
+    resolver: zodResolver(),
+    defaultValues: {}
+  });
+
+  const onSubmit = async (data) => {
+    try {
+      console.log('data here', data);
+      //   await formAction(data);
+      //   form.reset();
+    } catch (error) {
+      form.setError('submitError', {
+        type: 'manual',
+        message: 'Submission failed. Please try again.'
+      });
+    }
+  };
+
+  console.log('services here', services, inventories);
+
   return (
     <div className="">
       <div className="flex flex-row justify-between">
@@ -133,67 +159,95 @@ const MaintenaceRecord = () => {
           </SelectContent>
         </Select>
       </div>
-
-      <div className="grid grid-cols-2 gap-4 w-full">
-        <div className="col-span-1 flex flex-col space-y-4">
-          <div className="bg-white rounded-[14px] p-4">
-            <div className="flex flex-row justify-between mx-4">
-              <div className="grid justify-items-center">
-                <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
-                  {getIcon({
-                    name: 'profile',
-                    className: 'w-5 h-5 fill-green-400'
-                  })}
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="col-span-1 flex flex-col space-y-4">
+              <div className="bg-white rounded-[14px] p-4">
+                <div className="flex flex-row justify-between mx-4">
+                  <div className="grid justify-items-center">
+                    <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
+                      {getIcon({
+                        name: 'profile',
+                        className: 'w-5 h-5 fill-green-400'
+                      })}
+                    </div>
+                    <h3 className="text-sm">John Jackson</h3>
+                    <p className="text-xs text-muted-foreground mt-0">
+                      johnjackson@mailcom
+                    </p>
+                  </div>
+                  <div className="grid grid-flow-row justify-items-center">
+                    <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
+                      {getIcon({
+                        name: 'vehicle',
+                        className: 'w-5 h-5 fill-green-400'
+                      })}
+                    </div>
+                    <h3 className="text-sm">Mercedes Benz 2021</h3>
+                    <p className="text-xs text-muted-foreground mt-0">
+                      LND 123 EX
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-sm">John Jackson</h3>
-                <p className="text-xs text-muted-foreground mt-0">
-                  johnjackson@mailcom
-                </p>
               </div>
-              <div className="grid grid-flow-row justify-items-center">
-                <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
-                  {getIcon({
-                    name: 'vehicle',
-                    className: 'w-5 h-5 fill-green-400'
-                  })}
-                </div>
-                <h3 className="text-sm">Mercedes Benz 2021</h3>
-                <p className="text-xs text-muted-foreground mt-0">LND 123 EX</p>
+              <div className="bg-white rounded-[14px] p-4 pb-8">
+                <h3 className="text-sm font-semibold mx-2 mb-2">Services</h3>
+                <MaintenanceRecordTable name="Service" data={serviceData} />
+              </div>
+              <div className="bg-white rounded-[14px] p-4 pb-8">
+                <h3 className="text-sm font-semibold mt-4 mx-2 mb-2">
+                  Items used
+                </h3>
+                <MaintenanceRecordTable name="Items" data={inventoryData} />
+              </div>
+            </div>
+            <div className="col-span-1 bg-white rounded-[14px] p-4">
+              <h3 className="text-[16px] font-bold pb-0">
+                Select Services and Items
+              </h3>
+              <p className="text-xs text-muted-foreground mb-4 mt-0">
+                Pick the services and items to be used for the mantenance
+                activity
+              </p>
+              <div className="mb-4">
+                <h3 className="text-sm font-semibold mb-1">Select Services</h3>
+                <RecordCombobox
+                  data={services}
+                  name="services"
+                  form={form}
+                  label="Services"
+                  formName="serviceId"
+                />
+              </div>
+              <div className="mt-4">
+                <h3 className="text-sm font-semibold mb-1">Select Items</h3>
+                <RecordCombobox
+                  data={inventories}
+                  name="items"
+                  form={form}
+                  label="Inventories"
+                  formName="inventoryId"
+                />
+              </div>
+              <div className="bg-white rounded-[14px] px-0 pt-8">
+                <h3 className="text-sm font-semibold mb-1 ml-2">Total</h3>
+                <RecordTotalTable data={totalData} />
               </div>
             </div>
           </div>
-          <div className="bg-white rounded-[14px] p-4 pb-8">
-            <h3 className="text-sm font-semibold mx-2 mb-2">Services</h3>
-            <MaintenanceRecordTable name="Service" data={serviceData} />
-          </div>
-          <div className="bg-white rounded-[14px] p-4 pb-8">
-            <h3 className="text-sm font-semibold mt-4 mx-2 mb-2">Items used</h3>
-            <MaintenanceRecordTable name="Items" data={inventoryData} />
-          </div>
-        </div>
-        <div className="col-span-1 bg-white rounded-[14px] p-4">
-          <h3 className="text-[16px] font-bold pb-0">
-            Select Services and Items
-          </h3>
-          <p className="text-xs text-muted-foreground mb-4 mt-0">
-            Pick the services and items to be used for the mantenance activity
-          </p>
-          <div className="mb-4">
-            <h3 className="text-sm font-semibold mb-1">Select Services</h3>
-            <RecordCombobox data={services} name="services" />
-          </div>
-          <div className="mt-4">
-            <h3 className="text-sm font-semibold mb-1">Select Items</h3>
-            <RecordCombobox data={inventories} name="items" />
-          </div>
-          <div className="bg-white rounded-[14px] px-0 pt-8">
-            <h3 className="text-sm font-semibold mb-1 ml-2">Total</h3>
-            <RecordTotalTable data={totalData} />
-          </div>
-        </div>
-      </div>
+        </form>
+      </Form>
     </div>
   );
 };
 
 export default MaintenaceRecord;
+
+//  <RecordCombobox
+//               data={services}
+//               name="services"
+//               form={form}
+//               label="Services"
+//               formName="serviceId"
+//             />
