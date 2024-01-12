@@ -105,6 +105,13 @@ export const getServices = (servicesData) =>
     id: service.id
   }));
 
+export const getInventories = (inventoriesData) =>
+  inventoriesData.map((service) => ({
+    label: service.name,
+    value: service.name,
+    id: service.id
+  }));
+
 const servicesMap = new Map();
 
 export const findServiceName = (serviceId, servicesData) => {
