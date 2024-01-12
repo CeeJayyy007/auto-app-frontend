@@ -1,11 +1,17 @@
 import { Checkbox } from '@/components/ui/checkbox';
-import { services, inventories, statuses, vehicles } from './data';
+import { statuses } from './data';
 import { DataTableColumnHeader } from '../dataTable/dataTableColumnHeader';
-import { commaSeparatedArray, statusColor } from '@/utils/helpers';
+import { commaSeparatedArray, getDate, statusColor } from '@/utils/helpers';
 import { ActivitiesDataTableRowActions } from './ActivitiesDataTableRowActions';
 import ColouredBadge from '../badge/ColouredBadge';
 
-export const columns = [
+export const columns = (
+  vehicles,
+  services,
+  inventories,
+  editActivity,
+  removeActivity
+) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -35,7 +41,7 @@ export const columns = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="S/No." />
     ),
-    cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    cell: ({ row }) => <div>{row.index + 1}</div>,
     enableSorting: false,
     enableHiding: false
   },
@@ -47,7 +53,9 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[100px]">{row.getValue('startDate')}</span>
+          <span className="max-w-[100px]">
+            {getDate(row.getValue('startDate'))}
+          </span>
         </div>
       );
     }
@@ -60,7 +68,9 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[100px]">{row.getValue('endDate')}</span>
+          <span className="max-w-[100px]">
+            {getDate(row.getValue('endDate'))}
+          </span>
         </div>
       );
     }
@@ -81,7 +91,9 @@ export const columns = [
 
       return (
         <div className="flex items-center">
-          <span>{vehicle.label}</span>
+          <span className="max-w-[150px] truncate font-medium">
+            {vehicle.label}
+          </span>
         </div>
       );
     },
@@ -97,7 +109,7 @@ export const columns = [
     cell: ({ row }) => {
       return (
         <div className="flex space-x-2">
-          <span className="max-w-[400px] truncate font-medium">
+          <span className="max-w-[200px] truncate font-medium">
             {row.getValue('note')}
           </span>
         </div>
@@ -119,7 +131,7 @@ export const columns = [
       }
 
       return (
-        <div className="flex items-center max-w-[400px] truncate">
+        <div className="max-w-[200px] truncate font-medium">
           <span>{commaSeparatedArray(row.getValue('services'))}</span>
         </div>
       );
@@ -143,7 +155,7 @@ export const columns = [
       }
 
       return (
-        <div className="flex items-center max-w-[400px] truncate">
+        <div className="flex items-center max-w-[200px] truncate">
           <span>{commaSeparatedArray(row.getValue('inventory'))}</span>
         </div>
       );
@@ -181,6 +193,14 @@ export const columns = [
 
   {
     id: 'actions',
-    cell: ({ row }) => <ActivitiesDataTableRowActions row={row} />
+    cell: ({ row }) => (
+      <ActivitiesDataTableRowActions
+        row={row}
+        services={services}
+        inventories={inventories}
+        editActivity={editActivity}
+        removeActivity={removeActivity}
+      />
+    )
   }
 ];
