@@ -35,8 +35,8 @@ export const AppointmentsDataTableRowActions = ({
     serviceId,
     updatedAt
   } = row.original;
-  const cancelObject = { status: 'Canceled' };
   const user = useUserValue();
+  const cancelObject = { status: 'Canceled' };
 
   const handleCreateServiceRequest = (appointmentId) => {
     const data = {

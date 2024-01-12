@@ -69,10 +69,9 @@ const useAppointment = () => {
 
   const removeAppointmentMutation = useMutation({
     mutationFn: appointmentService.removeAppointment,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries('appointment');
 
-      const message = data.message;
       getToast({
         title: 'Appointment Deleted',
         description: 'Appointment Deleted Successfully'
@@ -92,7 +91,6 @@ const useAppointment = () => {
   };
 
   const createServiceRequest = (appointment) => {
-    console.log('appointment', appointment);
     createServiceRequestMutation.mutate(appointment);
   };
 

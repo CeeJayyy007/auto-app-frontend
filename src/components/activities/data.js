@@ -1,7 +1,7 @@
 export const statuses = [
   {
     value: 'In-Progress',
-    label: 'In-progress'
+    label: 'In-Progress'
   },
   {
     value: 'Canceled',
@@ -10,135 +10,6 @@ export const statuses = [
   {
     value: 'Completed',
     label: 'Completed'
-  }
-];
-
-export const services = [
-  {
-    label: 'Oil Change',
-    value: 'Oil Change'
-  },
-  {
-    label: 'Tyre Change',
-    value: 'Tyre Change'
-  },
-  {
-    label: 'Steering',
-    value: 'Steering'
-  },
-  {
-    label: 'Wheel Alignment',
-    value: 'Wheel Alignment'
-  },
-  {
-    label: 'Brake',
-    value: 'Brake'
-  },
-  {
-    label: 'Engine',
-    value: 'Engine'
-  },
-  {
-    label: 'Suspension',
-    value: 'Suspension'
-  },
-  {
-    label: 'Air Conditioning',
-    value: 'Air Conditioning'
-  },
-  {
-    label: 'Electrical',
-    value: 'Electrical'
-  },
-  {
-    label: 'Exhaust',
-    value: 'Exhaust'
-  },
-  {
-    label: 'Transmission',
-    value: 'Transmission'
-  },
-  {
-    label: 'Battery',
-    value: 'Battery'
-  },
-  {
-    label: 'Cooling',
-    value: 'Cooling'
-  },
-  {
-    label: 'Wiper',
-    value: 'Wiper'
-  }
-];
-
-export const inventories = [
-  {
-    label: 'Oil',
-    value: 'Oil'
-  },
-  {
-    label: 'Tyre',
-    value: 'Tyre'
-  },
-  {
-    label: 'Steering',
-    value: 'Steering'
-  },
-  {
-    label: 'Wheel',
-    value: 'Wheel'
-  },
-  {
-    label: 'Brake',
-    value: 'Brake'
-  },
-  {
-    label: 'Engine',
-    value: 'Engine'
-  },
-  {
-    label: 'Suspension',
-    value: 'Suspension'
-  },
-  {
-    label: 'Air',
-    value: 'Air'
-  },
-  {
-    label: 'Electrical',
-    value: 'Electrical'
-  },
-  {
-    label: 'Exhaust',
-    value: 'Exhaust'
-  },
-  {
-    label: 'Transmission',
-    value: 'Transmission'
-  },
-  {
-    label: 'Battery',
-    value: 'Battery'
-  },
-  {
-    label: 'Cooling',
-    value: 'Cooling'
-  },
-  {
-    label: 'Wiper',
-    value: 'Wiper'
-  }
-];
-
-export const vehicles = [
-  {
-    label: 'Vehicle 1',
-    value: 'Vehicle 1'
-  },
-  {
-    label: 'Vehicle 2',
-    value: 'Vehicle 2'
   }
 ];
 
@@ -151,7 +22,7 @@ export const activitiesData = [
     services: ['Oil Change', 'Tyre Change'],
     inventory: ['Oil', 'Tyre'],
     note: 'Note 1',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 2,
@@ -161,7 +32,7 @@ export const activitiesData = [
     services: ['Steering', 'Wheel Alignment'],
     inventory: ['Steering', 'Wheel'],
     note: 'Note 2',
-    status: 'canceled'
+    status: 'Canceled'
   },
   {
     id: 3,
@@ -171,7 +42,7 @@ export const activitiesData = [
     services: ['Brake', 'Engine'],
     inventory: ['Brake', 'Engine'],
     note: 'Note 3',
-    status: 'completed'
+    status: 'Completed'
   },
   {
     id: 4,
@@ -181,7 +52,7 @@ export const activitiesData = [
     services: ['Suspension', 'Air Conditioning'],
     inventory: ['Suspension', 'Air'],
     note: 'Note 4',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 5,
@@ -191,7 +62,7 @@ export const activitiesData = [
     services: ['Electrical', 'Exhaust'],
     inventory: ['Electrical', 'Exhaust'],
     note: 'Note 5',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 6,
@@ -201,7 +72,7 @@ export const activitiesData = [
     services: ['Transmission', 'Battery'],
     inventory: ['Transmission', 'Battery'],
     note: 'Note 6',
-    status: 'canceled'
+    status: 'Canceled'
   },
   {
     id: 7,
@@ -211,7 +82,7 @@ export const activitiesData = [
     services: ['Cooling', 'Wiper'],
     inventory: ['Cooling', 'Wiper'],
     note: 'Note 7',
-    status: 'completed'
+    status: 'Completed'
   },
   {
     id: 8,
@@ -221,7 +92,7 @@ export const activitiesData = [
     services: ['Oil Change', 'Tyre Change'],
     inventory: ['Oil', 'Tyre'],
     note: 'Note 8',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 9,
@@ -231,7 +102,7 @@ export const activitiesData = [
     services: ['Steering', 'Wheel Alignment'],
     inventory: ['Steering', 'Wheel'],
     note: 'Note 9',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 10,
@@ -241,7 +112,7 @@ export const activitiesData = [
     services: ['Brake', 'Engine'],
     inventory: ['Brake', 'Engine'],
     note: 'Note 10',
-    status: 'canceled'
+    status: 'Canceled'
   },
   {
     id: 11,
@@ -251,7 +122,7 @@ export const activitiesData = [
     services: ['Suspension', 'Air Conditioning'],
     inventory: ['Suspension', 'Air'],
     note: 'Note 11',
-    status: 'completed'
+    status: 'Completed'
   },
   {
     id: 12,
@@ -261,7 +132,7 @@ export const activitiesData = [
     services: ['Electrical', 'Exhaust'],
     inventory: ['Electrical', 'Exhaust'],
     note: 'Note 12',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 13,
@@ -271,7 +142,7 @@ export const activitiesData = [
     services: ['Transmission', 'Battery'],
     inventory: ['Transmission', 'Battery'],
     note: 'Note 13',
-    status: 'in-progress'
+    status: 'In-Progress'
   },
   {
     id: 14,
@@ -281,7 +152,7 @@ export const activitiesData = [
     services: ['Cooling', 'Wiper'],
     inventory: ['Cooling', 'Wiper'],
     note: 'Note 14',
-    status: 'canceled'
+    status: 'Canceled'
   },
   {
     id: 15,
@@ -291,6 +162,6 @@ export const activitiesData = [
     services: ['Oil Change', 'Tyre Change'],
     inventory: ['Oil', 'Tyre'],
     note: 'Note 15',
-    status: 'completed'
+    status: 'Completed'
   }
 ];
