@@ -1,59 +1,66 @@
 import { columns } from '@/components/activities/column';
-import { activitiesData } from '@/components/activities/data';
-import {
-  services,
-  statuses,
-  inventories,
-  vehicles
-} from '../components/activities/data';
+import { statuses } from '../components/activities/data';
 import { DataTable } from '@/components/dataTable/dataTable';
 import SideSheet from '@/components/display/SideSheet';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
-import { Textarea } from '@/components/ui/textarea';
-
-const vehicleData = [
-  {
-    make: 'Toyota',
-    model: 'Camry',
-    year: '2021',
-    registrationNumber: 'LND123XA'
-  },
-  {
-    make: 'Mercedes',
-    model: 'Benz',
-    year: '2021',
-    registrationNumber: 'LND123XX'
-  }
-];
-
-const userData = [
-  {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'johndoe@gmail.com',
-    phone: '08012345678',
-    role: 'admin'
-  },
-  {
-    id: 2,
-    firstName: 'Jane',
-    lastName: 'Doe',
-    email: 'janedoe@gmail.com',
-    phone: '08012345670',
-    role: 'user'
-  }
-];
+import useActivities from '@/hooks/useActivities';
+import useProfile from '@/hooks/useProfile';
+import useServices from '@/hooks/useServices';
+import useInventory from '@/hooks/useInventory';
+import { getInventories, getServices, getVehicles } from '@/utils/helpers';
+import ActivitiesForm from '@/components/activities/form/ActivitiesForm';
+import { ActivitiesFormSchema } from '@/components/activities/form/ActivitiesValidation';
+import useAppointment from '@/hooks/useAppointment';
 
 const Activities = () => {
+  const { allServices } = useServices();
+  const { allInventory } = useInventory();
+  const { activitiesByUser, editActivity, removeActivity } = useActivities();
+  const { result, allUsers } = useProfile();
+  const { createServiceRequest } = useAppointment();
+
+  const user = result?.data?.user[0];
+  const usersData = allUsers?.data;
+  const activities = activitiesByUser?.data;
+  const servicesData = allServices?.data;
+  const inventoryData = allInventory?.data;
+
+  // do not render anything if activities data is still null
+  if (!activities || !servicesData || !user || !inventoryData) {
+    return null;
+  }
+
+  const { Vehicles } = user;
+  const userVehiclesData = Vehicles.sort((a, b) => b.id - a.id);
+
+  // convert vehicles data to select options
+  const vehicles = getVehicles(userVehiclesData);
+
+  // convert services data to select options
+  const services = getServices(servicesData);
+
+  // convert inventory data to select options
+  const inventories = getInventories(inventoryData);
+
+  // convert vehicles array into vehicle label string
+  const activitiesData = activities.map((activity) => {
+    const { vehicle, services, inventory } = activity;
+
+    return {
+      ...activity,
+      services: services.map((service) => service.name),
+      inventory: inventory.map((item) => item.name),
+      vehicle: vehicle ? `${vehicle.make} ${vehicle.model} ${vehicle.year}` : ''
+    };
+  });
+
+  console.log('activities', usersData);
+
+  if (activitiesByUser.isLoading) {
+    return <div>loading data...</div>;
+  } else if (activitiesByUser.isError) {
+    return <div>error loading data</div>;
+  }
+
   return (
     <div>
       <div className="flex flex-row justify-between">
@@ -61,71 +68,31 @@ const Activities = () => {
         {/* Add appointment */}
         <SideSheet
           type="button"
-          triggerLabel="Add Maintenance Record"
-          title="Add Maintenance Record"
+          triggerLabel="Create Service Request"
+          title="Create Service Request"
           description="Select User and Vehicle details and click Create Service Request when done."
-          actionLabel="Create Service Request"
           body={
-            <div className="flex flex-col space-y-4 py-4">
-              {/* User */}
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select User
-                </Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select User" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {userData.map((item) => (
-                      <SelectItem key={item.firstName} value={item}>
-                        {`${item.firstName} ${item.lastName} `}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Vehicle */}
-              <div className="grid ">
-                <Label htmlFor="date" className="text-left mb-2 sr-only">
-                  Select Vehicle
-                </Label>
-                <Select>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Select vehicle" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {vehicleData.map((item) => (
-                      <SelectItem key={item.make} value={item}>
-                        {`${item.make} ${item.model} ${item.year} `}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Services */}
-              <div className="grid items-center">
-                <Label htmlFor="services" className="text-left mb-2 sr-only">
-                  Select Services
-                </Label>
-                <RecordCombobox data={services} name="services" />
-              </div>
-              <div className="grid ">
-                <Label htmlFor="note" className="text-left mb-2 sr-only">
-                  Note
-                </Label>
-                <Textarea placeholder="Enter service request note." />
-              </div>
-            </div>
+            <ActivitiesForm
+              users={usersData}
+              vehicles={vehicles}
+              services={services}
+              formAction={createServiceRequest}
+              formValidation={ActivitiesFormSchema}
+              buttonText="Create Service Request"
+            />
           }
         />
       </div>
       <div className="rounded-[14px] bg-white p-8">
         <DataTable
           data={activitiesData}
-          columns={columns}
+          columns={columns(
+            vehicles,
+            services,
+            inventories,
+            editActivity,
+            removeActivity
+          )}
           props={{ services, statuses, inventories, vehicles }}
           placeholder="Search activities..."
           filterColumn="note"
