@@ -10,16 +10,21 @@ import {
 import { useNavigate } from 'react-router-dom';
 import AlertDialogComponent from '../display/AlertDialog';
 
-export const ActivitiesDataTableRowActions = ({ row }) => {
+export const ActivitiesDataTableRowActions = ({
+  row,
+  services,
+  inventories,
+  editActivity,
+  removeActivity
+}) => {
   const navigate = useNavigate();
+  const cancelObject = { status: 'Canceled' };
 
   const { id, status } = row.original;
 
   const handleView = () => {
-    navigate(`/maintenance-record/${id}`);
+    navigate(`/maintenance-record/${id}`, { state: { services, inventories } });
   };
-
-  console.log(status);
 
   return (
     <DropdownMenu>
@@ -43,6 +48,7 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
             title="Cancel Maintenance Record"
             description="Are you sure you want to cancel this maintenance record?"
             cancelLabel="Cancel"
+            onClick={() => editActivity(cancelObject, id)}
           />
         )}
         <DropdownMenuSeparator />
@@ -53,6 +59,7 @@ export const ActivitiesDataTableRowActions = ({ row }) => {
           title="Delete Maintenance Record"
           description="Are you sure you want to delete this record?"
           cancelLabel="Cancel"
+          onClick={() => removeActivity(id)}
         />
       </DropdownMenuContent>
     </DropdownMenu>
