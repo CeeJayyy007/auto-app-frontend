@@ -4,13 +4,11 @@ const baseUrl = '/api/users';
 const vehicleUrl = '/api/vehicles';
 
 const getAll = async () => {
-  console.log('get all users');
   const response = await axios.get(baseUrl);
   return response.data;
 };
 
 const getUserDetailsById = async (id) => {
-  console.log('user details id', id);
   const response = await axios.get(`${baseUrl}/${id}`);
   return response.data;
 };
