@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/popover';
 import { cn } from '@/lib/utils';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
-import ItemCard from './ItemCard';
+import ItemCard from '../maintenanceRecord/ItemCard';
 import {
   FormControl,
   FormField,
@@ -25,7 +25,14 @@ import {
   FormMessage
 } from '../ui/form';
 
-const RecordCombobox = ({ data, rowData, name, form, label, formName }) => {
+const AppointmentCombobox = ({
+  data,
+  rowData,
+  name,
+  form,
+  label,
+  formName
+}) => {
   const rowRecordData = rowData ? rowData : {};
 
   const { services: selectedServices } = rowRecordData;
@@ -151,4 +158,4 @@ const RecordCombobox = ({ data, rowData, name, form, label, formName }) => {
   );
 };
 
-export default RecordCombobox;
+export default AppointmentCombobox;

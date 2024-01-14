@@ -43,17 +43,17 @@ const Activities = () => {
 
   // convert vehicles array into vehicle label string
   const activitiesData = activities.map((activity) => {
-    const { vehicle, services, inventory } = activity;
+    const { vehicleDetails, servicesDetails, inventoryDetails } = activity;
 
     return {
       ...activity,
-      services: services.map((service) => service.name),
-      inventory: inventory.map((item) => item.name),
-      vehicle: vehicle ? `${vehicle.make} ${vehicle.model} ${vehicle.year}` : ''
+      services: servicesDetails.map((service) => service.name),
+      inventory: inventoryDetails.map((item) => item.name),
+      vehicle: vehicleDetails
+        ? `${vehicleDetails.make} ${vehicleDetails.model} ${vehicleDetails.year}`
+        : ''
     };
   });
-
-  console.log('activities', usersData);
 
   if (activitiesByUser.isLoading) {
     return <div>loading data...</div>;
@@ -65,7 +65,7 @@ const Activities = () => {
     <div>
       <div className="flex flex-row justify-between">
         <h3 className="mb-4 font-bold text-gray-700">Activities</h3>
-        {/* Add appointment */}
+        {/* Add activity */}
         <SideSheet
           type="button"
           triggerLabel="Create Service Request"

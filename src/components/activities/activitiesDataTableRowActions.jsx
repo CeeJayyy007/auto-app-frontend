@@ -23,7 +23,9 @@ export const ActivitiesDataTableRowActions = ({
   const { id, status } = row.original;
 
   const handleView = () => {
-    navigate(`/maintenance-record/${id}`, { state: { services, inventories } });
+    navigate(`/maintenance-record/${id}`, {
+      state: { services, inventories, rowData: row.original }
+    });
   };
 
   return (

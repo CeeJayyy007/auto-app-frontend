@@ -19,8 +19,8 @@ import {
   SelectValue
 } from '../../ui/select';
 import { Textarea } from '../../ui/textarea';
-import RecordCombobox from '../../maintenanceRecord/RecordCombobox';
 import { useState } from 'react';
+import AppointmentCombobox from '../../appointment/AppointmentCombobox';
 
 const ActivitiesForm = ({
   users,
@@ -157,7 +157,7 @@ const ActivitiesForm = ({
             )}
 
             {/* Services */}
-            <RecordCombobox
+            <AppointmentCombobox
               data={services}
               name="services"
               form={form}

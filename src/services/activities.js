@@ -9,7 +9,6 @@ const getAll = async () => {
 };
 
 const getAllActivitiesByUser = async (id) => {
-  console.log('id', id);
   const response = await axios.get(`${activitiesUrl}/activities-details/${id}`);
   return response.data;
 };

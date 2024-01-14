@@ -1,8 +1,6 @@
 import getIcon from '@/components/icons/getIcon';
 import MaintenanceRecordTable from '@/components/maintenanceRecord/MaintenanceRecordTable';
-import RecordCombobox from '@/components/maintenanceRecord/RecordCombobox';
 import RecordTotalTable from '@/components/maintenanceRecord/RecordTotalTable';
-import { Form } from '@/components/ui/form';
 import {
   Select,
   SelectContent,
@@ -10,85 +8,10 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+
 import { useLocation } from 'react-router-dom';
-
-const inventoryData = [
-  {
-    id: 1,
-    title: 'Engine Oil',
-    price: 2700
-  },
-  {
-    id: 2,
-    title: 'Oil Filter',
-    price: 2800
-  },
-  {
-    id: 3,
-    title: 'Air Filter',
-    price: 800
-  },
-  {
-    id: 4,
-    title: 'Fuel Filter',
-    price: 400
-  },
-  {
-    id: 5,
-    title: 'Brake Fluid',
-    price: 5000
-  },
-  {
-    id: 6,
-    title: 'Power Steering Fluid',
-    price: 1000
-  },
-  {
-    id: 7,
-    title: 'Transmission Fluid',
-    price: 6000
-  }
-];
-
-const serviceData = [
-  {
-    id: 1,
-    title: 'Oil Change',
-    price: 2000
-  },
-  {
-    id: 2,
-    title: 'Tyre Change',
-    price: 3000
-  },
-  {
-    id: 3,
-    title: 'Cooling System',
-    price: 200
-  },
-  {
-    id: 4,
-    title: 'Wheel Alignment',
-    price: 2000
-  },
-  {
-    id: 5,
-    title: 'Steering Fix',
-    price: 2500
-  },
-  {
-    id: 6,
-    title: 'Brake Fix',
-    price: 100
-  },
-  {
-    id: 7,
-    title: 'Engine Fix',
-    price: 300
-  }
-];
+import ActivitiesCombobox from '@/components/maintenanceRecord/ActivitiesCombobox';
+import { useState } from 'react';
 
 const totalData = [
   {
@@ -109,38 +32,81 @@ const statusData = [
     label: 'In Progress'
   },
   {
-    value: 'ready',
+    value: 'Ready',
     label: 'Ready'
   },
   {
-    value: 'canceled',
+    value: 'Canceled',
     label: 'Canceled'
   }
 ];
 
 const MaintenaceRecord = () => {
   const location = useLocation();
-  const { services, inventories } = location.state || {};
+  const { services, inventories, rowData } = location.state || {};
 
-  const form = useForm({
-    resolver: zodResolver(),
-    defaultValues: {}
-  });
+  const {
+    userDetails,
+    vehicleDetails,
+    servicesDetails,
+    services: userServices,
+    inventory: userInventory,
+    inventoryDetails,
+    vehicle
+  } = rowData || {};
 
-  const onSubmit = async (data) => {
-    try {
-      console.log('data here', data);
-      //   await formAction(data);
-      //   form.reset();
-    } catch (error) {
-      form.setError('submitError', {
-        type: 'manual',
-        message: 'Submission failed. Please try again.'
+  const { firstName, lastName, email } = userDetails || {};
+
+  // activities combobox data
+  const selectedObject = (existingData) =>
+    existingData?.reduce((acc, existingItem) => {
+      acc[existingItem] = existingItem;
+      return acc;
+    }, {});
+
+  const [selectedServices, setSelectedServices] = useState(
+    selectedObject(userServices) || {}
+  );
+  const [selectedItem, setSelectedItem] = useState(
+    selectedObject(userInventory) || {}
+  );
+
+  const handleSelected =
+    (type) =>
+    ({ value, label }) => {
+      const setSelected =
+        type === 'services' ? setSelectedServices : setSelectedItem;
+      setSelected((prevSelected) => {
+        const updatedSelected = { ...prevSelected };
+
+        if (updatedSelected[value]) {
+          delete updatedSelected[value];
+        } else {
+          updatedSelected[value] = label;
+        }
+        return updatedSelected;
       });
-    }
-  };
+    };
 
-  console.log('services here', services, inventories);
+  const getLastSelectedLabel = (type) => (name) =>
+    Object.keys(type === 'services' ? selectedServices : selectedItem).length >
+    0
+      ? type === 'services'
+        ? services.find(
+            (item) =>
+              item.value ===
+              selectedServices[Object.keys(selectedServices).pop()]
+          )?.label
+        : inventories.find(
+            (item) =>
+              item.value === selectedItem[Object.keys(selectedItem).pop()]
+          )?.label
+      : `Add ${name}...`;
+
+  const tableData = (data, selectedData) =>
+    data.filter((item) => Object.values(selectedData).includes(item.value));
+
+  console.log('services here', tableData(services, selectedServices));
 
   return (
     <div className="">
@@ -159,95 +125,91 @@ const MaintenaceRecord = () => {
           </SelectContent>
         </Select>
       </div>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div className="grid grid-cols-2 gap-4 w-full">
-            <div className="col-span-1 flex flex-col space-y-4">
-              <div className="bg-white rounded-[14px] p-4">
-                <div className="flex flex-row justify-between mx-4">
-                  <div className="grid justify-items-center">
-                    <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
-                      {getIcon({
-                        name: 'profile',
-                        className: 'w-5 h-5 fill-green-400'
-                      })}
-                    </div>
-                    <h3 className="text-sm">John Jackson</h3>
-                    <p className="text-xs text-muted-foreground mt-0">
-                      johnjackson@mailcom
-                    </p>
-                  </div>
-                  <div className="grid grid-flow-row justify-items-center">
-                    <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
-                      {getIcon({
-                        name: 'vehicle',
-                        className: 'w-5 h-5 fill-green-400'
-                      })}
-                    </div>
-                    <h3 className="text-sm">Mercedes Benz 2021</h3>
-                    <p className="text-xs text-muted-foreground mt-0">
-                      LND 123 EX
-                    </p>
-                  </div>
+
+      <div className="grid grid-cols-2 gap-4 w-full">
+        <div className="col-span-1 flex flex-col space-y-4">
+          <div className="bg-white rounded-[14px] p-4">
+            <div className="flex flex-row justify-between mx-4">
+              <div className="grid justify-items-center">
+                <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
+                  {getIcon({
+                    name: 'profile',
+                    className: 'w-5 h-5 fill-green-400'
+                  })}
                 </div>
-              </div>
-              <div className="bg-white rounded-[14px] p-4 pb-8">
-                <h3 className="text-sm font-semibold mx-2 mb-2">Services</h3>
-                <MaintenanceRecordTable name="Service" data={serviceData} />
-              </div>
-              <div className="bg-white rounded-[14px] p-4 pb-8">
-                <h3 className="text-sm font-semibold mt-4 mx-2 mb-2">
-                  Items used
+                <h3 className="text-sm">
+                  {firstName} {lastName}
                 </h3>
-                <MaintenanceRecordTable name="Items" data={inventoryData} />
+                <p className="text-sm text-muted-foreground mt-0">{email}</p>
               </div>
-            </div>
-            <div className="col-span-1 bg-white rounded-[14px] p-4">
-              <h3 className="text-[16px] font-bold pb-0">
-                Select Services and Items
-              </h3>
-              <p className="text-xs text-muted-foreground mb-4 mt-0">
-                Pick the services and items to be used for the mantenance
-                activity
-              </p>
-              <div className="mb-4">
-                <h3 className="text-sm font-semibold mb-1">Select Services</h3>
-                <RecordCombobox
-                  data={services}
-                  name="services"
-                  form={form}
-                  label="Services"
-                  formName="serviceId"
-                />
-              </div>
-              <div className="mt-4">
-                <h3 className="text-sm font-semibold mb-1">Select Items</h3>
-                <RecordCombobox
-                  data={inventories}
-                  name="items"
-                  form={form}
-                  label="Inventories"
-                  formName="inventoryId"
-                />
-              </div>
-              <div className="bg-white rounded-[14px] px-0 pt-8">
-                <h3 className="text-sm font-semibold mb-1 ml-2">Total</h3>
-                <RecordTotalTable data={totalData} />
+              <div className="grid grid-flow-row justify-items-center">
+                <div className="bg-green-200 h-8 w-10 rounded-md flex justify-center items-center">
+                  {getIcon({
+                    name: 'vehicle',
+                    className: 'w-5 h-5 fill-green-400'
+                  })}
+                </div>
+                <h3 className="text-sm">{vehicle}</h3>
+                <p className="text-sm text-muted-foreground mt-0">
+                  {vehicleDetails?.registrationNumber}
+                </p>
               </div>
             </div>
           </div>
-        </form>
-      </Form>
+          <div className="bg-white rounded-[14px] p-4 pb-8 h-[330px]">
+            <h3 className="text-sm font-semibold mx-2 mb-2">Services</h3>
+            <MaintenanceRecordTable
+              name="Service"
+              tableData={tableData(services, selectedServices)}
+            />
+          </div>
+          <div className="bg-white rounded-[14px] p-4 pb-8 h-[330px]">
+            <h3 className="text-sm font-semibold mt-4 mx-2 mb-2">Items used</h3>
+            <MaintenanceRecordTable
+              name="Items"
+              tableData={tableData(inventories, selectedItem)}
+            />
+          </div>
+        </div>
+        <div className="col-span-1 bg-white rounded-[14px] p-4">
+          <h3 className="text-[16px] font-bold pb-0">
+            Select Services and Items
+          </h3>
+          <p className="text-xs text-muted-foreground mb-4 mt-0">
+            Pick the services and items to be used for the mantenance activity
+          </p>
+          <div className="mb-4">
+            <h3 className="text-sm font-semibold mb-1">Select Services</h3>
+            <ActivitiesCombobox
+              data={services}
+              rowData={userServices}
+              name="services"
+              label="Services"
+              selected={selectedServices}
+              handleSelect={handleSelected('services')}
+              lastSelectedLabel={getLastSelectedLabel('services')}
+            />
+          </div>
+          <div className="mt-4">
+            <h3 className="text-sm font-semibold mb-1">Select Items</h3>
+            <ActivitiesCombobox
+              data={inventories}
+              rowData={userInventory}
+              name="inventory item"
+              label="Inventory Item"
+              selected={selectedItem}
+              handleSelect={handleSelected('items')}
+              lastSelectedLabel={getLastSelectedLabel('items')}
+            />
+          </div>
+          <div className="bg-white rounded-[14px] px-0 pt-8">
+            <h3 className="text-sm font-semibold mb-1 ml-2">Total</h3>
+            <RecordTotalTable data={totalData} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
 export default MaintenaceRecord;
-
-//  <RecordCombobox
-//               data={services}
-//               name="services"
-//               form={form}
-//               label="Services"
-//               formName="serviceId"
-//             />

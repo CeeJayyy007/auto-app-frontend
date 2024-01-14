@@ -10,7 +10,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
-const MaintenanceRecordTable = ({ name, data }) => {
+const MaintenanceRecordTable = ({ name, tableData }) => {
   const [quantities, setQuantities] = useState({});
 
   const handleChange = (e) => {
@@ -22,7 +22,7 @@ const MaintenanceRecordTable = ({ name, data }) => {
   };
 
   const handleTotal = (quantity, price) => {
-    return quantity * price;
+    return (quantity * price).toFixed(2);
   };
 
   return (
@@ -37,28 +37,39 @@ const MaintenanceRecordTable = ({ name, data }) => {
             <TableHead>Amount(₦)</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody className="py-0">
-          {data.map((item) => (
-            <TableRow key={item.title}>
-              <TableCell className="font-medium">{item.id}</TableCell>
-              <TableCell className="min-w-[200px] max-w-[400px] truncate">
-                {item.title}
-              </TableCell>
-              <TableCell>
-                <Input
-                  type="number"
-                  value={quantities[item.title] || ''}
-                  onChange={handleChange}
-                  name={item.title}
-                  className="h-[28px] max-w-[100px]"
-                />
-              </TableCell>
-              <TableCell>{item.price}</TableCell>
-              <TableCell>
-                {handleTotal(quantities[item.title] || 1, item.price)}
+        <TableBody className="py-0 ">
+          {tableData.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} className="h-[200px] text-center">
+                No {name} added.
               </TableCell>
             </TableRow>
-          ))}
+          ) : (
+            tableData.map((item, index) => (
+              <TableRow key={item.label}>
+                <TableCell className="font-medium">{index + 1}</TableCell>
+                <TableCell className="min-w-[200px] max-w-[400px] truncate">
+                  {item.label}
+                </TableCell>
+                <TableCell>
+                  <Input
+                    type="number"
+                    value={quantities[item.label] || ''}
+                    onChange={handleChange}
+                    name={item.label}
+                    className="h-[28px] max-w-[100px]"
+                  />
+                </TableCell>
+                <TableCell>{item.price || item.finalPrice}</TableCell>
+                <TableCell>
+                  {handleTotal(
+                    quantities[item.label] || 1,
+                    item.price || item.finalPrice
+                  )}
+                </TableCell>
+              </TableRow>
+            ))
+          )}
         </TableBody>
       </Table>
     </ScrollArea>

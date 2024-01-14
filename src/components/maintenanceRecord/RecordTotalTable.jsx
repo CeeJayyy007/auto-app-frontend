@@ -70,7 +70,12 @@ const RecordTotalTable = ({ data }) => {
           </TableBody>
         </Table>
       </div>
-      <Button className="mt-4 w-full">Pay (₦{total})</Button>
+      <div className="flex justify-between space-x-4">
+        <Button variant="outline" className="mt-4 w-full">
+          Save Record
+        </Button>{' '}
+        <Button className="mt-4 w-full">Go to Payment (₦{total})</Button>
+      </div>
     </>
   );
 };

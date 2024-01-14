@@ -4,7 +4,7 @@ const ItemCard = ({ name, className }) => {
   return (
     <Badge
       variant="outline"
-      className={`max-w-[150px] truncate m-1  ${className}`}
+      className={`max-w-[150px] truncate m-1 ${className}`}
     >
       {name}
     </Badge>

@@ -29,8 +29,8 @@ import {
 } from '../../ui/select';
 import { generateTimeOptions } from '@/utils/helpers';
 import { Textarea } from '../../ui/textarea';
-import RecordCombobox from '../../maintenanceRecord/RecordCombobox';
 import { useState } from 'react';
+import AppointmentCombobox from '../AppointmentCombobox';
 
 const AppointmentForm = ({
   userId,
@@ -210,7 +210,7 @@ const AppointmentForm = ({
             />
 
             {/* Services */}
-            <RecordCombobox
+            <AppointmentCombobox
               data={services}
               name="services"
               rowData={rowData}
