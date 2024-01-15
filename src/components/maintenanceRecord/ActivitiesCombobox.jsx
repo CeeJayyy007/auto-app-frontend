@@ -14,26 +14,29 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 const ActivitiesCombobox = ({
-  rowData,
   name,
   data,
   handleSelect,
   lastSelectedLabel,
-  selected
+  selected,
+  status
 }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
+        <PopoverTrigger
+          asChild
+          disabled={status === ('Canceled' || 'Completed')}
+        >
           <Button
             variant="outline"
             role="combobox"
             aria-expanded={open}
             className={cn(
               'w-full justify-between mb-2',
-              !rowData && 'text-muted-foreground'
+              !selected && 'text-muted-foreground'
             )}
           >
             {lastSelectedLabel(name)}
