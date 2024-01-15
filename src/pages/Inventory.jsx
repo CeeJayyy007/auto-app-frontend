@@ -31,7 +31,7 @@ const Inventory = () => {
         <h3 className="mb-4 font-bold text-gray-700">Inventory</h3>
         <SideSheet
           type="button"
-          triggerLabel="Add inventory Item"
+          triggerLabel="Add Inventory Item"
           title="Add Inventory Item"
           description="Add Inventory Item details and click Add Inventory Item when done."
           actionLabel="Add Inventory Item"
