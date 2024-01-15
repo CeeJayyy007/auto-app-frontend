@@ -9,6 +9,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
 import { formattedNumber } from '@/utils/helpers';
+import { useNavigate } from 'react-router-dom';
 
 const RecordTotalTable = ({
   servicesData,
@@ -18,6 +19,8 @@ const RecordTotalTable = ({
   setDiscount,
   handleSave
 }) => {
+  const navigate = useNavigate();
+
   const handleTotalData = (data) =>
     data.reduce(
       (acc, item) => acc + parseInt(item.price) || parseInt(item.finalPrice),
@@ -96,7 +99,11 @@ const RecordTotalTable = ({
         <Button variant="outline" className="mt-4 w-full" onClick={handleSave}>
           Save Record
         </Button>{' '}
-        <Button className="mt-4 w-full" disabled={!(status === 'Ready')}>
+        <Button
+          className="mt-4 w-full"
+          disabled={!(status === 'Ready')}
+          onClick={() => navigate('/payment-integration')}
+        >
           Go to Payment (₦ {formattedNumber(total)})
         </Button>
       </div>

@@ -10,6 +10,8 @@ import Inventory from './pages/Inventory';
 import MaintenaceRecord from './pages/MaintenanceRecord';
 import Analytics from './pages/Analytics';
 import Users from './pages/Users';
+import Payments from './pages/Payment';
+import PaymentIntegration from './components/payments/PaymentIntegration';
 
 const privateRoutes = () => {
   return [
@@ -24,7 +26,8 @@ const privateRoutes = () => {
         { path: 'services', element: <Services /> },
         { path: 'maintenance-record/:id', element: <MaintenaceRecord /> },
         { path: 'inventory', element: <Inventory /> },
-        { path: 'payments', element: <div>Payments</div> },
+        { path: 'payments', element: <Payments /> },
+        { path: 'payment-integration', element: <PaymentIntegration /> },
         { path: 'reports', element: <div>Reports</div> },
         { path: 'analytics', element: <Analytics /> },
         { path: 'settings', element: <div>Settings</div> },
