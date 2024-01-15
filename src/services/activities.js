@@ -13,8 +13,12 @@ const getAllActivitiesByUser = async (id) => {
   return response.data;
 };
 
-const getActivitiesDetails = async (id) => {
-  const response = await axios.get(`${activitiesUrl}/activity-details/${id}`);
+const getActivitiesById = async (id) => {
+  const config = {
+    headers: { Authorization: token }
+  };
+
+  const response = await axios.get(`${activitiesUrl}/${id}`, config);
   return response.data;
 };
 
@@ -39,7 +43,7 @@ const removeActivity = async (id) => {
 export default {
   getAll,
   getAllActivitiesByUser,
-  getActivitiesDetails,
+  getActivitiesById,
   updateActivity,
   removeActivity
 };

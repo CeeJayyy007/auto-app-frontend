@@ -3,8 +3,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
 import { useUserValue } from '@/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
+import storePersist from '@/store/storePersist';
 
-const useActivities = () => {
+const useActivities = (recordId) => {
   const queryClient = useQueryClient();
   const { errorHandler } = useErrorHandler();
   const { toast } = useToast();
@@ -31,11 +32,16 @@ const useActivities = () => {
     refetchOnWindowFocus: true
   });
 
+  const activitiesById = useQuery({
+    queryKey: ['activities', recordId],
+    queryFn: () => activitiesService.getActivitiesById(recordId),
+    refetchOnWindowFocus: true
+  });
+
   const editActivityMutation = useMutation({
     mutationFn: (params) => activitiesService.updateActivity(...params),
     onSuccess: (data) => {
       queryClient.invalidateQueries('activities');
-      queryClient.invalidateQueries('user activities');
 
       const message = data.message;
       getToast({
@@ -52,7 +58,6 @@ const useActivities = () => {
     mutationFn: activitiesService.removeActivity,
     onSuccess: () => {
       queryClient.invalidateQueries('activities');
-      queryClient.invalidateQueries('user activities');
 
       getToast({
         title: 'Activity Deleted',
@@ -75,6 +80,7 @@ const useActivities = () => {
   return {
     allActivities,
     activitiesByUser,
+    activitiesById,
     editActivity,
     removeActivity
   };
