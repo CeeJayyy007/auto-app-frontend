@@ -8,6 +8,10 @@ export const statuses = [
     label: 'Canceled'
   },
   {
+    value: 'Ready',
+    label: 'Ready'
+  },
+  {
     value: 'Completed',
     label: 'Completed'
   }

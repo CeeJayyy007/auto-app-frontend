@@ -37,7 +37,7 @@ export const statusColor = (status) => {
       return 'bg-blue-100 text-blue-400 border-blue-400';
     case 'Canceled':
       return 'bg-red-100 text-red-400 border-red-400';
-    case 'ready':
+    case 'Ready':
       return 'bg-purple-100 text-purple-400 border-purple-400';
     case 'Completed':
       return 'bg-green-100 text-green-400 border-green-400';
