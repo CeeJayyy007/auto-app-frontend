@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,26 +8,35 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Button } from '../ui/button';
+import { formattedNumber } from '@/utils/helpers';
 
-const RecordTotalTable = ({ data }) => {
-  const [discount, setDiscount] = useState({});
+const RecordTotalTable = ({
+  servicesData,
+  itemsData,
+  status,
+  discount,
+  setDiscount,
+  handleSave
+}) => {
+  const handleTotalData = (data) =>
+    data.reduce(
+      (acc, item) => acc + parseInt(item.price) || parseInt(item.finalPrice),
+      0
+    );
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (name, value) => {
     setDiscount((prevDiscount) => ({
       ...prevDiscount,
       [name]: parseInt(value, 10) || 0
     }));
   };
 
-  const handleTotal = (discount, price) => {
-    return price - discount;
-  };
+  const handleTotal = (name, data) =>
+    handleTotalData(data) - (discount[name] || 0);
 
-  const total = data.reduce((acc, item) => {
-    const itemTotal = handleTotal(discount[item.title] || 0, item.amount);
-    return acc + itemTotal;
-  }, 0);
+  const total =
+    parseFloat(handleTotal('items', itemsData)) +
+    parseFloat(handleTotal('services', servicesData));
 
   return (
     <>
@@ -43,21 +51,33 @@ const RecordTotalTable = ({ data }) => {
             </TableRow>
           </TableHeader>
           <TableBody className="py-0">
-            {data.map((item) => (
-              <TableRow key={item.title}>
-                <TableCell className="font-medium">{item.title}</TableCell>
-                <TableCell>{item.amount}</TableCell>
+            {['services', 'items'].map((name) => (
+              <TableRow key={name}>
+                <TableCell className="font-medium">
+                  {name.charAt(0).toUpperCase() + name.slice(1)}
+                </TableCell>
+                <TableCell>
+                  {handleTotalData(
+                    name === 'services' ? servicesData : itemsData
+                  ).toFixed(2)}
+                </TableCell>
                 <TableCell>
                   <Input
                     type="number"
-                    value={discount[item.title] || ''}
-                    onChange={handleChange}
-                    name={item.title}
+                    value={discount[name] || ''}
+                    onChange={(e) => handleChange(name, e.target.value)}
+                    name={name}
                     className="h-[28px] max-w-[100px]"
+                    disabled={status === ('Canceled' || 'Completed')}
                   />
                 </TableCell>
                 <TableCell className="w-[100px]">
-                  {handleTotal(discount[item.title] || 0, item.amount)}
+                  {formattedNumber(
+                    handleTotal(
+                      name,
+                      name === 'services' ? servicesData : itemsData
+                    )
+                  )}
                 </TableCell>
               </TableRow>
             ))}
@@ -65,16 +85,20 @@ const RecordTotalTable = ({ data }) => {
               <TableCell className="font-medium">Total</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
-              <TableCell className="w-[100px] font-bold">{total}</TableCell>
+              <TableCell className="w-[100px] font-bold text-[16px]">
+                {formattedNumber(total)}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
       </div>
       <div className="flex justify-between space-x-4">
-        <Button variant="outline" className="mt-4 w-full">
+        <Button variant="outline" className="mt-4 w-full" onClick={handleSave}>
           Save Record
         </Button>{' '}
-        <Button className="mt-4 w-full">Go to Payment (₦{total})</Button>
+        <Button className="mt-4 w-full" disabled={!(status === 'Ready')}>
+          Go to Payment (₦ {formattedNumber(total)})
+        </Button>
       </div>
     </>
   );

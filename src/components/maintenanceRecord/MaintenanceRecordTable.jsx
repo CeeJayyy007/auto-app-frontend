@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   Table,
   TableBody,
@@ -9,10 +8,15 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+import { formattedNumber } from '@/utils/helpers';
 
-const MaintenanceRecordTable = ({ name, tableData }) => {
-  const [quantities, setQuantities] = useState({});
-
+const MaintenanceRecordTable = ({
+  name,
+  tableData,
+  status,
+  quantities,
+  setQuantities
+}) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setQuantities((prevQuantities) => ({
@@ -22,11 +26,11 @@ const MaintenanceRecordTable = ({ name, tableData }) => {
   };
 
   const handleTotal = (quantity, price) => {
-    return (quantity * price).toFixed(2);
+    return quantity * price;
   };
 
   return (
-    <ScrollArea className="max-h-[250px] overflow-y-auto rounded-md border">
+    <ScrollArea className="max-h-[200px] overflow-y-auto rounded-md border">
       <Table>
         <TableHeader>
           <TableRow>
@@ -40,7 +44,7 @@ const MaintenanceRecordTable = ({ name, tableData }) => {
         <TableBody className="py-0 ">
           {tableData.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="h-[200px] text-center">
+              <TableCell colSpan={5} className="h-[150px] text-center">
                 No {name} added.
               </TableCell>
             </TableRow>
@@ -48,7 +52,7 @@ const MaintenanceRecordTable = ({ name, tableData }) => {
             tableData.map((item, index) => (
               <TableRow key={item.label}>
                 <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell className="min-w-[200px] max-w-[400px] truncate">
+                <TableCell className="max-w-[150px] truncate">
                   {item.label}
                 </TableCell>
                 <TableCell>
@@ -57,14 +61,17 @@ const MaintenanceRecordTable = ({ name, tableData }) => {
                     value={quantities[item.label] || ''}
                     onChange={handleChange}
                     name={item.label}
-                    className="h-[28px] max-w-[100px]"
+                    className="h-[28px] max-w-[80px]"
+                    disabled={status === ('Canceled' || 'Completed')}
                   />
                 </TableCell>
                 <TableCell>{item.price || item.finalPrice}</TableCell>
                 <TableCell>
-                  {handleTotal(
-                    quantities[item.label] || 1,
-                    item.price || item.finalPrice
+                  {formattedNumber(
+                    handleTotal(
+                      quantities[item.label] || 1,
+                      item.price || item.finalPrice
+                    )
                   )}
                 </TableCell>
               </TableRow>
