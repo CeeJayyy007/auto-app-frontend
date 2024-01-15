@@ -15,12 +15,21 @@ import { Textarea } from '@/components/ui/textarea';
 import useActivities from '@/hooks/useActivities';
 import { statusData } from '../components/maintenanceRecord/data';
 import storePersist from '@/store/storePersist';
-import { get } from 'react-hook-form';
+import { AddServiceFormSchema } from '@/components/services/ServicesFormValidation';
+import ServiceForm from '@/components/services/ServiceForm';
+import SideSheet from '@/components/display/SideSheet';
+import useServices from '@/hooks/useServices';
+import InventoryForm from '@/components/inventory/inventoryForm/InventoryForm';
+import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/InventoryValidation';
+import useInventory from '@/hooks/useInventory';
+import { getInventories, getServices } from '@/utils/helpers';
 
 const MaintenaceRecord = () => {
   const location = useLocation();
-  const { services, inventories, rowData } = location.state || {};
+  const { rowData } = location.state || {};
   const { activitiesById, editActivity } = useActivities(rowData?.id);
+  const { allServices, addService } = useServices();
+  const { allInventory, addInventory } = useInventory();
 
   const activities = activitiesById?.data;
 
@@ -54,9 +63,13 @@ const MaintenaceRecord = () => {
   );
   const [selectedStatus, setSelectedStatus] = useState(activitiesData?.status);
   const [note, setNote] = useState(activitiesData?.note);
-  const [servicesQuantities, setServiceQuantities] = useState({});
-  const [inventoryQuantities, setInventoryQuantities] = useState({});
-  const [discount, setDiscount] = useState({});
+  const [servicesQuantities, setServiceQuantities] = useState(
+    activitiesData?.servicesQuantities
+  );
+  const [inventoryQuantities, setInventoryQuantities] = useState(
+    activitiesData?.inventoryQuantities
+  );
+  const [discount, setDiscount] = useState(activitiesData?.discount);
 
   if (activitiesById.isLoading) {
     return <div>loading data...</div>;
@@ -65,14 +78,15 @@ const MaintenaceRecord = () => {
   }
 
   // render nothing if activities data is still null
-  if (!activitiesData) {
+  if (!activitiesData || !allServices || !allInventory) {
     return null;
   }
 
-  const { userDetails, vehicleDetails, servicesDetails, inventoryDetails } =
-    activitiesData;
+  const { userDetails, vehicleDetails } = activitiesData;
   const { firstName, lastName, email } = userDetails || {};
   const { make, model, year, registrationNumber } = vehicleDetails || {};
+  const services = getServices(allServices?.data);
+  const inventories = getInventories(allInventory?.data);
 
   const handleSelected =
     (type) =>
@@ -126,6 +140,44 @@ const MaintenaceRecord = () => {
     discount
   };
 
+  const handleAddServiceOrItem = (type) => {
+    if (type === 'services') {
+      return (
+        <SideSheet
+          // type="button"
+          triggerLabel="Add Service"
+          title="Add Service"
+          description="Add Service details and click Add Service when done."
+          actionLabel="Add Service"
+          body={
+            <ServiceForm
+              formAction={addService}
+              formValidation={AddServiceFormSchema}
+              buttonText="Add Service"
+            />
+          }
+        />
+      );
+    } else if (type === 'inventory item') {
+      return (
+        <SideSheet
+          type="button"
+          triggerLabel="Add inventory Item"
+          title="Add Inventory Item"
+          description="Add Inventory Item details and click Add Inventory Item when done."
+          actionLabel="Add Inventory Item"
+          body={
+            <InventoryForm
+              formAction={addInventory}
+              formValidation={AddInventoryFormSchema}
+              buttonText="Add Inventory Item"
+            />
+          }
+        />
+      );
+    }
+  };
+
   const handleSave = () => {
     editActivity(pageData, activitiesData.id);
   };
@@ -134,7 +186,7 @@ const MaintenaceRecord = () => {
     console.log('data to be submitted');
   };
 
-  console.log('pageData', pageData);
+  console.log('pageData', activitiesData);
 
   return (
     <div className="">
@@ -208,6 +260,23 @@ const MaintenaceRecord = () => {
                 handleSelect={handleSelected('services')}
                 lastSelectedLabel={getLastSelectedLabel('services')}
                 status={selectedStatus}
+                addMore={
+                  <SideSheet
+                    type="button"
+                    triggerLabel="Add New Service"
+                    title="Add Service"
+                    description="Add Service details and click Add Service when done."
+                    actionLabel="Add Service"
+                    className="w-[180px]"
+                    body={
+                      <ServiceForm
+                        formAction={addService}
+                        formValidation={AddServiceFormSchema}
+                        buttonText="Add Service"
+                      />
+                    }
+                  />
+                }
               />
             </div>
             <div className="mt-4">
@@ -220,6 +289,23 @@ const MaintenaceRecord = () => {
                 handleSelect={handleSelected('items')}
                 lastSelectedLabel={getLastSelectedLabel('items')}
                 status={selectedStatus}
+                addMore={
+                  <SideSheet
+                    type="button"
+                    triggerLabel="Add New Item"
+                    title="Add Inventory Item"
+                    description="Add Inventory Item details and click Add Inventory Item when done."
+                    actionLabel="Add Inventory Item"
+                    className="w-[180px]"
+                    body={
+                      <InventoryForm
+                        formAction={addInventory}
+                        formValidation={AddInventoryFormSchema}
+                        buttonText="Add Inventory Item"
+                      />
+                    }
+                  />
+                }
               />
             </div>
             <div className="mt-4">

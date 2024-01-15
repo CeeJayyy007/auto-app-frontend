@@ -12,6 +12,8 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import SideSheet from '../display/SideSheet';
+import ServiceForm from '../services/ServiceForm';
 
 const ActivitiesCombobox = ({
   name,
@@ -19,7 +21,8 @@ const ActivitiesCombobox = ({
   handleSelect,
   lastSelectedLabel,
   selected,
-  status
+  status,
+  addMore
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -67,6 +70,9 @@ const ActivitiesCombobox = ({
               ))}
             </CommandGroup>
           </Command>
+
+          <div className="px-2 pt-4">{addMore}</div>
+
           <Button
             variant="outline"
             className="text-center w-[180px] my-2 ml-2"
