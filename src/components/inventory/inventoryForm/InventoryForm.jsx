@@ -36,8 +36,6 @@ const InventoryForm = ({
   });
 
   const onSubmit = async (data) => {
-    console.log('data inventory', data);
-
     try {
       if (rowData) {
         await formAction(data, id);
