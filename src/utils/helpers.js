@@ -102,14 +102,16 @@ export const getServices = (servicesData) =>
   servicesData.map((service) => ({
     label: service.name,
     value: service.name,
-    id: service.id
+    id: service.id,
+    price: service.price
   }));
 
 export const getInventories = (inventoriesData) =>
-  inventoriesData.map((service) => ({
-    label: service.name,
-    value: service.name,
-    id: service.id
+  inventoriesData.map((inventory) => ({
+    label: inventory.name,
+    value: inventory.name,
+    id: inventory.id,
+    price: inventory.finalPrice
   }));
 
 const servicesMap = new Map();
@@ -162,3 +164,8 @@ export const getDurationLabel = (minutes) => {
     return `${remainingMinutes} minute${remainingMinutes !== 1 ? 's' : ''}`;
   }
 };
+
+export const formattedNumber = (number) =>
+  number.toLocaleString('en-US', {
+    minimumFractionDigits: 2
+  });
