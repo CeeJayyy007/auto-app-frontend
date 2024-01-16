@@ -21,7 +21,9 @@ import { SheetClose } from '../../ui/sheet';
 import { cn } from '@/lib/utils';
 
 const UserForm = ({ user, formAction, formValidation, buttonText, props }) => {
-  const { firstName, lastName, email, phone, username, roles } = user;
+  const { firstName, lastName, email, phone, username, roles } = user
+    ? user
+    : {};
 
   const form = useForm({
     resolver: zodResolver(formValidation),
