@@ -30,15 +30,15 @@ export const columns = (removeProfile) => [
     enableSorting: false,
     enableHiding: false
   },
-  {
-    accessorKey: 'id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="S/No." />
-    ),
-    cell: ({ row }) => <div className="w-[50px]">{row.index + 1}</div>,
-    enableSorting: false,
-    enableHiding: false
-  },
+  // {
+  //   accessorKey: 'id',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="S/No." />
+  //   ),
+  //   cell: ({ row }) => <div className="w-[50px]">{row.index + 1}</div>,
+  //   enableSorting: false,
+  //   enableHiding: false
+  // },
   {
     accessorKey: 'firstName',
     header: ({ column }) => (

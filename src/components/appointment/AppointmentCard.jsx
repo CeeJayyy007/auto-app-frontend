@@ -42,7 +42,6 @@ const AppointmentCard = ({ appointments }) => {
         <Table>
           <TableHeader>
             <TableRow className="text-xs">
-              <TableHead>S/No.</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Time</TableHead>
               <TableHead>Note</TableHead>
@@ -51,9 +50,8 @@ const AppointmentCard = ({ appointments }) => {
             </TableRow>
           </TableHeader>
           <TableBody className="py-0 text-xs">
-            {appointmentData.map((appointment, index) => (
+            {appointmentData.map((appointment) => (
               <TableRow key={appointment.createdAt}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
                 <TableCell className="min-w-[80px]">
                   {getDate(appointment.date)}
                 </TableCell>

@@ -36,19 +36,19 @@ export const columns = (
     enableSorting: false,
     enableHiding: false
   },
-  {
-    accessorKey: 'id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="S/No." />
-    ),
-    cell: ({ row }) => (
-      <div>
-        <span>{row.index + 1}</span>
-      </div>
-    ),
-    enableSorting: false,
-    enableHiding: false
-  },
+  // {
+  //   accessorKey: 'id',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="S/No." />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <div>
+  //       <span>{row.index + 1}</span>
+  //     </div>
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false
+  // },
   {
     accessorKey: 'date',
     header: ({ column }) => (
