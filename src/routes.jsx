@@ -12,6 +12,7 @@ import Analytics from './pages/Analytics';
 import Users from './pages/Users';
 import Payments from './pages/Payment';
 import PaymentIntegration from './components/payments/PaymentIntegration';
+import NotFound from './components/emptyState/NotFound';
 
 const privateRoutes = () => {
   return [
@@ -31,7 +32,7 @@ const privateRoutes = () => {
         { path: 'reports', element: <div>Reports</div> },
         { path: 'analytics', element: <Analytics /> },
         { path: 'settings', element: <div>Settings</div> },
-        { path: '*', element: <Navigate to="/" replace /> }
+        { path: '*', element: <NotFound /> }
       ]
     }
   ];
