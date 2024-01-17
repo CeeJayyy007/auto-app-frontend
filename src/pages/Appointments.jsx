@@ -13,8 +13,12 @@ import {
   getServices,
   getVehicles
 } from '@/utils/helpers';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setAppointment } from '@/reducers/appointmentReducers';
 
 const Appointments = () => {
+  const dispatch = useDispatch();
   const { allServices } = useServices();
   const {
     addAppointment,
@@ -27,6 +31,10 @@ const Appointments = () => {
   const user = result?.data?.user[0];
   const servicesData = allServices?.data;
   const allVehiclesData = allVehicles?.data?.vehicles;
+
+  useEffect(() => {
+    dispatch(setAppointment(user?.Appointments));
+  }, [dispatch, user]);
 
   // do not render anything if profile data is still null
   if (!user || !servicesData || !allVehiclesData) {

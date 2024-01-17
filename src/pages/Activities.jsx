@@ -10,19 +10,28 @@ import { getInventories, getServices, getVehicles } from '@/utils/helpers';
 import ActivitiesForm from '@/components/activities/form/ActivitiesForm';
 import { ActivitiesFormSchema } from '@/components/activities/form/ActivitiesValidation';
 import useAppointment from '@/hooks/useAppointment';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setActivities } from '@/reducers/activitiesReducers';
 
 const Activities = () => {
+  const dispatch = useDispatch();
+
   const { allServices } = useServices();
   const { allInventory } = useInventory();
-  const { activitiesByUser, editActivity, removeActivity } = useActivities();
   const { result, allUsers } = useProfile();
   const { createServiceRequest } = useAppointment();
+  const { activitiesByUser, editActivity, removeActivity } = useActivities();
 
   const user = result?.data?.user[0];
   const usersData = allUsers?.data;
   const activities = activitiesByUser?.data;
   const servicesData = allServices?.data;
   const inventoryData = allInventory?.data;
+
+  useEffect(() => {
+    dispatch(setActivities(activities));
+  }, [dispatch, activities]);
 
   // do not render anything if activities data is still null
   if (!activities || !servicesData || !user || !inventoryData) {

@@ -8,14 +8,13 @@ import {
 import Charts from '@/components/dashboard/DashboardChart';
 import getIcon from '@/components/icons/getIcon';
 import AppointmentCard from '@/components/appointment/AppointmentCard';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/Separator';
 import Image from '@/components/image/Image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
-import { Link } from 'react-router-dom';
 import ButtonLink from '@/components/button/ButtonLink';
 import { useUserValue } from '@/context/UserContext';
+import { useSelector } from 'react-redux';
 
 const dashboardCardContent = [
   {
@@ -134,6 +133,10 @@ const appointmentData = [
 
 const Dashboard = () => {
   const user = useUserValue();
+  const appointment = useSelector((state) => state.appointment);
+  const activities = useSelector((state) => state.activities);
+
+  console.log('dashboard activities', appointment, activities);
 
   return (
     <div className="space-y-4">
