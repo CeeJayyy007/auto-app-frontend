@@ -22,13 +22,14 @@ import {
 } from '@/utils/helpers';
 import ColouredBadge from '../badge/ColouredBadge';
 import ButtonLink from '../button/ButtonLink';
+import { ScrollArea } from '../ui/scroll-area';
 
 const AppointmentCard = ({ appointments }) => {
   const appointmentData = formatDataArray(appointments, 4);
 
   return (
     <Card className="col-span-4">
-      <CardHeader className="pb-0">
+      <CardHeader className="pb-2 ">
         <div className="flex flex-row justify-between">
           <div>
             <CardTitle className="text-gray-700">Appointments</CardTitle>
@@ -36,44 +37,46 @@ const AppointmentCard = ({ appointments }) => {
           </div>
           <ButtonLink to="/appointments">View All</ButtonLink>
         </div>
-        <Separator />
+        {/* <Separator /> */}
       </CardHeader>
-      <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow className="text-xs">
-              <TableHead>Date</TableHead>
-              <TableHead>Time</TableHead>
-              <TableHead>Note</TableHead>
-              <TableHead>Services</TableHead>
-              <TableHead>Status</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody className="py-0 text-xs">
-            {appointmentData.map((appointment) => (
-              <TableRow key={appointment.createdAt}>
-                <TableCell className="min-w-[80px]">
-                  {getDate(appointment.date)}
-                </TableCell>
-                <TableCell>{appointment.time}</TableCell>
-                <TableCell className="max-w-[150px] truncate ">
-                  {appointment.note}
-                </TableCell>
-                <TableCell className="max-w-[150px] truncate ">
-                  {commaSeparatedArray(appointment.services)}
-                </TableCell>
-                <TableCell>
-                  {
-                    <ColouredBadge
-                      status={appointment.status}
-                      colorFn={statusColor}
-                    />
-                  }
-                </TableCell>
+      <CardContent className="px-4">
+        <ScrollArea className="max-h-[200px] overflow-y-auto rounded-md border">
+          <Table>
+            <TableHeader>
+              <TableRow className="text-xs">
+                <TableHead className="pl-4">Date</TableHead>
+                <TableHead>Time</TableHead>
+                <TableHead>Note</TableHead>
+                <TableHead>Services</TableHead>
+                <TableHead>Status</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody className="py-0 text-xs">
+              {appointmentData.map((appointment) => (
+                <TableRow key={appointment.createdAt}>
+                  <TableCell className="min-w-[80px] pl-4">
+                    {getDate(appointment.date)}
+                  </TableCell>
+                  <TableCell>{appointment.time}</TableCell>
+                  <TableCell className="max-w-[150px] truncate ">
+                    {appointment.note}
+                  </TableCell>
+                  <TableCell className="max-w-[150px] truncate ">
+                    {commaSeparatedArray(appointment.services)}
+                  </TableCell>
+                  <TableCell>
+                    {
+                      <ColouredBadge
+                        status={appointment.status}
+                        colorFn={statusColor}
+                      />
+                    }
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </ScrollArea>
       </CardContent>
     </Card>
   );

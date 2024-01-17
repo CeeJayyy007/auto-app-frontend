@@ -47,7 +47,7 @@ const RecordTotalTable = ({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Item</TableHead>
+              <TableHead className="pl-4">Item</TableHead>
               <TableHead>Amount(₦)</TableHead>
               <TableHead>Discount(₦)</TableHead>
               <TableHead>Total(₦)</TableHead>
@@ -56,7 +56,7 @@ const RecordTotalTable = ({
           <TableBody className="py-0">
             {['services', 'items'].map((name) => (
               <TableRow key={name}>
-                <TableCell className="font-medium">
+                <TableCell className="font-medium pl-4">
                   {name.charAt(0).toUpperCase() + name.slice(1)}
                 </TableCell>
                 <TableCell>
@@ -85,7 +85,7 @@ const RecordTotalTable = ({
               </TableRow>
             ))}
             <TableRow>
-              <TableCell className="font-medium">Total</TableCell>
+              <TableCell className="font-medium pl-4">Total</TableCell>
               <TableCell></TableCell>
               <TableCell></TableCell>
               <TableCell className="w-[100px] font-bold text-[16px]">

@@ -34,8 +34,7 @@ const MaintenanceRecordTable = ({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>S/No.</TableHead>
-            <TableHead>{name}</TableHead>
+            <TableHead className="pl-4">{name}</TableHead>
             <TableHead>Quantity</TableHead>
             <TableHead>Price(₦)</TableHead>
             <TableHead>Amount(₦)</TableHead>
@@ -49,10 +48,9 @@ const MaintenanceRecordTable = ({
               </TableCell>
             </TableRow>
           ) : (
-            tableData.map((item, index) => (
+            tableData.map((item) => (
               <TableRow key={item.label}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell className="max-w-[150px] truncate">
+                <TableCell className="max-w-[150px] truncate pl-4">
                   {item.label}
                 </TableCell>
                 <TableCell>
