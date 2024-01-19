@@ -47,7 +47,6 @@ const AppointmentCard = ({ appointments }) => {
                 <TableHead className="pl-4">Date</TableHead>
                 <TableHead>Time</TableHead>
                 <TableHead>Note</TableHead>
-                <TableHead>Services</TableHead>
                 <TableHead>Status</TableHead>
               </TableRow>
             </TableHeader>
@@ -58,13 +57,10 @@ const AppointmentCard = ({ appointments }) => {
                     {getDate(appointment.date)}
                   </TableCell>
                   <TableCell>{appointment.time}</TableCell>
-                  <TableCell className="max-w-[150px] truncate ">
+                  <TableCell className="max-w-[200px] truncate ">
                     {appointment.note}
                   </TableCell>
-                  <TableCell className="max-w-[150px] truncate ">
-                    {commaSeparatedArray(appointment.services)}
-                  </TableCell>
-                  <TableCell>
+                  <TableCell className="max-w-[100px]">
                     {
                       <ColouredBadge
                         status={appointment.status}
