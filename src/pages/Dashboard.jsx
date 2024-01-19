@@ -153,11 +153,11 @@ const Dashboard = () => {
   useEffect(() => {
     // dispatch(setAppointment(user?.Appointments));
     dispatch(setActivities(activitiesByUser?.data));
-    dispatch(setAppointment(appointmentData));
-    dispatch(setService(allServices));
-    dispatch(setInventory(allInventory));
-    dispatch(setProfile(allUsers));
-    dispatch(setResult(result));
+    dispatch(setAppointment(appointmentData?.data));
+    dispatch(setService(allServices?.data));
+    dispatch(setInventory(allInventory?.data));
+    dispatch(setProfile(allUsers?.data));
+    dispatch(setResult(result?.data));
   }, [dispatch, result, activitiesByUser, allServices, allInventory, allUsers]);
 
   return (
