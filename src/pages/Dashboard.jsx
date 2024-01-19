@@ -25,7 +25,11 @@ import { setAppointment } from '@/reducers/appointmentReducers';
 import { setActivities } from '@/reducers/activitiesReducers';
 import { setService } from '@/reducers/serviceReducers';
 import { setInventory } from '@/reducers/inventoryReducers';
-import { setProfile, setResult } from '@/reducers/profileReducers';
+import {
+  setAllUsers,
+  setResult,
+  setVehicles
+} from '@/reducers/profileReducers';
 
 const dashboardCardContent = [
   {
@@ -147,18 +151,28 @@ const Dashboard = () => {
   const user = useUserValue();
   const { allServices } = useServices();
   const { allInventory } = useInventory();
-  const { result, allUsers } = useProfile();
+  const { result, allUsers, allVehicles } = useProfile();
   const { activitiesByUser } = useActivities();
+  const { appointmentsDetails } = useAppointment();
 
   useEffect(() => {
-    // dispatch(setAppointment(user?.Appointments));
+    dispatch(setAppointment(appointmentsDetails?.data));
     dispatch(setActivities(activitiesByUser?.data));
-    dispatch(setAppointment(appointmentData?.data));
     dispatch(setService(allServices?.data));
     dispatch(setInventory(allInventory?.data));
-    dispatch(setProfile(allUsers?.data));
+    dispatch(setAllUsers(allUsers?.data));
     dispatch(setResult(result?.data));
-  }, [dispatch, result, activitiesByUser, allServices, allInventory, allUsers]);
+    dispatch(setVehicles(allVehicles?.data));
+  }, [
+    dispatch,
+    result,
+    allVehicles,
+    activitiesByUser,
+    allServices,
+    allInventory,
+    allUsers,
+    appointmentsDetails
+  ]);
 
   return (
     <div className="space-y-4">

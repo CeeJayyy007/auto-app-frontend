@@ -5,24 +5,16 @@ import SideSheet from '@/components/display/SideSheet';
 import useInventory from '@/hooks/useInventory';
 import InventoryForm from '@/components/inventory/inventoryForm/InventoryForm';
 import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/InventoryValidation';
+import storePersist from '@/store/storePersist';
 
 const Inventory = () => {
-  const { allInventory, addInventory, editInventory, deleteInventory } =
-    useInventory();
+  const { addInventory, editInventory, deleteInventory } = useInventory();
 
-  const inventoryData = allInventory?.data;
+  const inventoryData = storePersist.get('inventory');
 
   // do not render anything if profile data is still null
   if (!inventoryData) {
     return null;
-  }
-
-  console.log('data heere', inventoryData);
-
-  if (allInventory.isLoading) {
-    return <div>loading data...</div>;
-  } else if (allInventory.isError) {
-    return <div>error loading data</div>;
   }
 
   return (

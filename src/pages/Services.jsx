@@ -19,10 +19,12 @@ import {
   AddServiceFormSchema,
   EditServiceFormSchema
 } from '@/components/services/ServicesFormValidation';
+import storePersist from '@/store/storePersist';
 
 const Services = () => {
-  const { allServices, addService, editService, deleteService } = useServices();
-  const servicesData = allServices?.data;
+  const { addService, editService, deleteService } = useServices();
+
+  const servicesData = storePersist.get('service');
   const user = useUserValue();
 
   // do not render anything if profile data is still null
@@ -30,18 +32,12 @@ const Services = () => {
     return null;
   }
 
-  if (allServices.isLoading) {
-    return <div>loading data...</div>;
-  } else if (allServices.isError) {
-    return <div>error loading data</div>;
-  }
-
   return (
     <div>
       <div className="flex flex-row justify-between">
         <h3 className="mb-4 font-bold text-gray-700">Services</h3>
         {/* Add Service */}
-        {user.roles !== 'user' && (
+        {user?.roles !== 'user' && (
           <SideSheet
             type="button"
             triggerLabel="Add Service"
@@ -104,7 +100,7 @@ const Services = () => {
                   }
                   // Edit
                   editAction={
-                    user.roles !== 'user' && (
+                    user?.roles !== 'user' && (
                       <SideSheet
                         triggerLabel="Edit"
                         title="Edit Service"
@@ -123,7 +119,7 @@ const Services = () => {
                   }
                   // Delete
                   deleteAction={
-                    user.roles !== 'user' && (
+                    user?.roles !== 'user' && (
                       <AlertDialogComponent
                         actionLabel="Delete"
                         triggerLabel="Delete"

@@ -26,12 +26,14 @@ import { getInventories, getServices } from '@/utils/helpers';
 
 const MaintenaceRecord = () => {
   const location = useLocation();
-  const { rowData } = location.state || {};
-  const { activitiesById, editActivity } = useActivities(rowData?.id);
-  const { allServices, addService } = useServices();
-  const { allInventory, addInventory } = useInventory();
+  const { rowDataId } = location.state || {};
+  const { activitiesById, editActivity } = useActivities(rowDataId);
+  const { addService } = useServices();
+  const { addInventory } = useInventory();
 
   const activities = activitiesById?.data;
+  const allServices = storePersist.get('service');
+  const allInventory = storePersist.get('inventory');
 
   useEffect(() => {
     if (!activities) {
@@ -44,7 +46,7 @@ const MaintenaceRecord = () => {
     activities.inventory = activities?.inventoryDetails?.map(
       (item) => item.name
     );
-    storePersist.set('activities', activities);
+    storePersist.set('maintenance-record', activities);
   }, [activities]);
 
   const selectedObject = (existingData) =>
@@ -53,7 +55,7 @@ const MaintenaceRecord = () => {
       return acc;
     }, {});
 
-  const activitiesData = storePersist.get('activities');
+  const activitiesData = storePersist.get('maintenance-record');
 
   const [selectedServices, setSelectedServices] = useState(
     selectedObject(activitiesData.services)
@@ -85,8 +87,8 @@ const MaintenaceRecord = () => {
   const { userDetails, vehicleDetails } = activitiesData;
   const { firstName, lastName, email } = userDetails || {};
   const { make, model, year, registrationNumber } = vehicleDetails || {};
-  const services = getServices(allServices?.data);
-  const inventories = getInventories(allInventory?.data);
+  const services = getServices(allServices);
+  const inventories = getInventories(allInventory);
 
   const handleSelected =
     (type) =>
@@ -121,7 +123,7 @@ const MaintenaceRecord = () => {
       : `Add ${name}...`;
   };
 
-  const getServiceId = (data, selectedData) => {
+  const getSelectedItemId = (data, selectedData) => {
     const selectedServicesData = data.filter((service) =>
       Object.keys(selectedData).includes(service.value)
     );
@@ -131,51 +133,13 @@ const MaintenaceRecord = () => {
   const pageData = {
     status: selectedStatus || activitiesData?.status,
     note: note || activitiesData?.note,
-    serviceId: getServiceId(services, selectedServices),
+    serviceId: getSelectedItemId(services, selectedServices),
     services: Object.keys(selectedServices).map((service) => service) || [],
-    inventoryId: getServiceId(inventories, selectedItem),
+    inventoryId: getSelectedItemId(inventories, selectedItem),
     inventory: Object.keys(selectedItem).map((item) => item) || [],
     servicesQuantities,
     inventoryQuantities,
     discount
-  };
-
-  const handleAddServiceOrItem = (type) => {
-    if (type === 'services') {
-      return (
-        <SideSheet
-          // type="button"
-          triggerLabel="Add Service"
-          title="Add Service"
-          description="Add Service details and click Add Service when done."
-          actionLabel="Add Service"
-          body={
-            <ServiceForm
-              formAction={addService}
-              formValidation={AddServiceFormSchema}
-              buttonText="Add Service"
-            />
-          }
-        />
-      );
-    } else if (type === 'inventory item') {
-      return (
-        <SideSheet
-          type="button"
-          triggerLabel="Add inventory Item"
-          title="Add Inventory Item"
-          description="Add Inventory Item details and click Add Inventory Item when done."
-          actionLabel="Add Inventory Item"
-          body={
-            <InventoryForm
-              formAction={addInventory}
-              formValidation={AddInventoryFormSchema}
-              buttonText="Add Inventory Item"
-            />
-          }
-        />
-      );
-    }
   };
 
   const handleSave = () => {

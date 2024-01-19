@@ -9,7 +9,6 @@ import { avatarFallback } from '@/utils/helpers';
 import AppointmentCard from '@/components/appointment/AppointmentCard';
 import IconDropdownMenu from '@/components/icons/IconDropdownMenu';
 import { Badge } from '@/components/ui/badge';
-import ProfileStats from '@/components/profile/ProfileStats';
 import AlertDialogComponent from '@/components/display/AlertDialog';
 import SideSheet from '@/components/display/SideSheet';
 import useProfile from '@/hooks/useProfile';
@@ -22,13 +21,7 @@ import {
 import { EditUserFormSchema } from '@/components/profile/userForm/UserFormValidation';
 import UserForm from '@/components/profile/userForm/UserForm';
 import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
-
-const userStatsData = {
-  memberSince: '12/12/2020',
-  allTimeSpend: 10000,
-  totalSpendThisMonth: 1000,
-  mostFrequentService: 'oil change'
-};
+import storePersist from '@/store/storePersist';
 
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
@@ -36,20 +29,14 @@ const Profile = () => {
   const dispatchVehicle = useVehicleDispatch();
   const selectedVehicle = useVehicleValue();
 
-  const { result, addVehicle, editVehicle, removeVehicle, editUser } =
+  const { addVehicle, editVehicle, removeVehicle, editUser } =
     useProfile(navigate);
 
-  const profile = result.data || {};
+  const profile = storePersist.get('profile');
 
   // do not render anything if profile data is still null
   if (!profile) {
     return null;
-  }
-
-  if (result.isLoading) {
-    return <div>loading data...</div>;
-  } else if (result.isError) {
-    return <div>error loading data</div>;
   }
 
   const user = profile.user[0];
@@ -59,7 +46,8 @@ const Profile = () => {
   const vehicles = Vehicles.sort((a, b) => b.id - a.id);
   const name = `${firstName} ${lastName}`;
 
-  const handleSelectVehicle = (vehicle) => {
+  const handleSelectVehicle = (id) => {
+    const vehicle = vehicles.find((vehicle) => vehicle.id === id);
     dispatchVehicle({ type: 'SET_VEHICLE', payload: vehicle });
     setLoaded(true);
   };
@@ -235,14 +223,16 @@ const Profile = () => {
             <ScrollArea className="relative max-w-[620px]">
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
-                defaultValue={vehicles[0]}
-                onValueChange={(value) => handleSelectVehicle(value)}
+                defaultValue={vehicles[0].id}
+                onValueChange={(value) => {
+                  handleSelectVehicle(value);
+                }}
               >
                 {vehicles.map((vehicle) => (
                   <div key={vehicle.registrationNumber} className="mb-4">
                     <RadioGroupItem
                       id={vehicle.registrationNumber}
-                      value={vehicle}
+                      value={vehicle.id}
                       className="peer sr-only"
                     />
                     <Label
