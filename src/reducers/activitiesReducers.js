@@ -10,10 +10,14 @@ const activitiesSlice = createSlice({
     setActivities(state, action) {
       storePersist.set('activities', action.payload);
       return action.payload;
+    },
+    setActivitiesById(state, action) {
+      storePersist.set('activitiesById', action.payload);
+      return action.payload;
     }
   }
 });
 
-export const { setActivities } = activitiesSlice.actions;
+export const { setActivities, setActivitiesById } = activitiesSlice.actions;
 
 export default activitiesSlice.reducer;

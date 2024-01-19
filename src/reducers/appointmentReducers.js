@@ -8,7 +8,7 @@ const appointmentSlice = createSlice({
   initialState,
   reducers: {
     setAppointment(state, action) {
-      storePersist.set('appointment', action.payload);
+      storePersist.set('appointments', action.payload);
       return action.payload;
     }
   }
