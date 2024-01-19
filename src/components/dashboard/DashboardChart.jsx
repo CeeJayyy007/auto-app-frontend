@@ -67,7 +67,7 @@ const Chart = () => {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value) => `$${value}`}
+          tickFormatter={(value) => `₦${value}`}
         />
         <Bar dataKey="total" fill="#23CE96" radius={[4, 4, 0, 0]} />
       </BarChart>

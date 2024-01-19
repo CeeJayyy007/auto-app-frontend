@@ -11,10 +11,16 @@ import AppointmentCard from '@/components/appointment/AppointmentCard';
 import { Separator } from '@/components/ui/Separator';
 import Image from '@/components/image/Image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { avatarFallback } from '@/utils/helpers';
+import {
+  avatarFallback,
+  commaSeparatedArray,
+  formatDataArray,
+  getDate,
+  statusColor
+} from '@/utils/helpers';
 import ButtonLink from '@/components/button/ButtonLink';
 import { useUserValue } from '@/context/UserContext';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import useServices from '@/hooks/useServices';
 import useInventory from '@/hooks/useInventory';
@@ -30,6 +36,7 @@ import {
   setResult,
   setVehicles
 } from '@/reducers/profileReducers';
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
 const dashboardCardContent = [
   {
@@ -66,86 +73,6 @@ const dashboardCardContent = [
   }
 ];
 
-const recentActivityData = [
-  {
-    id: 1,
-    service: 'oil change',
-    status: 'in-progress',
-    date: '12/12/2021'
-  },
-  {
-    id: 2,
-    service: 'tyre change',
-    status: 'completed',
-    date: '12/12/2021'
-  },
-  {
-    id: 3,
-    service: 'cooling system',
-    status: 'approved',
-    date: '12/12/2021'
-  },
-  {
-    id: 4,
-    service: 'wheel alignment',
-    status: 'completed',
-    date: '12/12/2021'
-  },
-  {
-    id: 5,
-    service: 'oil change',
-    status: 'completed',
-    date: '12/12/2021'
-  }
-];
-
-const vehicleData = [
-  {
-    id: 1,
-    make: 'Lamborghini',
-    model: 'Aventador',
-    year: '2022',
-    image: '/src/assets/lambo.jpeg'
-  },
-  {
-    id: 2,
-    make: 'Mercedes',
-    model: 'Benz',
-    year: '2021',
-    image: '/src/assets/benz.jpeg'
-  }
-];
-
-const appointmentData = [
-  {
-    id: 1,
-    date: '2023-12-07T10:20:56.268Z',
-    time: '8:00',
-    note: 'Urgent fix',
-    services: ['oil change', 'tyre change'],
-    status: { value: 'Completed', label: 'Completed' },
-    createdAt: '12/12/2021'
-  },
-  {
-    id: 2,
-    date: '2023-12-08T10:20:56.268Z',
-    time: '9:00',
-    note: 'Change oil',
-    services: ['oil change', 'tyre change'],
-    status: { value: 'Pending', label: 'Pending' },
-    createdAt: '12/12/2022'
-  },
-  {
-    id: 3,
-    date: '2023-11-07T10:20:56.268Z',
-    time: '10:00',
-    note: 'Fix the issues',
-    services: ['steering fix', 'tyre change'],
-    status: { value: 'Canceled', label: 'Canceled' },
-    createdAt: '12/12/2023'
-  }
-];
-
 const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useUserValue();
@@ -173,6 +100,13 @@ const Dashboard = () => {
     allUsers,
     appointmentsDetails
   ]);
+
+  const activitiesData = formatDataArray(activitiesByUser?.data, 5);
+  const appointmentData = appointmentsDetails?.data;
+  const vehiclesData = result?.data?.user[0]?.Vehicles;
+  const activitiesDataLength = activitiesByUser?.data?.length;
+
+  console.log('activitiesDatas', vehiclesData);
 
   return (
     <div className="space-y-4">
@@ -207,36 +141,48 @@ const Dashboard = () => {
           </CardContent>
         </Card>
         <Card className="col-span-4 md:col-span-3">
-          <div className="flex flex-row justify-between">
-            <CardHeader>
-              <CardTitle>Recent Activities</CardTitle>
-              <CardDescription>
-                You made {recentActivityData.length} activities this month.
-              </CardDescription>
-            </CardHeader>
-            <ButtonLink to="/activities" className="mt-4 mr-4">
-              View all
-            </ButtonLink>
-          </div>
+          <CardHeader>
+            <div className="flex flex-row justify-between items-start">
+              <div>
+                <CardTitle>Recent Activities</CardTitle>
+                <CardDescription>
+                  You made {activitiesDataLength} activities this month.
+                </CardDescription>
+              </div>
+              <ButtonLink to="/activities" className="mr-2">
+                View all
+              </ButtonLink>
+            </div>
+            <Separator className="my-4" />
+          </CardHeader>
           <CardContent>
-            {recentActivityData.map((activity) => (
+            {activitiesData?.map((activity) => (
               <div className="space-y-8 py-2" key={activity.id}>
                 <div className="flex items-center">
                   <Avatar className="h-9 w-9">
                     <AvatarImage src="/avatars/01.png" alt="Avatar" />
                     <AvatarFallback>
-                      {avatarFallback(activity.service)}
+                      {avatarFallback(
+                        `${activity?.userDetails?.firstName} ${activity?.userDetails?.lastName}`
+                      )}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="ml-4 space-y-1">
-                    <p className="text-sm font-medium leading-none">
-                      {activity.service}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="ml-4 space-y-1 ">
+                    <div className="text-sm truncate max-w-[230px]">
+                      {activity.note}
+                    </div>
+                    <div className="text-sm truncate max-w-[230px]">
+                      {commaSeparatedArray(activity.services)}
+                    </div>
+                    <p
+                      className={`text-sm text-${statusColor(activity.status)}`}
+                    >
                       {activity.status}
                     </p>
                   </div>
-                  <div className="ml-auto font-medium">{activity.date}</div>
+                  <div className="ml-auto font-medium text-sm">
+                    {getDate(activity.createdAt)}
+                  </div>
                 </div>
               </div>
             ))}
@@ -257,19 +203,22 @@ const Dashboard = () => {
             <Separator className="my-4" />
           </CardHeader>
           <CardContent>
-            <div className="flex space-x-8 pb-4">
-              {vehicleData.map((vehicle) => (
-                <div key={vehicle.image}>
-                  <Image width={150} height={150} vehicle={vehicle} />
-                  <h4 className="mt-2 font-medium leading-none">
-                    {vehicle.make}
-                  </h4>
-                  <p className="text-sm text-muted-foreground mt-0">
-                    {vehicle.model} | {vehicle.year}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <ScrollArea className="relative max-w-[620px]">
+              <div className="flex space-x-8 pb-4">
+                {vehiclesData.map((vehicle) => (
+                  <div key={vehicle.image}>
+                    <Image width={150} height={150} vehicle={vehicle} />
+                    <h4 className="mt-2 font-medium leading-none">
+                      {vehicle.make}
+                    </h4>
+                    <p className="text-sm text-muted-foreground mt-0">
+                      {vehicle.model} | {vehicle.year}
+                    </p>
+                  </div>
+                ))}
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </ScrollArea>
           </CardContent>
         </Card>
       </div>
