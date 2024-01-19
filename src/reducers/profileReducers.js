@@ -1,4 +1,3 @@
-import store from '@/store/store';
 import storePersist from '@/store/storePersist';
 import { createSlice } from '@reduxjs/toolkit';
 
