@@ -19,6 +19,12 @@ const useAppointment = () => {
       duration: 5000
     });
 
+  const appointmentsDetails = useQuery({
+    queryKey: ['appointment', userId],
+    queryFn: () => appointmentService.getAppointmentDetails(userId),
+    refetchOnWindowFocus: true
+  });
+
   const addAppointmentMutation = useMutation({
     mutationFn: (params) => appointmentService.addAppointment(...params),
     onSuccess: (data) => {
@@ -99,6 +105,7 @@ const useAppointment = () => {
   };
 
   return {
+    appointmentsDetails,
     addAppointment,
     editAppointment,
     createServiceRequest,

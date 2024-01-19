@@ -3,7 +3,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useErrorHandler from './useErrorHandler';
 import { useUserValue } from '@/context/UserContext';
 import { useToast } from '@/components/ui/use-toast';
-import storePersist from '@/store/storePersist';
 
 const useActivities = (recordId) => {
   const queryClient = useQueryClient();
