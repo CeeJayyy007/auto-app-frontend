@@ -1,3 +1,4 @@
+import storePersist from '@/store/storePersist';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [];
@@ -7,6 +8,7 @@ const appointmentSlice = createSlice({
   initialState,
   reducers: {
     setAppointment(state, action) {
+      storePersist.set('appointment', action.payload);
       return action.payload;
     }
   }

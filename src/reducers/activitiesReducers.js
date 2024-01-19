@@ -1,3 +1,4 @@
+import storePersist from '@/store/storePersist';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = [];
@@ -7,6 +8,7 @@ const activitiesSlice = createSlice({
   initialState,
   reducers: {
     setActivities(state, action) {
+      storePersist.set('activities', action.payload);
       return action.payload;
     }
   }
