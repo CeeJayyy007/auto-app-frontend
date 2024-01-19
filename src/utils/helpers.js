@@ -116,18 +116,6 @@ export const getInventories = (inventoriesData) =>
 
 const servicesMap = new Map();
 
-export const findServiceName = (serviceId, servicesData) => {
-  if (!servicesMap.has(serviceId)) {
-    const service = servicesData.find((service) => service.id === serviceId);
-    servicesMap.set(serviceId, service?.name ?? null);
-  }
-  return servicesMap.get(serviceId);
-};
-
-export const findVehicleInfo = (vehicleId, allVehiclesData) => {
-  return allVehiclesData.find((vehicle) => vehicle.id === vehicleId);
-};
-
 export const getDate = (date) => {
   return format(new Date(date), 'dd MMM yyyy');
 };

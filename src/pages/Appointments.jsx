@@ -5,12 +5,7 @@ import SideSheet from '@/components/display/SideSheet';
 import AppointmentForm from '@/components/appointment/appointmentForm/AppointmentForm';
 import { AddAppointmentFormSchema } from '@/components/appointment/appointmentForm/AppointmentValidation';
 import useAppointment from '@/hooks/useAppointment';
-import {
-  findServiceName,
-  findVehicleInfo,
-  getServices,
-  getVehicles
-} from '@/utils/helpers';
+import { getServices, getVehicles } from '@/utils/helpers';
 import storePersist from '@/store/storePersist';
 
 const Appointments = () => {
