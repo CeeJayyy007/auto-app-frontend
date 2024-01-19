@@ -5,66 +5,51 @@ import SideSheet from '@/components/display/SideSheet';
 import AppointmentForm from '@/components/appointment/appointmentForm/AppointmentForm';
 import { AddAppointmentFormSchema } from '@/components/appointment/appointmentForm/AppointmentValidation';
 import useAppointment from '@/hooks/useAppointment';
-import useProfile from '@/hooks/useProfile';
-import useServices from '@/hooks/useServices';
 import {
   findServiceName,
   findVehicleInfo,
   getServices,
   getVehicles
 } from '@/utils/helpers';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setAppointment } from '@/reducers/appointmentReducers';
+import storePersist from '@/store/storePersist';
 
 const Appointments = () => {
-  const { allServices } = useServices();
   const {
     addAppointment,
     editAppointment,
     removeAppointment,
     createServiceRequest
   } = useAppointment();
-  const { result, allVehicles } = useProfile();
 
-  const user = result?.data?.user[0];
-  const servicesData = allServices?.data;
-  const allVehiclesData = allVehicles?.data?.vehicles;
+  const userAppointments = storePersist.get('appointments');
+  const servicesData = storePersist.get('service');
+  const user = storePersist.get('profile').user[0];
 
   // do not render anything if profile data is still null
-  if (!user || !servicesData || !allVehiclesData) {
+  if (!userAppointments) {
     return null;
   }
 
-  const { Vehicles, Appointments: userAppointments } = user;
-  const userVehiclesData = Vehicles.sort((a, b) => b.id - a.id);
-
   // convert vehicles data to select options
-  const vehicles = getVehicles(userVehiclesData);
+  const vehicles = getVehicles(user?.Vehicles);
 
   // conver services data to select options
   const servicesOption = getServices(servicesData);
 
   // get services name for appointment.serviceId array from appointments
   const appointmentData = userAppointments.map((appointment) => {
-    const { serviceId, vehicleId } = appointment;
-    const services = (serviceId || []).map((id) =>
-      findServiceName(id, servicesData)
-    );
-    const vehicle = findVehicleInfo(vehicleId, allVehiclesData);
+    const { servicesDetails, vehicleDetails } = appointment;
+
+    const vehicle = vehicleDetails
+      ? `${vehicleDetails.make} ${vehicleDetails.model} ${vehicleDetails.year}`
+      : '';
 
     return {
       ...appointment,
-      services: services.filter(Boolean),
-      vehicle: vehicle ? `${vehicle.make} ${vehicle.model} ${vehicle.year}` : ''
+      services: servicesDetails.map((service) => service.name),
+      vehicle
     };
   });
-
-  if (result.isLoading) {
-    return <div>loading data...</div>;
-  } else if (result.isError) {
-    return <div>error loading data</div>;
-  }
 
   return (
     <div>
