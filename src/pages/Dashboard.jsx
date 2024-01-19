@@ -14,7 +14,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { avatarFallback } from '@/utils/helpers';
 import ButtonLink from '@/components/button/ButtonLink';
 import { useUserValue } from '@/context/UserContext';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import useServices from '@/hooks/useServices';
+import useInventory from '@/hooks/useInventory';
+import useProfile from '@/hooks/useProfile';
+import useAppointment from '@/hooks/useAppointment';
+import useActivities from '@/hooks/useActivities';
+import { setAppointment } from '@/reducers/appointmentReducers';
+import { setActivities } from '@/reducers/activitiesReducers';
+import { setService } from '@/reducers/serviceReducers';
+import { setInventory } from '@/reducers/inventoryReducers';
+import { setProfile, setResult } from '@/reducers/profileReducers';
 
 const dashboardCardContent = [
   {
@@ -132,11 +143,22 @@ const appointmentData = [
 ];
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
   const user = useUserValue();
-  const appointment = useSelector((state) => state.appointment);
-  const activities = useSelector((state) => state.activities);
+  const { allServices } = useServices();
+  const { allInventory } = useInventory();
+  const { result, allUsers } = useProfile();
+  const { activitiesByUser } = useActivities();
 
-  console.log('dashboard activities', appointment, activities);
+  useEffect(() => {
+    // dispatch(setAppointment(user?.Appointments));
+    dispatch(setActivities(activitiesByUser?.data));
+    dispatch(setAppointment(appointmentData));
+    dispatch(setService(allServices));
+    dispatch(setInventory(allInventory));
+    dispatch(setProfile(allUsers));
+    dispatch(setResult(result));
+  }, [dispatch, result, activitiesByUser, allServices, allInventory, allUsers]);
 
   return (
     <div className="space-y-4">
