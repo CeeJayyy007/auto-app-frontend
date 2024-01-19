@@ -3,46 +3,29 @@ import { statuses } from '../components/activities/data';
 import { DataTable } from '@/components/dataTable/dataTable';
 import SideSheet from '@/components/display/SideSheet';
 import useActivities from '@/hooks/useActivities';
-import useProfile from '@/hooks/useProfile';
-import useServices from '@/hooks/useServices';
-import useInventory from '@/hooks/useInventory';
 import { getInventories, getServices, getVehicles } from '@/utils/helpers';
 import ActivitiesForm from '@/components/activities/form/ActivitiesForm';
 import { ActivitiesFormSchema } from '@/components/activities/form/ActivitiesValidation';
 import useAppointment from '@/hooks/useAppointment';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { setActivities } from '@/reducers/activitiesReducers';
+import storePersist from '@/store/storePersist';
 
 const Activities = () => {
-  const dispatch = useDispatch();
-
-  const { allServices } = useServices();
-  const { allInventory } = useInventory();
-  const { result, allUsers } = useProfile();
+  const { editActivity, removeActivity } = useActivities();
   const { createServiceRequest } = useAppointment();
-  const { activitiesByUser, editActivity, removeActivity } = useActivities();
 
-  const user = result?.data?.user[0];
-  const usersData = allUsers?.data;
-  const activities = activitiesByUser?.data;
-  const servicesData = allServices?.data;
-  const inventoryData = allInventory?.data;
-
-  useEffect(() => {
-    dispatch(setActivities(activities));
-  }, [dispatch, activities]);
+  const user = storePersist.get('profile').user[0];
+  const usersData = storePersist.get('allUsers');
+  const activities = storePersist.get('activities');
+  const servicesData = storePersist.get('service');
+  const inventoryData = storePersist.get('inventory');
 
   // do not render anything if activities data is still null
   if (!activities || !servicesData || !user || !inventoryData) {
     return null;
   }
 
-  const { Vehicles } = user;
-  const userVehiclesData = Vehicles.sort((a, b) => b.id - a.id);
-
   // convert vehicles data to select options
-  const vehicles = getVehicles(userVehiclesData);
+  const vehicles = getVehicles(user?.Vehicles);
 
   // convert services data to select options
   const services = getServices(servicesData);
@@ -63,12 +46,6 @@ const Activities = () => {
         : ''
     };
   });
-
-  if (activitiesByUser.isLoading) {
-    return <div>loading data...</div>;
-  } else if (activitiesByUser.isError) {
-    return <div>error loading data</div>;
-  }
 
   return (
     <div>
