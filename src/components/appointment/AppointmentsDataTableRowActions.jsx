@@ -108,7 +108,7 @@ export const AppointmentsDataTableRowActions = ({
             actionLabel="Save Appointment"
             body={
               <AppointmentForm
-                userId={user.id}
+                userId={user?.id}
                 vehicles={vehicles}
                 services={servicesOption}
                 rowData={row.original}

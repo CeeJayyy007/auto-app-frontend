@@ -12,8 +12,6 @@ import AlertDialogComponent from '../display/AlertDialog';
 
 export const ActivitiesDataTableRowActions = ({
   row,
-  services,
-  inventories,
   editActivity,
   removeActivity
 }) => {
@@ -24,7 +22,7 @@ export const ActivitiesDataTableRowActions = ({
 
   const handleView = () => {
     navigate(`/maintenance-record/${id}`, {
-      state: { services, inventories, rowData: row.original }
+      state: { rowDataId: id }
     });
   };
 
