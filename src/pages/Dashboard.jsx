@@ -37,6 +37,7 @@ import {
   setVehicles
 } from '@/reducers/profileReducers';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import EmptyPlaceholder from '@/components/emptyState/EmptyPlaceholder';
 
 const dashboardCardContent = [
   {
@@ -150,47 +151,59 @@ const Dashboard = () => {
                 </CardDescription>
               </div>
               <ButtonLink to="/activities" className="mr-2">
-                View all
+                {activitiesDataLength === 0 ? 'See More...' : 'View all'}
               </ButtonLink>
             </div>
             <Separator className="my-4" />
           </CardHeader>
           <CardContent>
-            {activitiesData?.map((activity) => (
-              <div className="space-y-8 py-2" key={activity.id}>
-                <div className="flex items-center">
-                  <Avatar className="h-9 w-9">
-                    <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                    <AvatarFallback>
-                      {avatarFallback(
-                        `${activity?.userDetails?.firstName} ${activity?.userDetails?.lastName}`
-                      )}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="ml-4 space-y-1 ">
-                    <div className="text-sm truncate max-w-[230px]">
-                      {activity.note}
+            {activitiesDataLength === 0 ? (
+              <EmptyPlaceholder
+                description="No saved activity"
+                className="h-[300px]"
+              />
+            ) : (
+              activitiesData?.map((activity) => (
+                <div className="space-y-8 py-2" key={activity.id}>
+                  <div className="flex items-center">
+                    <Avatar className="h-9 w-9">
+                      <AvatarImage src="/avatars/01.png" alt="Avatar" />
+                      <AvatarFallback>
+                        {avatarFallback(
+                          `${activity?.userDetails?.firstName} ${activity?.userDetails?.lastName}`
+                        )}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="ml-4 space-y-1 ">
+                      <div className="text-sm truncate max-w-[230px]">
+                        {activity.note}
+                      </div>
+                      <div className="text-sm truncate max-w-[230px]">
+                        {commaSeparatedArray(activity.services)}
+                      </div>
+                      <p
+                        className={`text-sm text-${statusColor(
+                          activity.status
+                        )}`}
+                      >
+                        {activity.status}
+                      </p>
                     </div>
-                    <div className="text-sm truncate max-w-[230px]">
-                      {commaSeparatedArray(activity.services)}
+                    <div className="ml-auto font-medium text-sm">
+                      {getDate(activity.createdAt)}
                     </div>
-                    <p
-                      className={`text-sm text-${statusColor(activity.status)}`}
-                    >
-                      {activity.status}
-                    </p>
-                  </div>
-                  <div className="ml-auto font-medium text-sm">
-                    {getDate(activity.createdAt)}
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
       </div>
       <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-8">
-        <AppointmentCard appointments={appointmentData} />
+        <AppointmentCard
+          appointments={appointmentData}
+          className="col-span-4"
+        />
         <Card className="col-span-4">
           <CardHeader>
             <div className="flex flex-row justify-between items-start">
@@ -198,27 +211,36 @@ const Dashboard = () => {
                 <CardTitle>Vehicle</CardTitle>
                 <CardDescription>Details and overview.</CardDescription>
               </div>
-              <ButtonLink to="/profile">View all</ButtonLink>
+              <ButtonLink to="/profile">
+                {vehiclesData?.length === 0 ? 'See More...' : 'View all'}
+              </ButtonLink>
             </div>
             <Separator className="my-4" />
           </CardHeader>
           <CardContent>
-            <ScrollArea className="relative max-w-[620px]">
-              <div className="flex space-x-8 pb-4">
-                {vehiclesData?.map((vehicle) => (
-                  <div key={vehicle.image}>
-                    <Image width={150} height={150} vehicle={vehicle} />
-                    <h4 className="mt-2 font-medium leading-none">
-                      {vehicle.make}
-                    </h4>
-                    <p className="text-sm text-muted-foreground mt-0">
-                      {vehicle.model} | {vehicle.year}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <ScrollBar orientation="horizontal" />
-            </ScrollArea>
+            {vehiclesData?.length === 0 ? (
+              <EmptyPlaceholder
+                description="No saved vehicle"
+                className="h-[150px]"
+              />
+            ) : (
+              <ScrollArea className="relative max-w-[620px]">
+                <div className="flex space-x-8 pb-4">
+                  {vehiclesData?.map((vehicle) => (
+                    <div key={vehicle.image}>
+                      <Image width={150} height={150} vehicle={vehicle} />
+                      <h4 className="mt-2 font-medium leading-none">
+                        {vehicle.make}
+                      </h4>
+                      <p className="text-sm text-muted-foreground mt-0">
+                        {vehicle.model} | {vehicle.year}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
+            )}
           </CardContent>
         </Card>
       </div>

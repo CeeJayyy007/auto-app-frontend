@@ -22,6 +22,7 @@ import { EditUserFormSchema } from '@/components/profile/userForm/UserFormValida
 import UserForm from '@/components/profile/userForm/UserForm';
 import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
 import storePersist from '@/store/storePersist';
+import EmptyPlaceholder from '@/components/emptyState/EmptyPlaceholder';
 
 const Profile = () => {
   const [loaded, setLoaded] = useState(false);
@@ -61,7 +62,7 @@ const Profile = () => {
             <div className="">
               <p className="text-muted-foreground text-green-300">Make</p>
               <p className="text-xl text-white mt-1">
-                {selectedVehicle ? selectedVehicle.make : vehicles[0].make}
+                {selectedVehicle ? selectedVehicle?.make : vehicles[0]?.make}
               </p>
             </div>
             <Separator
@@ -71,7 +72,7 @@ const Profile = () => {
             <div>
               <p className="text-muted-foreground text-green-300">Model</p>
               <p className="text-xl text-white mt-1">
-                {selectedVehicle ? selectedVehicle.model : vehicles[0].model}
+                {selectedVehicle ? selectedVehicle?.model : vehicles[0]?.model}
               </p>
             </div>
           </div>
@@ -79,7 +80,7 @@ const Profile = () => {
             <div className="">
               <p className="text-muted-foreground text-green-300">Year</p>
               <p className="text-xl text-white mt-1">
-                {selectedVehicle ? selectedVehicle.year : vehicles[0].year}
+                {selectedVehicle ? selectedVehicle?.year : vehicles[0]?.year}
               </p>
             </div>
             <Separator
@@ -90,8 +91,8 @@ const Profile = () => {
               <p className="text-muted-foreground text-green-300">Reg. No.</p>
               <p className="text-xl text-white mt-1">
                 {selectedVehicle
-                  ? selectedVehicle.registrationNumber
-                  : vehicles[0].registrationNumber}
+                  ? selectedVehicle?.registrationNumber
+                  : vehicles[0]?.registrationNumber}
               </p>
             </div>
           </div>
@@ -131,19 +132,21 @@ const Profile = () => {
                   />
                 }
                 deleteAction={
-                  <AlertDialogComponent
-                    actionLabel="Delete"
-                    triggerLabel="Delete"
-                    title="Delete User"
-                    description="Are you sure you want to delete this user?"
-                    cancelLabel="Cancel"
-                  />
+                  user.roles === 'User' ? null : (
+                    <AlertDialogComponent
+                      actionLabel="Delete"
+                      triggerLabel="Delete"
+                      title="Delete User"
+                      description="Are you sure you want to delete this user?"
+                      cancelLabel="Cancel"
+                    />
+                  )
                 }
                 // Add Vehicle Profile
                 extraActions={
                   <SideSheet
                     triggerLabel="Add Vehicle"
-                    title="Add Vehicle Profile"
+                    title="Add Vehicle"
                     description="Add Vehicle Profile details and click Add Vehicle when done."
                     body={
                       <VehicleForm
@@ -186,69 +189,96 @@ const Profile = () => {
                   Click to view details
                 </p>
               </div>
-              <IconDropdownMenu
-                label="Vehicle Menu"
-                editAction={
-                  <SideSheet
-                    triggerLabel="Edit"
-                    title="Edit Vehicle Profile"
-                    description="Edit Vehicle Profile details and click Save when done."
-                    actionLabel="Save Profile"
-                    body={
-                      <VehicleForm
-                        vehicle={selectedVehicle || vehicles[0]}
-                        formAction={editVehicle}
-                        formValidation={EditVehicleFormSchema}
-                        buttonText="Save"
-                      />
-                    }
-                  />
-                }
-                deleteAction={
-                  <AlertDialogComponent
-                    actionLabel="Delete"
-                    triggerLabel="Delete"
-                    title="Delete Vehicle"
-                    description="Are you sure you want to delete this vehicle?"
-                    cancelLabel="Cancel"
-                    onClick={() =>
-                      removeVehicle(
-                        selectedVehicle ? selectedVehicle.id : vehicles[0].id
-                      )
-                    }
-                  />
-                }
-              />
+              {vehicles.length === 0 ? null : (
+                <IconDropdownMenu
+                  label="Vehicle Menu"
+                  editAction={
+                    <SideSheet
+                      triggerLabel="Edit"
+                      title="Edit Vehicle Profile"
+                      description="Edit Vehicle Profile details and click Save when done."
+                      actionLabel="Save Profile"
+                      body={
+                        <VehicleForm
+                          vehicle={selectedVehicle || vehicles[0]}
+                          formAction={editVehicle}
+                          formValidation={EditVehicleFormSchema}
+                          buttonText="Save"
+                        />
+                      }
+                    />
+                  }
+                  deleteAction={
+                    <AlertDialogComponent
+                      actionLabel="Delete"
+                      triggerLabel="Delete"
+                      title="Delete Vehicle"
+                      description="Are you sure you want to delete this vehicle?"
+                      cancelLabel="Cancel"
+                      onClick={() =>
+                        removeVehicle(
+                          selectedVehicle
+                            ? selectedVehicle?.id
+                            : vehicles[0]?.id
+                        )
+                      }
+                    />
+                  }
+                />
+              )}
             </div>
             <ScrollArea className="relative max-w-[620px]">
               <RadioGroup
                 className="flex flex-row justify-center space-x-4 mt-4"
-                defaultValue={vehicles[0].id}
+                defaultValue={vehicles[0]?.id}
                 onValueChange={(value) => {
                   handleSelectVehicle(value);
                 }}
               >
-                {vehicles.map((vehicle) => (
-                  <div key={vehicle.registrationNumber} className="mb-4">
-                    <RadioGroupItem
-                      id={vehicle.registrationNumber}
-                      value={vehicle.id}
-                      className="peer sr-only"
-                    />
-                    <Label
-                      htmlFor={vehicle.registrationNumber}
-                      className="flex flex-col items-center justify-between rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-                    >
-                      <Image vehicle={vehicle} />
-                      {vehicle.make} {vehicle.model}
-                    </Label>
-                  </div>
-                ))}
+                {vehicles.length === 0 ? (
+                  <EmptyPlaceholder
+                    description="No vehicles saved"
+                    className="h-[150px] w-full"
+                    withButton={true}
+                    buttonTitle={
+                      <SideSheet
+                        type="button"
+                        triggerLabel="Add Vehicle"
+                        title="Add Vehicle"
+                        description="Add Vehicle Profile details and click Add Vehicle when done."
+                        body={
+                          <VehicleForm
+                            formAction={addVehicle}
+                            formValidation={AddVehicleFormSchema}
+                            buttonText="Add Vehicle"
+                          />
+                        }
+                      />
+                    }
+                  />
+                ) : (
+                  vehicles.map((vehicle) => (
+                    <div key={vehicle?.registrationNumber} className="mb-4">
+                      <RadioGroupItem
+                        id={vehicle?.registrationNumber}
+                        value={vehicle?.id}
+                        className="peer sr-only"
+                      />
+                      <Label
+                        htmlFor={vehicle?.registrationNumber}
+                        className="flex flex-col items-center justify-between rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
+                      >
+                        <Image vehicle={vehicle} />
+                        {vehicle?.make} {vehicle?.model}
+                      </Label>
+                    </div>
+                  ))
+                )}
               </RadioGroup>
               <ScrollBar orientation="horizontal" />
             </ScrollArea>
           </div>
-          <AppointmentCard appointments={appointments} />
+          <AppointmentCard appointments={appointments} className="col-span-3" />
         </div>
       </div>
     </div>
