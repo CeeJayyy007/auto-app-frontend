@@ -24,18 +24,20 @@ import ColouredBadge from '../badge/ColouredBadge';
 import ButtonLink from '../button/ButtonLink';
 import { ScrollArea } from '../ui/scroll-area';
 
-const AppointmentCard = ({ appointments }) => {
+const AppointmentCard = ({ appointments, className }) => {
   const appointmentData = formatDataArray(appointments, 4);
 
   return (
-    <Card className="col-span-4">
-      <CardHeader className="pb-2 ">
+    <Card className={className}>
+      <CardHeader className="pb-2">
         <div className="flex flex-row justify-between">
           <div>
             <CardTitle className="text-gray-700">Appointments</CardTitle>
             <CardDescription>Details and overview.</CardDescription>
           </div>
-          <ButtonLink to="/appointments">View All</ButtonLink>
+          <ButtonLink to="/appointments">
+            {appointmentData.length === 0 ? 'See More...' : 'View All'}
+          </ButtonLink>
         </div>
         {/* <Separator /> */}
       </CardHeader>
@@ -51,25 +53,36 @@ const AppointmentCard = ({ appointments }) => {
               </TableRow>
             </TableHeader>
             <TableBody className="py-0 text-xs">
-              {appointmentData.map((appointment) => (
-                <TableRow key={appointment.createdAt}>
-                  <TableCell className="min-w-[80px] pl-4">
-                    {getDate(appointment.date)}
-                  </TableCell>
-                  <TableCell>{appointment.time}</TableCell>
-                  <TableCell className="max-w-[200px] truncate ">
-                    {appointment.note}
-                  </TableCell>
-                  <TableCell className="max-w-[100px]">
-                    {
-                      <ColouredBadge
-                        status={appointment.status}
-                        colorFn={statusColor}
-                      />
-                    }
+              {appointmentData.length === 0 ? (
+                <TableRow>
+                  <TableCell
+                    colSpan={5}
+                    className="h-[120px] text-center text-sm text-muted-foreground"
+                  >
+                    No saved appointment.
                   </TableCell>
                 </TableRow>
-              ))}
+              ) : (
+                appointmentData.map((appointment) => (
+                  <TableRow key={appointment.createdAt}>
+                    <TableCell className="min-w-[80px] pl-4">
+                      {getDate(appointment.date)}
+                    </TableCell>
+                    <TableCell>{appointment.time}</TableCell>
+                    <TableCell className="max-w-[200px] truncate ">
+                      {appointment.note}
+                    </TableCell>
+                    <TableCell className="max-w-[100px]">
+                      {
+                        <ColouredBadge
+                          status={appointment.status}
+                          colorFn={statusColor}
+                        />
+                      }
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </ScrollArea>
