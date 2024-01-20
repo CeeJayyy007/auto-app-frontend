@@ -52,22 +52,24 @@ const Activities = () => {
       <div className="flex flex-row justify-between">
         <h3 className="mb-4 font-bold text-gray-700">Activities</h3>
         {/* Add activity */}
-        <SideSheet
-          type="button"
-          triggerLabel="Create Service Request"
-          title="Create Service Request"
-          description="Select User and Vehicle details and click Create Service Request when done."
-          body={
-            <ActivitiesForm
-              users={usersData}
-              vehicles={vehicles}
-              services={services}
-              formAction={createServiceRequest}
-              formValidation={ActivitiesFormSchema}
-              buttonText="Create Service Request"
-            />
-          }
-        />
+        {user?.roles !== 'User' && (
+          <SideSheet
+            type="button"
+            triggerLabel="Create Service Request"
+            title="Create Service Request"
+            description="Select User and Vehicle details and click Create Service Request when done."
+            body={
+              <ActivitiesForm
+                users={usersData}
+                vehicles={vehicles}
+                services={services}
+                formAction={createServiceRequest}
+                formValidation={ActivitiesFormSchema}
+                buttonText="Create Service Request"
+              />
+            }
+          />
+        )}
       </div>
       <div className="rounded-[14px] bg-white p-8">
         <DataTable
