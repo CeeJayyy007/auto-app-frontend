@@ -5,6 +5,7 @@ import activitiesReducers from '@/reducers/activitiesReducers';
 import serviceReducers from '@/reducers/serviceReducers';
 import inventoryReducers from '@/reducers/inventoryReducers';
 import profileReducers from '@/reducers/profileReducers';
+import dashboardReducers from '@/reducers/dashboardReducers';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ const store = configureStore({
     activities: activitiesReducers,
     service: serviceReducers,
     inventory: inventoryReducers,
-    profile: profileReducers
+    profile: profileReducers,
+    dashboard: dashboardReducers
   }
 });
 
