@@ -227,7 +227,7 @@ const Dashboard = () => {
               <ScrollArea className="relative max-w-[620px]">
                 <div className="flex space-x-8 pb-4">
                   {vehiclesData?.map((vehicle) => (
-                    <div key={vehicle.image}>
+                    <div key={vehicle.registrationNumber}>
                       <Image width={150} height={150} vehicle={vehicle} />
                       <h4 className="mt-2 font-medium leading-none">
                         {vehicle.make}
