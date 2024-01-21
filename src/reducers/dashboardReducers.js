@@ -15,13 +15,13 @@ const dashboardSlice = createSlice({
   name: 'dashboard',
   initialState,
   reducers: {
-    setDashboard(state, action) {
+    setDashboardData(state, action) {
       storePersist.set('dashboard', action.payload);
       return action.payload;
     }
   }
 });
 
-export const { setDashboard } = dashboardSlice.actions;
+export const { setDashboardData } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

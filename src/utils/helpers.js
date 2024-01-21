@@ -92,14 +92,14 @@ export const generateTimeOptions = () => {
 };
 
 export const getVehicles = (vehiclesData) =>
-  vehiclesData.map((vehicle) => ({
+  vehiclesData?.map((vehicle) => ({
     label: `${vehicle.make} ${vehicle.model} ${vehicle.year}`,
     value: `${vehicle.make} ${vehicle.model} ${vehicle.year}`,
     id: vehicle.id
   }));
 
 export const getServices = (servicesData) =>
-  servicesData.map((service) => ({
+  servicesData?.map((service) => ({
     label: service.name,
     value: service.name,
     id: service.id,
@@ -107,14 +107,12 @@ export const getServices = (servicesData) =>
   }));
 
 export const getInventories = (inventoriesData) =>
-  inventoriesData.map((inventory) => ({
+  inventoriesData?.map((inventory) => ({
     label: inventory.name,
     value: inventory.name,
     id: inventory.id,
     price: inventory.finalPrice
   }));
-
-const servicesMap = new Map();
 
 export const getDate = (date) => {
   return format(new Date(date), 'dd MMM yyyy');

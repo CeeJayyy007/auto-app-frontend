@@ -9,13 +9,8 @@ import dashboardReducers from '@/reducers/dashboardReducers';
 
 const store = configureStore({
   reducer: {
-    vehicle: vehicleReducer,
-    appointment: appointmentReducer,
-    activities: activitiesReducers,
-    service: serviceReducers,
-    inventory: inventoryReducers,
-    profile: profileReducers,
-    dashboard: dashboardReducers
+    dashboard: dashboardReducers,
+    user: profileReducers
   }
 });
 
