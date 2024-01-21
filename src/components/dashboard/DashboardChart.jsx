@@ -69,7 +69,7 @@ const Chart = () => {
           axisLine={false}
           tickFormatter={(value) => `₦${value}`}
         />
-        <Bar dataKey="total" fill="#23CE96" radius={[4, 4, 0, 0]} />
+        <Bar dataKey="total" fill="#1dd597" radius={[4, 4, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );
