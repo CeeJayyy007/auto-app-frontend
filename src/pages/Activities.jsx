@@ -8,16 +8,23 @@ import ActivitiesForm from '@/components/activities/form/ActivitiesForm';
 import { ActivitiesFormSchema } from '@/components/activities/form/ActivitiesValidation';
 import useAppointment from '@/hooks/useAppointment';
 import storePersist from '@/store/storePersist';
+import useInventory from '@/hooks/useInventory';
+import useServices from '@/hooks/useServices';
+import useProfile from '@/hooks/useProfile';
+import { all } from 'axios';
 
 const Activities = () => {
-  const { editActivity, removeActivity } = useActivities();
+  const { activitiesByUser, editActivity, removeActivity } = useActivities();
+  const { result, allUsers } = useProfile();
+  const { allInventory } = useInventory();
+  const { allServices } = useServices();
   const { createServiceRequest } = useAppointment();
 
-  const user = storePersist.get('profile').user[0];
-  const usersData = storePersist.get('allUsers');
-  const activities = storePersist.get('activities');
-  const servicesData = storePersist.get('service');
-  const inventoryData = storePersist.get('inventory');
+  const activities = activitiesByUser?.data;
+  const user = result?.data?.user[0];
+  const usersData = allUsers?.data;
+  const servicesData = allServices?.data;
+  const inventoryData = allInventory?.data;
 
   // do not render anything if activities data is still null
   if (!activities || !servicesData || !user || !inventoryData) {

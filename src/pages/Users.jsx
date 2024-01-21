@@ -5,16 +5,20 @@ import SideSheet from '@/components/display/SideSheet';
 import useProfile from '@/hooks/useProfile';
 import { AddUserFormSchema } from '@/components/profile/userForm/UserFormValidation';
 import UserForm from '@/components/profile/userForm/UserForm';
-import storePersist from '@/store/storePersist';
 
 const Users = () => {
-  const { addProfile, removeProfile } = useProfile();
-
-  const users = storePersist.get('allUsers');
+  const { allUsers, addProfile, removeProfile } = useProfile();
+  const users = allUsers?.data;
 
   // do not render anything if profile data is still null
   if (!users) {
     return null;
+  }
+
+  if (allUsers.isLoading) {
+    return <div>loading data...</div>;
+  } else if (allUsers.isError) {
+    return <div>error loading data</div>;
   }
 
   return (

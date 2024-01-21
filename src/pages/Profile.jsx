@@ -30,10 +30,10 @@ const Profile = () => {
   const dispatchVehicle = useVehicleDispatch();
   const selectedVehicle = useVehicleValue();
 
-  const { addVehicle, editVehicle, removeVehicle, editUser } =
+  const { result, addVehicle, editVehicle, removeVehicle, editUser } =
     useProfile(navigate);
 
-  const profile = storePersist.get('profile');
+  const profile = result?.data;
 
   // do not render anything if profile data is still null
   if (!profile) {

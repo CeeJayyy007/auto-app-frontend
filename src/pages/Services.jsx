@@ -23,9 +23,9 @@ import storePersist from '@/store/storePersist';
 import EmptyPlaceholder from '@/components/emptyState/EmptyPlaceholder';
 
 const Services = () => {
-  const { addService, editService, deleteService } = useServices();
+  const { allServices, addService, editService, deleteService } = useServices();
 
-  const servicesData = storePersist.get('service');
+  const servicesData = allServices?.data;
   const user = useUserValue();
 
   // do not render anything if profile data is still null

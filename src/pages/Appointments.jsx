@@ -7,21 +7,26 @@ import { AddAppointmentFormSchema } from '@/components/appointment/appointmentFo
 import useAppointment from '@/hooks/useAppointment';
 import { getServices, getVehicles } from '@/utils/helpers';
 import storePersist from '@/store/storePersist';
+import useServices from '@/hooks/useServices';
+import useProfile from '@/hooks/useProfile';
 
 const Appointments = () => {
   const {
+    appointmentsDetails,
     addAppointment,
     editAppointment,
     removeAppointment,
     createServiceRequest
   } = useAppointment();
+  const { allServices } = useServices();
+  const { result } = useProfile();
 
-  const userAppointments = storePersist.get('appointments');
-  const servicesData = storePersist.get('service');
-  const user = storePersist.get('profile').user[0];
+  const userAppointments = appointmentsDetails?.data;
+  const servicesData = allServices?.data;
+  const user = result?.data?.user[0];
 
   // do not render anything if profile data is still null
-  if (!userAppointments) {
+  if (!userAppointments || !servicesData || !user) {
     return null;
   }
 

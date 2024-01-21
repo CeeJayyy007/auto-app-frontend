@@ -38,6 +38,7 @@ import {
 } from '@/reducers/profileReducers';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import EmptyPlaceholder from '@/components/emptyState/EmptyPlaceholder';
+import { setDashboardData } from '@/reducers/dashboardReducers';
 
 const dashboardCardContent = [
   {
@@ -77,6 +78,7 @@ const dashboardCardContent = [
 const Dashboard = () => {
   const dispatch = useDispatch();
   const user = useUserValue();
+
   const { allServices } = useServices();
   const { allInventory } = useInventory();
   const { result, allUsers, allVehicles } = useProfile();
@@ -84,30 +86,55 @@ const Dashboard = () => {
   const { appointmentsDetails } = useAppointment();
 
   useEffect(() => {
-    dispatch(setAppointment(appointmentsDetails?.data));
-    dispatch(setActivities(activitiesByUser?.data));
-    dispatch(setService(allServices?.data));
-    dispatch(setInventory(allInventory?.data));
-    dispatch(setAllUsers(allUsers?.data));
-    dispatch(setResult(result?.data));
-    dispatch(setVehicles(allVehicles?.data));
+    dispatch(
+      setDashboardData({
+        appointmentsDetails: appointmentsDetails?.data,
+        activitiesByUser: activitiesByUser?.data,
+        allServices: allServices?.data,
+        allInventory: allInventory?.data,
+        allUsers: allUsers?.data,
+        result: result?.data,
+        allVehicles: allVehicles?.data
+      })
+    );
   }, [
     dispatch,
-    result,
-    allVehicles,
+    appointmentsDetails,
     activitiesByUser,
     allServices,
     allInventory,
     allUsers,
-    appointmentsDetails
+    result,
+    allVehicles
   ]);
+
+  // useEffect(() => {
+  //   dispatch(setAppointment(appointmentsDetails?.data));
+  //   dispatch(setActivities(activitiesByUser?.data));
+  //   dispatch(setService(allServices?.data));
+  //   dispatch(setInventory(allInventory?.data));
+  //   dispatch(setAllUsers(allUsers?.data));
+  //   dispatch(setResult(result?.data));
+  //   dispatch(setVehicles(allVehicles?.data));
+  // }, [
+  //   dispatch,
+  //   result,
+  //   allVehicles,
+  //   activitiesByUser,
+  //   allServices,
+  //   allInventory,
+  //   allUsers,
+  //   appointmentsDetails
+  // ]);
 
   const activitiesData = formatDataArray(activitiesByUser?.data, 5);
   const appointmentData = appointmentsDetails?.data;
   const vehiclesData = result?.data?.user[0]?.Vehicles;
   const activitiesDataLength = activitiesByUser?.data?.length;
 
-  console.log('activitiesDatas', vehiclesData);
+  if (!activitiesData || !appointmentData || !vehiclesData || !user) {
+    return null;
+  }
 
   return (
     <div className="space-y-4">

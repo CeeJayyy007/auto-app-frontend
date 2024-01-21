@@ -8,9 +8,10 @@ import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/Inv
 import storePersist from '@/store/storePersist';
 
 const Inventory = () => {
-  const { addInventory, editInventory, deleteInventory } = useInventory();
+  const { allInventory, addInventory, editInventory, deleteInventory } =
+    useInventory();
 
-  const inventoryData = storePersist.get('inventory');
+  const inventoryData = allInventory?.data;
 
   // do not render anything if profile data is still null
   if (!inventoryData) {

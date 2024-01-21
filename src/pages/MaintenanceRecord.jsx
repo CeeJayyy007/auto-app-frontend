@@ -30,10 +30,12 @@ const MaintenaceRecord = () => {
   const { activitiesById, editActivity } = useActivities(rowDataId);
   const { addService } = useServices();
   const { addInventory } = useInventory();
+  const { allServices: allServicesData } = useServices();
+  const { allInventory: allInventoryData } = useInventory();
 
   const activities = activitiesById?.data;
-  const allServices = storePersist.get('service');
-  const allInventory = storePersist.get('inventory');
+  const allServices = allServicesData?.data;
+  const allInventory = allInventoryData?.data;
 
   useEffect(() => {
     if (!activities) {
