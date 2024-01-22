@@ -37,10 +37,15 @@ const Authentication = () => {
       </div>
       <div className="container relative hidden h-screen w-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-zinc-900" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <Icons.logo className="mr-2 h-6 w-6" />
-            Auto App
+          {/* <div className="absolute inset-0 bg-zinc-900" /> */}
+          <div className="absolute inset-0 bg-no-repeat bg-zinc-900 bg-[url('src/assets/bg-img-1.jpg')]" />
+          <div className="relative z-20 flex items-center text-2xl font-bold">
+            <img
+              src="/src/assets/NaborhoodLogo.svg"
+              alt="logo"
+              className="w-10 pr-2"
+            />
+            Naborhood Auto
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
