@@ -21,7 +21,6 @@ import {
 import { EditUserFormSchema } from '@/components/profile/userForm/UserFormValidation';
 import UserForm from '@/components/profile/userForm/UserForm';
 import { useVehicleDispatch, useVehicleValue } from '@/context/VehicleContext';
-import storePersist from '@/store/storePersist';
 import EmptyPlaceholder from '@/components/emptyState/EmptyPlaceholder';
 
 const Profile = () => {
@@ -44,11 +43,11 @@ const Profile = () => {
   const { firstName, lastName, roles, email, phone } = user;
   const { Vehicles, Appointments: appointments } = user;
 
-  const vehicles = Vehicles.sort((a, b) => b.id - a.id);
+  const vehicles = Vehicles ?? Vehicles?.sort((a, b) => b.id - a.id);
   const name = `${firstName} ${lastName}`;
 
   const handleSelectVehicle = (id) => {
-    const vehicle = vehicles.find((vehicle) => vehicle.id === id);
+    const vehicle = vehicles?.find((vehicle) => vehicle.id === id);
     dispatchVehicle({ type: 'SET_VEHICLE', payload: vehicle });
     setLoaded(true);
   };
@@ -162,7 +161,7 @@ const Profile = () => {
             <div className="flex flex-row items-center">
               <Avatar className="h-[100px] w-[100px] m-4">
                 <AvatarImage
-                  src="src/assets/profile.webp"
+                  src="src/assets/user-avatar/7309685.jpg"
                   alt="profile-avatar"
                 />
                 <AvatarFallback>{avatarFallback(name)}</AvatarFallback>
