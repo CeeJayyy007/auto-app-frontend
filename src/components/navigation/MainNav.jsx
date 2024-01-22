@@ -4,10 +4,12 @@ import { Icons } from '../icons/icons';
 
 const MainNav = () => {
   return (
-    <nav className="flex items-center justify-between h-16 px-4 py-4">
-      <h3 className="flex flex-row">
-        <Icons.logo className="h-6 w-auto fill-gray-400" /> Auto App
-      </h3>
+    <nav className="flex items-center justify-between h-16 px-0 py-4">
+      <img
+        src="/src/assets/NaborhoodName.svg"
+        alt="logo"
+        className="w-[150px] pt-4 pl-0"
+      />
       <div className="ml-auto flex items-center space-x-4">
         <Search />
         <UserNav />
