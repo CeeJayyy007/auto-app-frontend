@@ -108,24 +108,7 @@ const Dashboard = () => {
     allVehicles
   ]);
 
-  // useEffect(() => {
-  //   dispatch(setAppointment(appointmentsDetails?.data));
-  //   dispatch(setActivities(activitiesByUser?.data));
-  //   dispatch(setService(allServices?.data));
-  //   dispatch(setInventory(allInventory?.data));
-  //   dispatch(setAllUsers(allUsers?.data));
-  //   dispatch(setResult(result?.data));
-  //   dispatch(setVehicles(allVehicles?.data));
-  // }, [
-  //   dispatch,
-  //   result,
-  //   allVehicles,
-  //   activitiesByUser,
-  //   allServices,
-  //   allInventory,
-  //   allUsers,
-  //   appointmentsDetails
-  // ]);
+  console.log('allVehicles', allVehicles?.data);
 
   const activitiesData = formatDataArray(activitiesByUser?.data, 5);
   const appointmentData = appointmentsDetails?.data;
@@ -193,9 +176,9 @@ const Dashboard = () => {
               activitiesData?.map((activity) => (
                 <div className="space-y-8 py-2" key={activity.id}>
                   <div className="flex items-center">
-                    <Avatar className="h-9 w-9">
+                    <Avatar className="h-9 w-9 ">
                       <AvatarImage src="/avatars/01.png" alt="Avatar" />
-                      <AvatarFallback>
+                      <AvatarFallback className="bg-green-100">
                         {avatarFallback(
                           `${activity?.userDetails?.firstName} ${activity?.userDetails?.lastName}`
                         )}
