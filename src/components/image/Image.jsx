@@ -2,7 +2,7 @@ const Image = ({ vehicle, width, height, className }) => {
   return (
     <div className="overflow-hidden rounded-lg ">
       <img
-        src={vehicle.image}
+        src={vehicle.avatar}
         alt={vehicle.make}
         width={width}
         height={height}
