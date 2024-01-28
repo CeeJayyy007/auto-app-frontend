@@ -10,7 +10,6 @@ import useAppointment from '@/hooks/useAppointment';
 import useInventory from '@/hooks/useInventory';
 import useServices from '@/hooks/useServices';
 import useProfile from '@/hooks/useProfile';
-import { all } from 'axios';
 
 const Activities = () => {
   const { activitiesByUser, editActivity, removeActivity } = useActivities();
