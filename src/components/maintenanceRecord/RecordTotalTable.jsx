@@ -12,20 +12,14 @@ import { formattedNumber } from '@/utils/helpers';
 import { useNavigate } from 'react-router-dom';
 
 const RecordTotalTable = ({
-  servicesData,
-  itemsData,
+  servicesTotalData,
+  inventoriesTotalData,
   status,
   discount,
   setDiscount,
   handleSave
 }) => {
   const navigate = useNavigate();
-
-  const handleTotalData = (data) =>
-    data.reduce(
-      (acc, item) => acc + parseInt(item.price) || parseInt(item.finalPrice),
-      0
-    );
 
   const handleChange = (name, value) => {
     setDiscount((prevDiscount) => ({
@@ -34,12 +28,11 @@ const RecordTotalTable = ({
     }));
   };
 
-  const handleTotal = (name, data) =>
-    handleTotalData(data) - (discount[name] || 0);
+  const handleTotal = (name, data) => data - (discount[name] || 0);
 
   const total =
-    parseFloat(handleTotal('items', itemsData)) +
-    parseFloat(handleTotal('services', servicesData));
+    parseFloat(handleTotal('items', servicesTotalData)) +
+    parseFloat(handleTotal('services', inventoriesTotalData));
 
   return (
     <>
@@ -60,9 +53,11 @@ const RecordTotalTable = ({
                   {name.charAt(0).toUpperCase() + name.slice(1)}
                 </TableCell>
                 <TableCell>
-                  {handleTotalData(
-                    name === 'services' ? servicesData : itemsData
-                  ).toFixed(2)}
+                  {formattedNumber(
+                    name === 'services'
+                      ? servicesTotalData
+                      : inventoriesTotalData
+                  )}
                 </TableCell>
                 <TableCell>
                   <Input
@@ -78,7 +73,9 @@ const RecordTotalTable = ({
                   {formattedNumber(
                     handleTotal(
                       name,
-                      name === 'services' ? servicesData : itemsData
+                      name === 'services'
+                        ? servicesTotalData
+                        : inventoriesTotalData
                     )
                   )}
                 </TableCell>
