@@ -23,33 +23,20 @@ import InventoryForm from '@/components/inventory/inventoryForm/InventoryForm';
 import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/InventoryValidation';
 import useInventory from '@/hooks/useInventory';
 import { getInventories, getServices } from '@/utils/helpers';
+import { setActivities } from '@/reducers/activitiesReducers';
 
 const MaintenaceRecord = () => {
   const location = useLocation();
-  const { rowDataId } = location.state || {};
-  const { activitiesById, editActivity } = useActivities(rowDataId);
+  const { id, activitiesData: activities } = location.state || {};
+  const { editActivity } = useActivities(id);
   const { addService } = useServices();
   const { addInventory } = useInventory();
   const { allServices: allServicesData } = useServices();
   const { allInventory: allInventoryData } = useInventory();
 
-  const activities = activitiesById?.data;
   const allServices = allServicesData?.data;
   const allInventory = allInventoryData?.data;
-
-  useEffect(() => {
-    if (!activities) {
-      return;
-    }
-    // add services and inventory user data to activities data
-    activities.services = activities?.servicesDetails?.map(
-      (service) => service.name
-    );
-    activities.inventory = activities?.inventoryDetails?.map(
-      (item) => item.name
-    );
-    storePersist.set('maintenance-record', activities);
-  }, [activities]);
+  const activitiesData = activities.filter((activity) => activity.id === id)[0];
 
   const selectedObject = (existingData) =>
     existingData?.reduce((acc, existingItem) => {
@@ -57,13 +44,11 @@ const MaintenaceRecord = () => {
       return acc;
     }, {});
 
-  const activitiesData = storePersist.get('maintenance-record');
-
   const [selectedServices, setSelectedServices] = useState(
-    selectedObject(activitiesData.services)
+    selectedObject(activitiesData?.services)
   );
   const [selectedItem, setSelectedItem] = useState(
-    selectedObject(activitiesData.inventory)
+    selectedObject(activitiesData?.inventory)
   );
   const [selectedStatus, setSelectedStatus] = useState(activitiesData?.status);
   const [note, setNote] = useState(activitiesData?.note);
@@ -74,12 +59,6 @@ const MaintenaceRecord = () => {
     activitiesData?.inventoryQuantities
   );
   const [discount, setDiscount] = useState(activitiesData?.discount);
-
-  if (activitiesById.isLoading) {
-    return <div>loading data...</div>;
-  } else if (activitiesById.isError) {
-    return <div>error loading data</div>;
-  }
 
   // render nothing if activities data is still null
   if (!activitiesData || !allServices || !allInventory) {
@@ -108,9 +87,6 @@ const MaintenaceRecord = () => {
       });
     };
 
-  const tableData = (data, selectedData) =>
-    data.filter((item) => Object.values(selectedData).includes(item.value));
-
   const getLastSelectedLabel = (type) => (name) => {
     const selected = type === 'services' ? selectedServices : selectedItem;
     return Object.keys(selected).length > 0
@@ -132,12 +108,34 @@ const MaintenaceRecord = () => {
     return selectedServicesData.map((service) => service.id);
   };
 
+  const tableData = (data, selectedData) =>
+    data.filter((item) => Object.values(selectedData).includes(item.value));
+
+  const getTableTotalData = (data, selectedData, quantities) => {
+    return data
+      .filter((item) => Object.values(selectedData).includes(item.value))
+      .reduce((acc, item) => {
+        const quantity = quantities[item.label];
+        const price = parseInt(item.price) || parseInt(item.finalPrice);
+
+        if (quantity === 0 && !isNaN(price)) {
+          acc += price;
+        }
+
+        if (!isNaN(quantity) && !isNaN(price)) {
+          acc += quantity * price;
+        }
+
+        return acc;
+      }, 0);
+  };
+
   const pageData = {
     status: selectedStatus || activitiesData?.status,
     note: note || activitiesData?.note,
-    serviceId: getSelectedItemId(services, selectedServices),
+    serviceId: getSelectedItemId(services, selectedServices) || [],
     services: Object.keys(selectedServices).map((service) => service) || [],
-    inventoryId: getSelectedItemId(inventories, selectedItem),
+    inventoryId: getSelectedItemId(inventories, selectedItem) || [],
     inventory: Object.keys(selectedItem).map((item) => item) || [],
     servicesQuantities,
     inventoryQuantities,
@@ -151,8 +149,6 @@ const MaintenaceRecord = () => {
   const handleSubmit = () => {
     console.log('data to be submitted');
   };
-
-  console.log('pageData', activitiesData);
 
   return (
     <div className="">
@@ -309,8 +305,16 @@ const MaintenaceRecord = () => {
           <div className="bg-white rounded-[14px] p-4">
             <h3 className="text-sm font-semibold mb-1 ml-2">Total</h3>
             <RecordTotalTable
-              itemsData={tableData(inventories, selectedItem)}
-              servicesData={tableData(services, selectedServices)}
+              servicesTotalData={getTableTotalData(
+                services,
+                selectedServices,
+                servicesQuantities
+              )}
+              inventoriesTotalData={getTableTotalData(
+                inventories,
+                selectedItem,
+                inventoryQuantities
+              )}
               status={selectedStatus}
               discount={discount}
               setDiscount={setDiscount}

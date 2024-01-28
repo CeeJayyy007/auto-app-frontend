@@ -10,7 +10,8 @@ export const columns = (
   services,
   inventories,
   editActivity,
-  removeActivity
+  removeActivity,
+  activitiesData
 ) => [
   {
     id: 'select',
@@ -200,6 +201,7 @@ export const columns = (
         inventories={inventories}
         editActivity={editActivity}
         removeActivity={removeActivity}
+        activitiesData={activitiesData}
       />
     )
   }

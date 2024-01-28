@@ -86,7 +86,8 @@ const Activities = () => {
             services,
             inventories,
             editActivity,
-            removeActivity
+            removeActivity,
+            activitiesData
           )}
           props={{ services, statuses, inventories, vehicles }}
           placeholder="Search activities..."

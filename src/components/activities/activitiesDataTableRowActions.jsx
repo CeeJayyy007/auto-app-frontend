@@ -13,7 +13,8 @@ import AlertDialogComponent from '../display/AlertDialog';
 export const ActivitiesDataTableRowActions = ({
   row,
   editActivity,
-  removeActivity
+  removeActivity,
+  activitiesData
 }) => {
   const navigate = useNavigate();
   const { id, status } = row.original;
@@ -21,7 +22,7 @@ export const ActivitiesDataTableRowActions = ({
 
   const handleView = () => {
     navigate(`/maintenance-record/${id}`, {
-      state: { id }
+      state: { id, activitiesData }
     });
   };
 
