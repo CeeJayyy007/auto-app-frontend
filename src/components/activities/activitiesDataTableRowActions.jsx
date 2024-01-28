@@ -16,13 +16,12 @@ export const ActivitiesDataTableRowActions = ({
   removeActivity
 }) => {
   const navigate = useNavigate();
-  const cancelObject = { status: 'Canceled' };
-
   const { id, status } = row.original;
+  const cancelObject = { status: 'Canceled' };
 
   const handleView = () => {
     navigate(`/maintenance-record/${id}`, {
-      state: { rowDataId: id }
+      state: { id }
     });
   };
 

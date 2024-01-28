@@ -12,8 +12,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import SideSheet from '../display/SideSheet';
-import ServiceForm from '../services/ServiceForm';
 
 const ActivitiesCombobox = ({
   name,
