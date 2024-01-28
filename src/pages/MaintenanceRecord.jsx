@@ -23,7 +23,6 @@ import InventoryForm from '@/components/inventory/inventoryForm/InventoryForm';
 import { AddInventoryFormSchema } from '@/components/inventory/inventoryForm/InventoryValidation';
 import useInventory from '@/hooks/useInventory';
 import { getInventories, getServices } from '@/utils/helpers';
-import { setActivities } from '@/reducers/activitiesReducers';
 
 const MaintenaceRecord = () => {
   const location = useLocation();

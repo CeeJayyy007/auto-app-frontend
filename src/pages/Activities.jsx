@@ -7,7 +7,6 @@ import { getInventories, getServices, getVehicles } from '@/utils/helpers';
 import ActivitiesForm from '@/components/activities/form/ActivitiesForm';
 import { ActivitiesFormSchema } from '@/components/activities/form/ActivitiesValidation';
 import useAppointment from '@/hooks/useAppointment';
-import storePersist from '@/store/storePersist';
 import useInventory from '@/hooks/useInventory';
 import useServices from '@/hooks/useServices';
 import useProfile from '@/hooks/useProfile';
