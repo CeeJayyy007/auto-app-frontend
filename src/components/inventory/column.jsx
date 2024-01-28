@@ -92,19 +92,6 @@ export const columns = (editInventory, deleteInventory) => [
     }
   },
   {
-    accessorKey: 'markUp',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Mark Up" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <div className="flex space-x-2">
-          <span>{row.getValue('markUp')}</span>
-        </div>
-      );
-    }
-  },
-  {
     accessorKey: 'finalPrice',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Final Price (₦)" />

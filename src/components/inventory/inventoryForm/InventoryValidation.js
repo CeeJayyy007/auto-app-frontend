@@ -21,9 +21,9 @@ const AddInventoryFormSchema = z.object({
       required_error: 'Inventory low level is required.'
     })
     .min(1, 'Must be at least 1'),
-  markUp: z.coerce
+  finalPrice: z.coerce
     .number({
-      required_error: 'Inventory mark up is required.'
+      required_error: 'Inventory final price up is required.'
     })
     .gte(1, 'Must be at least 1')
     .min(1, 'Must be at least 1')
@@ -43,9 +43,9 @@ const EditInventoryFormSchema = z
     lowLevel: z.coerce.number({
       required_error: 'Inventory low level is required.'
     }),
-    markUp: z.coerce
+    finalPrice: z.coerce
       .number({
-        required_error: 'Inventory mark up is required.'
+        required_error: 'Inventory final price is required.'
       })
       .gte(1, 'Must be at least 1')
   })

@@ -20,7 +20,7 @@ const InventoryForm = ({
   formValidation,
   ...props
 }) => {
-  const { id, name, quantity, lowLevel, initialPrice, markUp } = rowData
+  const { id, name, quantity, lowLevel, initialPrice, finalPrice } = rowData
     ? rowData
     : {};
 
@@ -31,7 +31,7 @@ const InventoryForm = ({
       quantity: quantity ? quantity : '',
       lowLevel: lowLevel ? lowLevel : '',
       initialPrice: initialPrice ? initialPrice : '',
-      markUp: markUp ? markUp : ''
+      finalPrice: finalPrice ? finalPrice : ''
     }
   });
 
@@ -146,22 +146,22 @@ const InventoryForm = ({
             {/* Mark Up */}
             <FormField
               control={form.control}
-              name="markUp"
+              name="finalPrice"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className={cn(!field.value && 'sr-only')}>
-                    Mark Up
+                    Final Price
                   </FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Mark Up"
+                      placeholder="Final Price"
                       type="number"
                       value={field.value}
                       disabled={form.formState.isLoading}
                       {...field}
                     />
                   </FormControl>
-                  {form.formState.errors.markUp && <FormMessage />}
+                  {form.formState.errors.finalPrice && <FormMessage />}
                 </FormItem>
               )}
             />
