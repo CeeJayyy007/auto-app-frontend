@@ -96,7 +96,7 @@ const Profile = () => {
             </div>
           </div>
           <img
-            src="/src/assets/car-top-view.png"
+            src="/assets/car-top-view.png"
             alt="car top view"
             className={`h-[600px] w-[300px] mx-auto transition-transform transform duration-1000 ${
               loaded ? 'translate-y-0' : 'translate-y-full'
@@ -161,7 +161,7 @@ const Profile = () => {
             <div className="flex flex-row items-center">
               <Avatar className="h-[100px] w-[100px] m-4">
                 <AvatarImage
-                  src="src/assets/user-avatar/7309685.jpg"
+                  src="/assets/user-avatar/7309685.jpg"
                   alt="profile-avatar"
                 />
                 <AvatarFallback>{avatarFallback(name)}</AvatarFallback>
