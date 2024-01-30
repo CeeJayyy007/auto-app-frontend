@@ -3,8 +3,10 @@ import { publicRoutes, privateRoutes } from './routes';
 import checkAuth from './utils/auth';
 
 const App = () => {
+  const isAuthenticated = checkAuth();
+
   const router = createBrowserRouter([
-    checkAuth() ? privateRoutes() : {},
+    isAuthenticated ? privateRoutes() : {},
     ...publicRoutes()
   ]);
 
