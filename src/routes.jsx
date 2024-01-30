@@ -15,27 +15,25 @@ import PaymentIntegration from './components/payments/PaymentIntegration';
 import NotFound from './components/emptyState/NotFound';
 
 const privateRoutes = () => {
-  return [
-    {
-      element: <Layout />,
-      children: [
-        { path: '/', element: <Dashboard replace /> },
-        { path: 'users', element: <Users /> },
-        { path: 'profile', element: <Profile /> },
-        { path: 'appointments', element: <Appointments /> },
-        { path: 'activities', element: <Activities /> },
-        { path: 'services', element: <Services /> },
-        { path: 'maintenance-record/:id', element: <MaintenaceRecord /> },
-        { path: 'inventory', element: <Inventory /> },
-        { path: 'payments', element: <Payments /> },
-        { path: 'payment-integration', element: <PaymentIntegration /> },
-        { path: 'reports', element: <div>Reports</div> },
-        { path: 'analytics', element: <Analytics /> },
-        { path: 'settings', element: <div>Settings</div> },
-        { path: '*', element: <NotFound /> }
-      ]
-    }
-  ];
+  return {
+    element: <Layout />,
+    children: [
+      { path: '/', element: <Dashboard replace /> },
+      { path: 'users', element: <Users /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'appointments', element: <Appointments /> },
+      { path: 'activities', element: <Activities /> },
+      { path: 'services', element: <Services /> },
+      { path: 'maintenance-record/:id', element: <MaintenaceRecord /> },
+      { path: 'inventory', element: <Inventory /> },
+      { path: 'payments', element: <Payments /> },
+      { path: 'payment-integration', element: <PaymentIntegration /> },
+      { path: 'reports', element: <div>Reports</div> },
+      { path: 'analytics', element: <Analytics /> },
+      { path: 'settings', element: <div>Settings</div> },
+      { path: '*', element: <NotFound /> }
+    ]
+  };
 };
 
 const publicRoutes = () => {

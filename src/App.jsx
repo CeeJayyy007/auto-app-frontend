@@ -4,7 +4,7 @@ import checkAuth from './utils/auth';
 
 const App = () => {
   const router = createBrowserRouter([
-    ...(checkAuth() ? privateRoutes() : []),
+    checkAuth() ? privateRoutes() : {},
     ...publicRoutes()
   ]);
 
