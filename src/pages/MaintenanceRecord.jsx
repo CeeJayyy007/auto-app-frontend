@@ -1,5 +1,5 @@
 import getIcon from '@/components/icons/getIcon';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ActivitiesCombobox from '@/components/maintenanceRecord/ActivitiesCombobox';
 import MaintenanceRecordTable from '@/components/maintenanceRecord/MaintenanceRecordTable';
@@ -141,6 +141,7 @@ const MaintenaceRecord = () => {
     discount
   };
 
+  console.log('pageData', pageData);
   const handleSave = () => {
     editActivity(pageData, activitiesData.id);
   };
