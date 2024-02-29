@@ -4,7 +4,6 @@ import checkAuth from './utils/auth';
 import { useEffect } from 'react';
 
 const App = () => {
-  console.log('checkAuth', checkAuth());
   const router = createBrowserRouter([
     checkAuth() ? privateRoutes() : {},
     ...publicRoutes()
